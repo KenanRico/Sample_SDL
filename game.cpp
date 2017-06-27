@@ -1,15 +1,17 @@
 #include "game.h"
 #include "gamesystem.h"
 #include <SDL2/SDL.h>
+#include "sprite.h"
 
 
 enum class Game::State{
 	RUN,
-	STOP
+	STOP,
+	PAUSE
 };
 
 
-Game::Game(): g_window((SDL_Window*)0), g_width(640), g_height(480), g_renderer((SDL_Renderer*)0), g_state(State::STOP){
+Game::Game(): g_window((SDL_Window*)0), g_windowW(640), g_windowH(480), g_renderer((SDL_Renderer*)0), g_state(State::STOP), g_testSprite("assets/Cougar.bmp"){
 	initSystems();
 }
 Game::~Game(){
@@ -19,10 +21,10 @@ Game::~Game(){
 
 void Game::initSystems(){
 	GameSystem::Init();
-	g_window = SDL_CreateWindow("This is a window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, g_width, g_height, SDL_WINDOW_OPENGL);
+	g_window = SDL_CreateWindow("This is a window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, g_windowW, g_windowH, SDL_WINDOW_RESIZABLE|SDL_WINDOW_OPENGL);
 	if(g_window!=(SDL_Window*)0){
 		g_renderer = SDL_CreateRenderer(g_window,-1, 0);
-		SDL_SetRenderDrawColor(g_renderer,100,0,0,255);
+		SDL_SetRenderDrawColor(g_renderer,100,0,0,0);
 		SDL_RenderClear(g_renderer);
 		SDL_RenderPresent(g_renderer);
 	}else;
@@ -48,25 +50,47 @@ void Game::run(){
 }
 void Game::gameLoop(){
 	while(g_state!=State::STOP){
-		handleEvents();
-		updateGame();
-		renderGame();
+		if(g_state==State::RUN){
+			handleEvents_RUN();
+			updateGame();
+			renderGame();
+		}else if(g_state==State::PAUSE){
+			showPauseMenu();
+			while(g_state==State::PAUSE){
+				handleEvents_PAUSE();
+			}
+			hidePauseMenu();
+			//other PAUSE operations
+		}else{
+			//More states in the future?
+		}
 	}
 
 }
-void Game::handleEvents(){
+void Game::handleEvents_RUN(){
 	SDL_Event event;
 	if(SDL_PollEvent(&event)){
 		switch(event.type){
 			case SDL_QUIT:
 				g_state = State::STOP;
 				break;
+			case SDL_KEYDOWN:
+				switch(event.key.keysym.sym){
+					case SDLK_ESCAPE:
+						g_state = State::PAUSE;
+						GameSystem::writeMessage("game paused");
+						break;
+					default:
+						//Keys outside of consideration
+						break; 
+				}
+				break;
 			default:
 				//Events outside of consideration
 				break;
 		}
 	}else{
-//		GameSystem::writeMessage("No event");
+		//When there is no recognized event at this instant
 	}
 
 }
@@ -78,4 +102,41 @@ void Game::renderGame(){
 
 
 
+}
+
+void Game::showPauseMenu(){
+
+
+}
+
+void Game::hidePauseMenu(){
+
+
+}
+
+void Game::handleEvents_PAUSE(){
+	SDL_Event event;
+	if(SDL_PollEvent(&event)){
+		switch(event.type){
+			case SDL_QUIT:
+				g_state = State::STOP;
+				break;
+			case SDL_KEYDOWN:
+				switch(event.key.keysym.sym){
+					case SDLK_ESCAPE:
+						g_state = State::RUN;
+						GameSystem::writeMessage("game resumed");
+						break;
+					default:
+						//...
+						break;
+				}
+				break;
+			default:
+				//...
+				break;
+		}
+	}else{
+		//no recognized events
+	}
 }
