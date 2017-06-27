@@ -43,6 +43,8 @@
 		<Unit filename="game.h" />
 		<Unit filename="gamesystem.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="sprite.cpp" />
+		<Unit filename="sprite.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

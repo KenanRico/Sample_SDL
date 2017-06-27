@@ -35,7 +35,7 @@ namespace GameSystem{
 	}
 //-------------------------Print Message-------------------------------------
 	inline void writeErrorMessage(const char* err_msg){
-		std::cerr<<"Fatal Error: "<<err_msg<<std::endl;
+		std::cerr<<"******Fatal Error: "<<err_msg<<std::endl;
 	}
 
 	inline void writeMessage(const char* msg){

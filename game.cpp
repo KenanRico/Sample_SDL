@@ -2,7 +2,7 @@
 #include "gamesystem.h"
 #include <SDL2/SDL.h>
 #include "sprite.h"
-
+#include <iostream>
 
 enum class Game::State{
 	RUN,
@@ -11,7 +11,13 @@ enum class Game::State{
 };
 
 
-Game::Game(): g_window((SDL_Window*)0), g_windowW(640), g_windowH(480), g_renderer((SDL_Renderer*)0), g_state(State::STOP), g_testSprite("assets/Cougar.bmp"){
+Game::Game(): 
+g_window((SDL_Window*)0), 
+g_windowW(640), 
+g_windowH(480), 
+g_renderer((SDL_Renderer*)0), 
+g_state(State::STOP), 
+g_testSprite(g_renderer, "assets/Geoff.bmp"){
 	initSystems();
 }
 Game::~Game(){
@@ -24,6 +30,9 @@ void Game::initSystems(){
 	g_window = SDL_CreateWindow("This is a window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, g_windowW, g_windowH, SDL_WINDOW_RESIZABLE|SDL_WINDOW_OPENGL);
 	if(g_window!=(SDL_Window*)0){
 		g_renderer = SDL_CreateRenderer(g_window,-1, 0);
+		if(g_renderer!=(SDL_Renderer*)0){
+			g_testSprite.createSprite();
+		}
 		SDL_SetRenderDrawColor(g_renderer,100,0,0,0);
 		SDL_RenderClear(g_renderer);
 		SDL_RenderPresent(g_renderer);
@@ -80,6 +89,8 @@ void Game::handleEvents_RUN(){
 						g_state = State::PAUSE;
 						GameSystem::writeMessage("game paused");
 						break;
+					case SDLK_RIGHT:
+						g_testSprite.moveRight();
 					default:
 						//Keys outside of consideration
 						break; 
@@ -99,7 +110,9 @@ void Game::updateGame(){
 
 }
 void Game::renderGame(){
-
+	SDL_RenderClear(g_renderer);
+	SDL_RenderCopy(g_renderer, g_testSprite.getTexturePtr(), g_testSprite.getSourceRectanglePtr(), g_testSprite.getDestinationRectPtr());
+	SDL_RenderPresent(g_renderer);
 
 
 }
