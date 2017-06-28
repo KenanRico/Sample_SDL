@@ -14,12 +14,13 @@
 				<Compiler>
 					<Add option="-std=c++11" />
 					<Add option="-g" />
-					<Add directory="D:/Coding/libs/SDL2-2.0.5/i686-w64-mingw32/include" />
+					<Add directory="D:/Coding/libs/SDL2_VC/include" />
 				</Compiler>
 				<Linker>
 					<Add library="D:/Coding/libs/SDL2_VC/lib/x86/SDL2.lib" />
 					<Add library="D:/Coding/libs/SDL2_VC/lib/x86/SDL2main.lib" />
 					<Add library="D:/Coding/libs/SDL2_VC/lib/x86/SDL2test.lib" />
+					<Add library="D:/Coding/libs/SDL2_VC/Extensions/SDL2_image-2.0.1/lib/x86/SDL2_image.lib" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -43,6 +44,8 @@
 		<Unit filename="game.h" />
 		<Unit filename="gamesystem.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="objectmanager.cpp" />
+		<Unit filename="objectmanager.h" />
 		<Unit filename="sprite.cpp" />
 		<Unit filename="sprite.h" />
 		<Extensions>

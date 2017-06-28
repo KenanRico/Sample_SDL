@@ -11,13 +11,10 @@ void testRun();
 
 int main()
 {
-	Game g;
-	g.run();
+	Game::startGame();
 //	testRun();
 	return 0;
 }
-
-
 
 
 

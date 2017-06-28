@@ -1,20 +1,25 @@
 #include <SDL2/SDL.h>
 #include "sprite.h"
+#include "objectmanager.h"
 
 #ifndef GAME_H
 #define GAME_H
 class Game{
+
+	private: static bool Running;
+	public: static void startGame();
+
 	private:
 		enum class State;
 	private:
 		SDL_Window* g_window;
-		int g_windowW;
-		int g_windowH;
 		SDL_Renderer* g_renderer;
 		State g_state;
-		Sprite g_testSprite;
-	public:
+		Sprite g_testSprite;//Remove after sorting everything out
+		ObjectManager* g_objects;	
+	private:
 		Game();
+	public:
 		~Game();
 		Game(const Game&) = delete;
 		Game& operator=(const Game&) = delete;

@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1498550146 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\main.cpp
+1498636896 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\main.cpp
 	<SDL2/SDL.h>
 	"gamesystem.h"
 	"game.h"
@@ -648,14 +648,16 @@
 	"begin_code.h"
 	"close_code.h"
 
-1498550292 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\game.h
+1498643283 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\game.h
 	<SDL2/SDL.h>
 	"sprite.h"
+	"objectmanager.h"
 
-1498631885 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\game.cpp
+1498651229 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\game.cpp
+	<SDL2/SDL.h>
 	"game.h"
 	"gamesystem.h"
-	<SDL2/SDL.h>
+	"objectmanager.h"
 	"sprite.h"
 	<iostream>
 
@@ -663,7 +665,7 @@
 	<SDL2/SDL.h>
 	<string>
 
-1498632737 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite.cpp
+1498648318 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite.cpp
 	<SDL2/SDL.h>
 	<SDL2/extensions/SDL_image.h>
 	"sprite.h"
@@ -994,4 +996,9 @@
 	<SDL2/SDL_version.h>
 	<SDL2/begin_code.h>
 	<SDL2/close_code.h>
+
+1498651169 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\objectmanager.h
+	"sprite.h"
+	<map>
+	<string>
 

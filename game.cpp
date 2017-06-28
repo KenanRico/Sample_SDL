@@ -1,8 +1,23 @@
+#include <SDL2/SDL.h>
 #include "game.h"
 #include "gamesystem.h"
-#include <SDL2/SDL.h>
+#include "objectmanager.h"
 #include "sprite.h"
 #include <iostream>
+
+
+bool Game::Running = false;
+
+void Game::startGame(){
+	if(!Game::Running){
+		Game::Running = true;
+		Game game;
+		game.run();
+	}else{
+		GameSystem::writeErrorMessage("The game is already running!");
+	}
+}
+
 
 enum class Game::State{
 	RUN,
@@ -13,11 +28,10 @@ enum class Game::State{
 
 Game::Game(): 
 g_window((SDL_Window*)0), 
-g_windowW(640), 
-g_windowH(480), 
 g_renderer((SDL_Renderer*)0), 
 g_state(State::STOP), 
-g_testSprite(g_renderer, "assets/lucas.png", 50, 50, 50, 50, 10, 10, 50, 50){
+g_testSprite(g_renderer, "assets/lucas.png", 5, 0, 30, 50, 10, 10, 30, 50),
+g_objects((ObjectManager*)0){
 	initSystems();
 }
 Game::~Game(){
@@ -27,7 +41,7 @@ Game::~Game(){
 
 void Game::initSystems(){
 	GameSystem::Init();
-	g_window = SDL_CreateWindow("This is a window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, g_windowW, g_windowH, SDL_WINDOW_RESIZABLE|SDL_WINDOW_OPENGL);
+	g_window = SDL_CreateWindow("This is a window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_RESIZABLE|SDL_WINDOW_OPENGL);
 	if(g_window!=(SDL_Window*)0){
 		g_renderer = SDL_CreateRenderer(g_window,-1, 0);
 		if(g_renderer!=(SDL_Renderer*)0){
@@ -37,6 +51,7 @@ void Game::initSystems(){
 		SDL_RenderClear(g_renderer);
 		SDL_RenderPresent(g_renderer);
 	}else;
+	g_objects = ObjectManager::Init();
 	GameSystem::writeMessage("Inited system");
 }
 
@@ -44,6 +59,7 @@ void Game::deinitSystems(){
 	SDL_DestroyWindow(g_window);
 	SDL_DestroyRenderer(g_renderer);
 	GameSystem::Quit();
+	delete g_objects;
 	if(g_state==State::STOP){
 		GameSystem::writeMessage("De-Inited system");
 	}else{
@@ -106,12 +122,12 @@ void Game::handleEvents_RUN(){
 
 }
 void Game::updateGame(){
-
+	//Note: This function is responsible for updating everything that's independent from user inputs
 
 }
 void Game::renderGame(){
 	SDL_RenderClear(g_renderer);
-	SDL_RenderCopy(g_renderer, g_testSprite.getTexturePtr(), g_testSprite.getSrcRectPtr(), g_testSprite.getDstRectPtr());
+	SDL_RenderCopyEx(g_renderer, g_testSprite.getTexturePtr(), g_testSprite.getSrcRectPtr(), g_testSprite.getDstRectPtr(), 0, 0, SDL_FLIP_NONE);
 	SDL_RenderPresent(g_renderer);
 
 
