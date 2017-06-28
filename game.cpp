@@ -17,7 +17,7 @@ g_windowW(640),
 g_windowH(480), 
 g_renderer((SDL_Renderer*)0), 
 g_state(State::STOP), 
-g_testSprite(g_renderer, "assets/Geoff.bmp"){
+g_testSprite(g_renderer, "assets/lucas.png", 50, 50, 50, 50, 10, 10, 50, 50){
 	initSystems();
 }
 Game::~Game(){
@@ -33,7 +33,7 @@ void Game::initSystems(){
 		if(g_renderer!=(SDL_Renderer*)0){
 			g_testSprite.createSprite();
 		}
-		SDL_SetRenderDrawColor(g_renderer,100,0,0,0);
+		SDL_SetRenderDrawColor(g_renderer,100,0,100,255);
 		SDL_RenderClear(g_renderer);
 		SDL_RenderPresent(g_renderer);
 	}else;
@@ -111,7 +111,7 @@ void Game::updateGame(){
 }
 void Game::renderGame(){
 	SDL_RenderClear(g_renderer);
-	SDL_RenderCopy(g_renderer, g_testSprite.getTexturePtr(), g_testSprite.getSourceRectanglePtr(), g_testSprite.getDestinationRectPtr());
+	SDL_RenderCopy(g_renderer, g_testSprite.getTexturePtr(), g_testSprite.getSrcRectPtr(), g_testSprite.getDstRectPtr());
 	SDL_RenderPresent(g_renderer);
 
 
