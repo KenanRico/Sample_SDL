@@ -30,7 +30,7 @@ Game::Game():
 g_window((SDL_Window*)0), 
 g_renderer((SDL_Renderer*)0), 
 g_state(State::STOP), 
-g_testSprite(g_renderer, "assets/lucas.png", 5, 0, 30, 50, 10, 10, 30, 50),
+//g_testSprite(g_renderer, "assets/lucas.png", 5, 0, 30, 50, 10, 10, 30, 50),
 g_objects((ObjectManager*)0){
 	initSystems();
 }
@@ -45,13 +45,20 @@ void Game::initSystems(){
 	if(g_window!=(SDL_Window*)0){
 		g_renderer = SDL_CreateRenderer(g_window,-1, 0);
 		if(g_renderer!=(SDL_Renderer*)0){
-			g_testSprite.createSprite();
+			//g_testSprite.createSprite();
+			g_objects = ObjectManager::Init();
+			if(g_objects!=(ObjectManager*)0){
+				loadAllObjects();
+			}else{
+				GameSystem::writeErrorMessage("Failed to init g_objects");
+			}
+		}else{
+			GameSystem::writeErrorMessage("Failed to initialize g_renderer");
 		}
 		SDL_SetRenderDrawColor(g_renderer,100,0,100,255);
 		SDL_RenderClear(g_renderer);
 		SDL_RenderPresent(g_renderer);
 	}else;
-	g_objects = ObjectManager::Init();
 	GameSystem::writeMessage("Inited system");
 }
 
@@ -65,6 +72,12 @@ void Game::deinitSystems(){
 	}else{
 		GameSystem::writeErrorMessage("Game has stopped unexpectedly");
 	}
+}
+
+void Game::loadAllObjects(){
+	//load every sprite used in the game
+	//Or we can load the ones that are rendered right off the bat and gradually load more as they come in
+	g_objects->insert("lucas", new Sprite(g_renderer, "assets/lucas.png", 5,0,30,50,10,10,30,50));	
 }
 
 
@@ -106,7 +119,12 @@ void Game::handleEvents_RUN(){
 						GameSystem::writeMessage("game paused");
 						break;
 					case SDLK_RIGHT:
-						g_testSprite.moveRight();
+					{
+						//g_testSprite.moveRight();
+						Sprite* character = g_objects->get("lucas");
+						character->moveRight();
+						break;
+					}
 					default:
 						//Keys outside of consideration
 						break; 
@@ -127,7 +145,9 @@ void Game::updateGame(){
 }
 void Game::renderGame(){
 	SDL_RenderClear(g_renderer);
-	SDL_RenderCopyEx(g_renderer, g_testSprite.getTexturePtr(), g_testSprite.getSrcRectPtr(), g_testSprite.getDstRectPtr(), 0, 0, SDL_FLIP_NONE);
+	//SDL_RenderCopyEx(g_renderer, g_testSprite.getTexturePtr(), g_testSprite.getSrcRectPtr(), g_testSprite.getDstRectPtr(), 0, 0, SDL_FLIP_NONE);
+	Sprite* character = g_objects->get("lucas");
+	SDL_RenderCopyEx(g_renderer, character->getTexturePtr(), character->getSrcRectPtr(), character->getDstRectPtr(), 0, 0, SDL_FLIP_NONE);	
 	SDL_RenderPresent(g_renderer);
 
 

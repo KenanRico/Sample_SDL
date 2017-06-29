@@ -34,8 +34,9 @@ void ObjectManager::freeObjects(){
 
 bool ObjectManager::insert(const char* ID, Sprite* sp_ptr){
 	bool successful = false;
-	if(o_Objects.find(ID)!=o_Objects.end()){
+	if(o_Objects.find(ID)==o_Objects.end()){
 		o_Objects[ID] = sp_ptr;
+		o_Objects[ID]->createSprite();
 		successful = true;
 	}else{
 		std::string Err1 = "Failed to insert object. Object ID ";
@@ -61,7 +62,15 @@ bool ObjectManager::remove(const char* ID){
 }
 
 Sprite* ObjectManager::get(const char* ID){
-	return o_Objects[ID];
+	if(o_Objects.find(ID)!=o_Objects.end()){
+		return o_Objects[ID];
+	}else{
+		std::string Err1 = "Cannot find object. Object ID ";
+		std::string Err2 = " does not exist";
+		std::string Err = Err1 + std::string(ID) + Err2;
+		GameSystem::writeErrorMessage(Err.c_str());
+		return (Sprite*)0;
+	}	
 }
 
 unsigned int ObjectManager::count(){

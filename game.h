@@ -15,7 +15,7 @@ class Game{
 		SDL_Window* g_window;
 		SDL_Renderer* g_renderer;
 		State g_state;
-		Sprite g_testSprite;//Remove after sorting everything out
+//		Sprite g_testSprite;//Remove after sorting everything out
 		ObjectManager* g_objects;	
 	private:
 		Game();
@@ -28,6 +28,8 @@ class Game{
 	private:
 		void initSystems();
 		void deinitSystems();
+
+		void loadAllObjects();
 
 		void gameLoop();
 		void handleEvents_RUN();

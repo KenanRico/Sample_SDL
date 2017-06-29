@@ -648,12 +648,12 @@
 	"begin_code.h"
 	"close_code.h"
 
-1498643283 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\game.h
+1498703289 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\game.h
 	<SDL2/SDL.h>
 	"sprite.h"
 	"objectmanager.h"
 
-1498651229 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\game.cpp
+1498704190 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\game.cpp
 	<SDL2/SDL.h>
 	"game.h"
 	"gamesystem.h"
@@ -999,6 +999,13 @@
 
 1498651169 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\objectmanager.h
 	"sprite.h"
+	<map>
+	<string>
+
+1498704448 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\objectmanager.cpp
+	"objectmanager.h"
+	"sprite.h"
+	"gamesystem.h"
 	<map>
 	<string>
 
