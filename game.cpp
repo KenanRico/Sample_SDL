@@ -3,8 +3,7 @@
 #include "gamesystem.h"
 #include "objectmanager.h"
 #include "sprite.h"
-#include <iostream>
-
+#include "sprite_player.h"
 
 bool Game::Running = false;
 
@@ -30,7 +29,6 @@ Game::Game():
 g_window((SDL_Window*)0), 
 g_renderer((SDL_Renderer*)0), 
 g_state(State::STOP), 
-//g_testSprite(g_renderer, "assets/lucas.png", 5, 0, 30, 50, 10, 10, 30, 50),
 g_objects((ObjectManager*)0){
 	initSystems();
 }
@@ -45,7 +43,6 @@ void Game::initSystems(){
 	if(g_window!=(SDL_Window*)0){
 		g_renderer = SDL_CreateRenderer(g_window,-1, 0);
 		if(g_renderer!=(SDL_Renderer*)0){
-			//g_testSprite.createSprite();
 			g_objects = ObjectManager::Init();
 			if(g_objects!=(ObjectManager*)0){
 				loadAllObjects();
@@ -77,7 +74,8 @@ void Game::deinitSystems(){
 void Game::loadAllObjects(){
 	//load every sprite used in the game
 	//Or we can load the ones that are rendered right off the bat and gradually load more as they come in
-	g_objects->insert("lucas", new Sprite(g_renderer, "assets/lucas.png", 5,0,30,50,10,10,30,50));	
+	//g_objects->insert("lucas", new Sprite(g_renderer, "assets/lucas.png", 3,50,37,50,10,10,30,50));	
+	g_objects->insert("lucas", new Player(g_renderer, "assets/lucas.png", 3,50,37,50,10,10,30,50, 9,9,9,9));	
 }
 
 
@@ -89,9 +87,14 @@ void Game::run(){
 void Game::gameLoop(){
 	while(g_state!=State::STOP){
 		if(g_state==State::RUN){
+			int starttime = SDL_GetTicks();
 			handleEvents_RUN();
 			updateGame();
 			renderGame();
+			int timespent = SDL_GetTicks()-starttime;
+			if(timespent<GameSystem::FrameTime){
+				SDL_Delay((int)(GameSystem::FrameTime-timespent));
+			}else;
 		}else if(g_state==State::PAUSE){
 			showPauseMenu();
 			while(g_state==State::PAUSE){
@@ -102,12 +105,15 @@ void Game::gameLoop(){
 		}else{
 			//More states in the future?
 		}
+	SDL_Delay(16);
 	}
 
 }
 void Game::handleEvents_RUN(){
 	SDL_Event event;
 	if(SDL_PollEvent(&event)){
+		Sprite* character = g_objects->get("lucas");
+		character->setAction(&event);
 		switch(event.type){
 			case SDL_QUIT:
 				g_state = State::STOP;
@@ -119,12 +125,9 @@ void Game::handleEvents_RUN(){
 						GameSystem::writeMessage("game paused");
 						break;
 					case SDLK_RIGHT:
-					{
-						//g_testSprite.moveRight();
-						Sprite* character = g_objects->get("lucas");
-						character->moveRight();
 						break;
-					}
+					case SDLK_LEFT:
+						break;
 					default:
 						//Keys outside of consideration
 						break; 
@@ -140,17 +143,16 @@ void Game::handleEvents_RUN(){
 
 }
 void Game::updateGame(){
-	//Note: This function is responsible for updating everything that's independent from user inputs
-
+	//Note: This function is responsible for updating everything that indirectly responds to or that is independent from user inputs
+	g_objects->get("lucas")->updateState();
+	g_objects->get("lucas")->updateSprite();
 }
 void Game::renderGame(){
 	SDL_RenderClear(g_renderer);
-	//SDL_RenderCopyEx(g_renderer, g_testSprite.getTexturePtr(), g_testSprite.getSrcRectPtr(), g_testSprite.getDstRectPtr(), 0, 0, SDL_FLIP_NONE);
-	Sprite* character = g_objects->get("lucas");
-	SDL_RenderCopyEx(g_renderer, character->getTexturePtr(), character->getSrcRectPtr(), character->getDstRectPtr(), 0, 0, SDL_FLIP_NONE);	
+	g_objects->get("lucas")->renderSprite();
+
+
 	SDL_RenderPresent(g_renderer);
-
-
 }
 
 void Game::showPauseMenu(){

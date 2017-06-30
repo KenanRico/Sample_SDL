@@ -19,10 +19,8 @@ s_sourceImage(img),
 s_srcRect(new SDL_Rect{_sx,_sy,_sw,_sh}),
 s_dstRect(new SDL_Rect{_dx,_dy,_dw,_dh}),
 s_created(false){
-
+	;
 }
-
-
 
 void Sprite::createSprite(){
 	if(s_created){
@@ -57,19 +55,6 @@ void Sprite::destroySprite(){
 }
 
 
-SDL_Texture* Sprite::getTexturePtr(){
-	return s_texture;
-}
-
-SDL_Rect* Sprite::getSrcRectPtr(){
-	return s_srcRect;
-}
-
-SDL_Rect* Sprite::getDstRectPtr(){
-	return s_dstRect;
-}
-
-
 void Sprite::setSrcRect(int x, int y, int w, int h){
 	s_srcRect->x = x;
 	s_srcRect->y = y;
@@ -84,10 +69,16 @@ void Sprite::setDstRect(int x, int y, int w, int h){
 }
 
 
-void Sprite::moveRight(){
+/*void Sprite::moveRight(){
+	int w = 300;
+	int h = 0;
+	std::cout<<s_srcRect->x<<std::endl;
+	SDL_QueryTexture(s_texture, nullptr, nullptr, &w, &h);
+	s_srcRect->x = (s_srcRect->x+40>w)?3:s_srcRect->x+40;
+	s_dstRect->x += 4;
+}*/
 
-	s_dstRect->x += 5;
-
-
-}
-
+/*void Sprite::render(){
+	SDL_RenderCopyEx(*s_mainRendererPointer, s_texture, s_srcRect, s_dstRect, 0, 0, SDL_FLIP_NONE);
+	SDL_Delay(10);
+}*/

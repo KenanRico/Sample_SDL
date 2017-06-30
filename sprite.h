@@ -4,32 +4,37 @@
 #ifndef SPRITE_H
 #define SPRITE_H
 class Sprite{
-	private:
+	protected:
 		SDL_Renderer** s_mainRendererPointer;
 		std::string s_sourceImage;
 		SDL_Texture* s_texture;
 		int s_imageW;
 		int s_imageH;
+		bool s_created;
+	protected:
 		SDL_Rect* s_srcRect;
 		SDL_Rect* s_dstRect;
-		bool s_created;
+
 	public:
 		Sprite() = delete;
-		~Sprite();
+		virtual ~Sprite();
 		Sprite(const Sprite&) = delete;
 		Sprite& operator=(const Sprite&) = delete;
 	public:
 		void createSprite();
 
 		Sprite(SDL_Renderer*&, const char*, int, int, int, int, int, int, int, int);
-		SDL_Texture* getTexturePtr();
-		SDL_Rect* getSrcRectPtr();
-		SDL_Rect* getDstRectPtr();
 
+		//void moveRight(); //Will move to inherited classes
+		virtual void setAction(const SDL_Event*) = 0;
+		virtual void updateState() = 0;//to be implemented by each derived based on there own states
+		virtual void updateSprite() = 0;
+		virtual void renderSprite() = 0;
+	protected:
 		void setSrcRect(int,int,int,int);
 		void setDstRect(int,int,int,int);
-
-		void moveRight(); //might move to inherited classes
+		
+		
 	private:
 		void destroySprite();
 

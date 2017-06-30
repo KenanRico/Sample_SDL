@@ -324,7 +324,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1498552448 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\gamesystem.h
+1498815503 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\gamesystem.h
 	<SDL2/SDL.h>
 	<iostream>
 	<string>
@@ -653,19 +653,19 @@
 	"sprite.h"
 	"objectmanager.h"
 
-1498704190 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\game.cpp
+1498815562 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\game.cpp
 	<SDL2/SDL.h>
 	"game.h"
 	"gamesystem.h"
 	"objectmanager.h"
 	"sprite.h"
-	<iostream>
+	"sprite_player.h"
 
-1498632747 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite.h
+1498809491 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite.h
 	<SDL2/SDL.h>
 	<string>
 
-1498648318 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite.cpp
+1498808189 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite.cpp
 	<SDL2/SDL.h>
 	<SDL2/extensions/SDL_image.h>
 	"sprite.h"
@@ -997,15 +997,26 @@
 	<SDL2/begin_code.h>
 	<SDL2/close_code.h>
 
-1498651169 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\objectmanager.h
+1498727462 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\objectmanager.h
 	"sprite.h"
 	<map>
 	<string>
 
-1498704448 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\objectmanager.cpp
+1498727457 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\objectmanager.cpp
 	"objectmanager.h"
 	"sprite.h"
 	"gamesystem.h"
 	<map>
 	<string>
+
+1498809315 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite_player.h
+	<SDL2/SDL.h>
+	"sprite.h"
+
+1498811294 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite_player.cpp
+	<SDL2/SDL.h>
+	"sprite_player.h"
+	"sprite.h"
+	"gamesystem.h"
+	<iostream>
 

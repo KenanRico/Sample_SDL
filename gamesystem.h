@@ -4,7 +4,11 @@
 
 #ifndef GAMESYSTEM_NAMESPACE
 #define GAMESYSTEM_NAMESPACE
-namespace GameSystem{	
+namespace GameSystem{
+//-------------------------System parameters-----------------------------
+	const int PixToMetre = 30;
+	const int FPS = 60;
+	const int FrameTime = 1000.0f/FPS;	
 //--------------------------SDL_Init-------------------------------------
 	inline void Init(){
 		try{
