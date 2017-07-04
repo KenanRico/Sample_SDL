@@ -648,24 +648,28 @@
 	"begin_code.h"
 	"close_code.h"
 
-1498703289 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\game.h
+1499165901 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\game.h
 	<SDL2/SDL.h>
-	"sprite.h"
 	"objectmanager.h"
+	"eventhandler.h"
+	"keyboardhandler.h"
 
-1498815562 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\game.cpp
+1499169758 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\game.cpp
 	<SDL2/SDL.h>
 	"game.h"
 	"gamesystem.h"
 	"objectmanager.h"
 	"sprite.h"
 	"sprite_player.h"
+	"eventhandler.h"
+	"keyboardhandler.h"
 
-1498809491 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite.h
+1499165851 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite.h
 	<SDL2/SDL.h>
 	<string>
+	"eventhandler.h"
 
-1498808189 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite.cpp
+1499066150 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite.cpp
 	<SDL2/SDL.h>
 	<SDL2/extensions/SDL_image.h>
 	"sprite.h"
@@ -1009,14 +1013,35 @@
 	<map>
 	<string>
 
-1498809315 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite_player.h
+1499165717 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite_player.h
 	<SDL2/SDL.h>
 	"sprite.h"
+	"eventhandler.h"
+	"keyboardhandler.h"
 
-1498811294 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite_player.cpp
+1499165757 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite_player.cpp
 	<SDL2/SDL.h>
 	"sprite_player.h"
 	"sprite.h"
 	"gamesystem.h"
+	"eventhandler.h"
+	"keyboardhandler.h"
+	<iostream>
+
+1499162043 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\keyboardhandler.h
+	<SDL2/SDL.h>
+
+1499167737 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\keyboardhandler.cpp
+	<SDL2/SDL.h>
+	"keyboardhandler.h"
+
+1499169008 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\eventhandler.h
+	<SDL2/SDL.h>
+	"keyboardhandler.h"
+
+1499169000 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\eventhandler.cpp
+	<SDL2/SDL.h>
+	"eventhandler.h"
+	"keyboardhandler.h"
 	<iostream>
 

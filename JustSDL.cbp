@@ -40,14 +40,20 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="eventhandler.cpp" />
+		<Unit filename="eventhandler.h" />
 		<Unit filename="game.cpp" />
 		<Unit filename="game.h" />
 		<Unit filename="gamesystem.h" />
+		<Unit filename="keyboardhandler.cpp" />
+		<Unit filename="keyboardhandler.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="objectmanager.cpp" />
 		<Unit filename="objectmanager.h" />
 		<Unit filename="sprite.cpp" />
 		<Unit filename="sprite.h" />
+		<Unit filename="sprite_player.cpp" />
+		<Unit filename="sprite_player.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

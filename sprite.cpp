@@ -13,18 +13,19 @@ Sprite::~Sprite(){
 }*/
 
 
-Sprite::Sprite(SDL_Renderer*& g_renderer, const char* img, int _sx, int _sy, int _sw, int _sh, int _dx, int _dy, int _dw, int _dh) : 
-s_mainRendererPointer(&g_renderer), 
-s_sourceImage(img), 
+Sprite::Sprite(SDL_Renderer*& g_renderer, const char* img, int _sx, int _sy, int _sw, int _sh, int _dx, int _dy, int _dw, int _dh) :
+s_mainRendererPointer(&g_renderer),
+s_sourceImage(img),
 s_srcRect(new SDL_Rect{_sx,_sy,_sw,_sh}),
 s_dstRect(new SDL_Rect{_dx,_dy,_dw,_dh}),
-s_created(false){
+s_created(false),
+s_framecounter(0){
 	;
 }
 
 void Sprite::createSprite(){
 	if(s_created){
-		std::string Err1("Already created sprite with BMP: ");
+		std::string Err1("Already created sprite with image: ");
 		std::string Err = Err1+s_sourceImage;
 		GameSystem::writeErrorMessage(Err.c_str());
 		return;
@@ -68,6 +69,9 @@ void Sprite::setDstRect(int x, int y, int w, int h){
 	s_dstRect->h = h;
 }
 
+void Sprite::resetFrameCounter(){
+	s_framecounter = 0;
+}
 
 /*void Sprite::moveRight(){
 	int w = 300;

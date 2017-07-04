@@ -4,6 +4,9 @@
 #include "objectmanager.h"
 #include "sprite.h"
 #include "sprite_player.h"
+#include "eventhandler.h"
+#include "keyboardhandler.h"
+//#include "mousehandler.h"
 
 bool Game::Running = false;
 
@@ -105,13 +108,23 @@ void Game::gameLoop(){
 		}else{
 			//More states in the future?
 		}
-	SDL_Delay(16);
 	}
 
 }
 void Game::handleEvents_RUN(){
 	SDL_Event event;
-	if(SDL_PollEvent(&event)){
+	g_event.parseEvent(event);
+	if(g_event.quit()){
+		g_state = State::STOP;
+	}else;
+	if(g_event.getKeyboard(KeyboardHandler::ESCAPE)){
+		g_state = State::PAUSE;
+		GameSystem::writeMessage("game paused");
+	}else;
+
+
+
+	/*if(SDL_PollEvent(&event)){
 		Sprite* character = g_objects->get("lucas");
 		character->setAction(&event);
 		switch(event.type){
@@ -139,12 +152,12 @@ void Game::handleEvents_RUN(){
 		}
 	}else{
 		//When there is no recognized event at this instant
-	}
+	}*/
 
 }
 void Game::updateGame(){
 	//Note: This function is responsible for updating everything that indirectly responds to or that is independent from user inputs
-	g_objects->get("lucas")->updateState();
+	g_objects->get("lucas")->updateState(g_event);
 	g_objects->get("lucas")->updateSprite();
 }
 void Game::renderGame(){
@@ -167,7 +180,16 @@ void Game::hidePauseMenu(){
 
 void Game::handleEvents_PAUSE(){
 	SDL_Event event;
-	if(SDL_PollEvent(&event)){
+	g_event.parseEvent(event);
+	if(g_event.quit()){
+		g_state = State::STOP;
+	}else;
+	if(false/*on resume button clicked*/){
+		g_state = State::RUN;
+		GameSystem::writeMessage("game resumed");
+		
+	}else;
+	/*if(SDL_PollEvent(&event)){
 		switch(event.type){
 			case SDL_QUIT:
 				g_state = State::STOP;
@@ -189,5 +211,5 @@ void Game::handleEvents_PAUSE(){
 		}
 	}else{
 		//no recognized events
-	}
+	}*/
 }

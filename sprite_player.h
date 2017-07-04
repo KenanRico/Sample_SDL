@@ -1,6 +1,7 @@
 #include <SDL2/SDL.h>
 #include "sprite.h"
-
+#include "eventhandler.h"
+#include "keyboardhandler.h"
 
 #ifndef SPRITE_PLAYER_H
 #define SPRITE_PLAYER_H
@@ -22,9 +23,16 @@ class Player : public Sprite{
 		Player(SDL_Renderer*&, const char*, int,int,int,int,int,int,int,int, int,int,int,int);
 	public:
 		void renderSprite();
-		void setAction(const SDL_Event*);
 		void updateSprite(); //update sprite on states
 	private:
-		void updateState(); //update states (or attributes) on p_action
+
+		void updateState(const EventHandler&); //update states (or attributes) on p_action
+		void onGroundSpeedChange();
+		void checkJump();
+		void inAirSpeedChange();
+		void checkLand();
+
+		void updateActionBasedOnEvent(const EventHandler&);
 };
+
 #endif

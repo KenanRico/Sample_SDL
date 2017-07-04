@@ -1,6 +1,9 @@
 #include <SDL2/SDL.h>
-#include "sprite.h"
 #include "objectmanager.h"
+#include "eventhandler.h"
+#include "keyboardhandler.h"
+//#include "mousehandler.h"
+
 
 #ifndef GAME_H
 #define GAME_H
@@ -15,8 +18,8 @@ class Game{
 		SDL_Window* g_window;
 		SDL_Renderer* g_renderer;
 		State g_state;
-//		Sprite g_testSprite;//Remove after sorting everything out
-		ObjectManager* g_objects;	
+		ObjectManager* g_objects;
+		EventHandler g_event;	
 	private:
 		Game();
 	public:

@@ -2,8 +2,10 @@
 #include "sprite_player.h"
 #include "sprite.h"
 #include "gamesystem.h"
+#include "eventhandler.h"
+#include "keyboardhandler.h"
 
-#include <iostream> //for debugging, remove when done
+#include <iostream> //remove
 
 class Player::PlayerAttribute{
 	private:
@@ -29,8 +31,8 @@ class Player::PlayerAttribute{
 		PlayerAttribute(int a, int s, int i, int d): agility(a), strength(s), intelligence(i), dexterity(d){
 			//all values below are sample value; will change later
 			_jumpspeed = 5;
-			_acceleration = 1;
-			_deceleration = 10;
+			_acceleration = 3;//per second, applied every 1/3 second (per 20 frames)
+			_deceleration = 10;//per second, applied every 1/10 second (per 6 frames)
 			_topwalkspeed = 6;
 			_topsprintspeed = 12;
 			_attackstrength = 0;
@@ -44,8 +46,9 @@ class Player::PlayerState{
 		int speed_v;
 		int direction;
 		bool in_air;
+		SDL_RendererFlip spriteflip;
 	public:
-		PlayerState(): speed_h(0), speed_v(0), direction(1), in_air(false){;}
+		PlayerState(): speed_h(0), speed_v(0), direction(1), in_air(false), spriteflip(SDL_FLIP_NONE){;}
 		~PlayerState(){;}
 		PlayerState(const PlayerState&) = delete;
 		PlayerState& operator=(const PlayerState&) = delete;
@@ -53,38 +56,17 @@ class Player::PlayerState{
 };
 class Player::PlayerAction{
 	public:
-		bool ctrl;
-		bool d;
-		bool a;
-		bool space;
-		bool j;
-	public:
 		bool _walk;
 		bool _sprint;
 		int _movedirection;
 		bool _jump;
 		bool _attack;
 	public:
-		PlayerAction(): ctrl(false),d(false),a(false),space(false),j(false),_walk(false),_sprint(false),_movedirection(0),_jump(false),_attack(false){;}
+		PlayerAction(): _walk(false),_sprint(false),_movedirection(0),_jump(false),_attack(false){;}
 		~PlayerAction(){;}
 		PlayerAction(const PlayerAction&) = delete;
 		PlayerAction& operator=(const PlayerAction&) = delete;
-	public:
-		void updateActionBasedOnEvent(){
-			_walk = ((d||a)&&!ctrl);
-			_sprint = ((d||a)&&ctrl);
-			if(a==true&&d==true) ;
-			else if(a==true) _movedirection=-1;
-			else if(d==true) _movedirection=1;
-			else _movedirection=0;
-			_jump = space;
-			_attack = j;
-
-
-			std::cout<<"walk: "<<_walk<<" sprint: "<<_sprint<<" movedirection: "<<_movedirection<<" jump: "<<_jump<<" attack: "<<_attack<<std::endl;
-		}
 };
-
 
 
 
@@ -96,97 +78,115 @@ Player::~Player(){
 	delete p_attribute;
 	delete p_state;
 	delete p_action;
-
 }
 
 
 
-
-void Player::updateState(){
+void Player::updateState(const EventHandler& event){
+	updateActionBasedOnEvent(event);
 	if(!p_state->in_air){
-		if(p_action->_walk){std::cout<<"speed_h:"<<p_state->speed_h<<" acc:"<<p_attribute->_acceleration<<" topwalkspeed:"<<p_attribute->_topwalkspeed<<std::endl;
-			(p_state->speed_h+p_attribute->_acceleration > p_attribute->_topwalkspeed)?
-			 p_state->speed_h=p_attribute->_topwalkspeed : p_state->speed_h+=p_attribute->_acceleration;
-		}else if(p_action->_sprint){
-			(p_state->speed_h+p_attribute->_acceleration*2 > p_attribute->_topwalkspeed)?
-			 p_state->speed_h=p_attribute->_topwalkspeed : p_state->speed_h+=p_attribute->_acceleration*2;
-		}else{
-			(p_state->speed_h-p_attribute->_deceleration < 0)?
-			 0 : p_state->speed_h-=p_attribute->_deceleration;
-		}
-		if(p_action->_jump){
-			p_state->speed_v = p_attribute->_jumpspeed;
-			p_state->in_air = true;
-		}else;
-	}else{
-		(p_state->speed_h-p_attribute->_deceleration/4 < 0)?
-		 0 : p_state->speed_h-=p_attribute->_deceleration/4;
-		(p_state->speed_v-9 < 0)?
-		 0 : p_state->speed_h-=9;
-		if(p_state->speed_v==0){
-			p_state->in_air = false;
-		}else;
-	}
-	if(p_action->_movedirection!=0){
+		onGroundSpeedChange();
+		std::cout<<p_state->speed_h<<" "<<p_state->speed_v<<" "<<p_state->in_air<<std::endl;//remove
+		checkJump();
+	}else;
+	if(p_state->in_air){
+		inAirSpeedChange();
+		checkLand();
+	}else;
+	++s_framecounter;
+	//We need a procedure here to reset framecounter to 0 when reaching least common multiple of all frames-dependent updates (to prevent overflow in case someone plays this game for straight 20k hours without stopping)
+}
+
+void Player::onGroundSpeedChange(){
+	if(p_state->speed_h==0){
 		p_state->direction = p_action->_movedirection;
 	}else;
-	std::cout<<p_state->speed_h<<" "<<p_state->speed_v<<" "<<p_state->in_air<<std::endl;
+	if(p_action->_movedirection==0){
+		if(s_framecounter%5==0){
+			(p_state->speed_h-1 > 0)?
+			--p_state->speed_h : p_state->speed_h=0;
+		}else;	
+	}else{
+		if(p_state->direction==p_action->_movedirection){
+			if(p_action->_walk){
+				if(s_framecounter%7==0){
+					(p_state->speed_h+1 < p_attribute->_topwalkspeed)?
+					++p_state->speed_h : p_state->speed_h=p_attribute->_topwalkspeed;
+				}else;
+			}else if(p_action->_sprint){
+				if(s_framecounter%5==0){
+					(p_state->speed_h+1 < p_attribute->_topsprintspeed)?
+					++p_state->speed_h : p_state->speed_h=p_attribute->_topsprintspeed;
+				}else;
+			}else;
+		}else{
+			if(p_action->_walk){
+				if(s_framecounter%4==0){
+					(p_state->speed_h-1 > 0)?
+					--p_state->speed_h : p_state->speed_h=0;
+				}else;
+			}else if(p_action->_sprint){
+				if(s_framecounter%3==0){
+					(p_state->speed_h-1 > 0)?
+					--p_state->speed_h : p_state->speed_h=0;
+				}
+			}else;
+		}
+	}
 }
+void Player::checkJump(){
+	if(p_action->_jump){
+		p_state->in_air = true;
+		p_state->speed_v = -p_attribute->_jumpspeed;
+	}else;
+}
+
+void Player::inAirSpeedChange(){
+	if(s_framecounter%5==0){
+		(p_state->speed_h-1 > 0) ? --p_state->speed_h : p_state->speed_h=0;
+	}else;
+	if(s_framecounter%10==0){
+		(p_state->speed_v+1 <= 10)?
+		 ++p_state->speed_v : p_state->speed_v=0;
+	}else;
+}
+void Player::checkLand(){
+//implement later on
+	if(false){
+		p_state->in_air = false;
+	}else;
+}
+
 
 void Player::updateSprite(){
-	int sx = s_srcRect->x;
-	int sy = s_srcRect->y;
-	int sw = s_srcRect->w;
-	int sh = s_srcRect->h;
-	int dx = s_dstRect->x;
-	int dy = s_dstRect->y;
-	int dw = s_dstRect->w;
-	int dh = s_dstRect->h;
 	int pm = GameSystem::PixToMetre;
-	dx += p_state->speed_h*pm/60*p_state->direction;
-	dy += p_state->speed_v*pm/60*p_state->in_air;
+	s_srcRect->x = (s_srcRect->x+40>300)?3:s_srcRect->x+40;
+	s_dstRect->x += p_state->speed_h*pm/60*p_state->direction;
+	s_dstRect->y += p_state->speed_v*pm/60*p_state->in_air;
 	//setSrcRect();
-	setDstRect(dx,dy,dw,dh);
 
 }
-void Player::setAction(const SDL_Event* event){
-	//after polling
-	switch(event->type){
-		case SDL_KEYDOWN:
-			switch(event->key.keysym.sym){
-				case SDLK_LCTRL: p_action->ctrl = true; break;
-				case SDLK_d: p_action->d = true; break;
-				case SDLK_a: p_action->a = true; break;
-				case SDLK_SPACE: p_action->_jump = true; break;
-				case SDLK_j: p_action->j = true; break;
-				default: /*other keys to be implemented in the future*/ break;
-			}
-			break;
-		case SDL_KEYUP:
-			switch(event->key.keysym.sym){
-				case SDLK_LCTRL: p_action->ctrl = false; break;
-				case SDLK_d: p_action->d = false; break;
-				case SDLK_a: p_action->a = false; break;
-				case SDLK_SPACE: p_action->_jump = false; break;
-				case SDLK_j: p_action->j = false; break;
-				default: /*every KEYUP correspond to a KEYDOWN*/ break;
-			}
-			break;
-		default: /*other actions to be implemented in the future*/
-			break;
-	}
-	p_action->updateActionBasedOnEvent();
+
+void Player::updateActionBasedOnEvent(const EventHandler& event){
+	p_action->_walk = ((event.getKeyboard(KeyboardHandler::A)||event.getKeyboard(KeyboardHandler::D))&&!event.getKeyboard(KeyboardHandler::CTRL));
+	p_action->_sprint = ((event.getKeyboard(KeyboardHandler::A)||event.getKeyboard(KeyboardHandler::D))&&event.getKeyboard(KeyboardHandler::CTRL));
+	if(event.getKeyboard(KeyboardHandler::A)==true&&event.getKeyboard(KeyboardHandler::D)==true) ;
+	else if(event.getKeyboard(KeyboardHandler::A)==true) p_action->_movedirection = -1;
+	else if(event.getKeyboard(KeyboardHandler::D)==true) p_action->_movedirection = 1;
+	else p_action->_movedirection=0;
+	p_action->_jump = event.getKeyboard(KeyboardHandler::K);
+	p_action->_attack = event.getKeyboard(KeyboardHandler::J);
+	std::cout<<"walk: "<<p_action->_walk<<" sprint: "<<p_action->_sprint<<" movedirection: "<<p_action->_movedirection<<" jump: "<<p_action->_jump<<" attack: "<<p_action->_attack<<std::endl;//remove
 }
 
 void Player::renderSprite(){
-	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	switch(p_state->direction){
-		case 0: flip = SDL_FLIP_NONE; break;
-		case -1: flip = SDL_FLIP_HORIZONTAL; break;
-		case 1: break;
+		case 1: p_state->spriteflip = SDL_FLIP_NONE; break;
+		case -1: p_state->spriteflip = SDL_FLIP_HORIZONTAL; break;
+		case 0: break;
 		default: break;
 	}
-	SDL_RenderCopyEx(*s_mainRendererPointer, s_texture, s_srcRect, s_dstRect, 0, 0, flip);
+	SDL_RenderCopyEx(*s_mainRendererPointer, s_texture, s_srcRect, s_dstRect, 0, 0, p_state->spriteflip);
 }
 
 
