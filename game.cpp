@@ -121,39 +121,6 @@ void Game::handleEvents_RUN(){
 		g_state = State::PAUSE;
 		GameSystem::writeMessage("game paused");
 	}else;
-
-
-
-	/*if(SDL_PollEvent(&event)){
-		Sprite* character = g_objects->get("lucas");
-		character->setAction(&event);
-		switch(event.type){
-			case SDL_QUIT:
-				g_state = State::STOP;
-				break;
-			case SDL_KEYDOWN:
-				switch(event.key.keysym.sym){
-					case SDLK_ESCAPE:
-						g_state = State::PAUSE;
-						GameSystem::writeMessage("game paused");
-						break;
-					case SDLK_RIGHT:
-						break;
-					case SDLK_LEFT:
-						break;
-					default:
-						//Keys outside of consideration
-						break; 
-				}
-				break;
-			default:
-				//Events outside of consideration
-				break;
-		}
-	}else{
-		//When there is no recognized event at this instant
-	}*/
-
 }
 void Game::updateGame(){
 	//Note: This function is responsible for updating everything that indirectly responds to or that is independent from user inputs
@@ -189,27 +156,4 @@ void Game::handleEvents_PAUSE(){
 		GameSystem::writeMessage("game resumed");
 		
 	}else;
-	/*if(SDL_PollEvent(&event)){
-		switch(event.type){
-			case SDL_QUIT:
-				g_state = State::STOP;
-				break;
-			case SDL_KEYDOWN:
-				switch(event.key.keysym.sym){
-					case SDLK_ESCAPE:
-						g_state = State::RUN;
-						GameSystem::writeMessage("game resumed");
-						break;
-					default:
-						//...
-						break;
-				}
-				break;
-			default:
-				//...
-				break;
-		}
-	}else{
-		//no recognized events
-	}*/
 }
