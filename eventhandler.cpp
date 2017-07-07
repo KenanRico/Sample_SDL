@@ -14,8 +14,9 @@ EventHandler::~EventHandler(){
 	;
 }
 
-void EventHandler::parseEvent(SDL_Event& event){
+void EventHandler::parseEvent(){
 	resetEscape();
+	SDL_Event event;
 	if(SDL_PollEvent(&event)){
 		switch(event.type){
 			case SDL_QUIT:
@@ -23,29 +24,29 @@ void EventHandler::parseEvent(SDL_Event& event){
 				break;
 			case SDL_KEYDOWN:
 				switch(event.key.keysym.sym){
-					case SDLK_ESCAPE: keyboard[KeyboardHandler::ESCAPE] = true; break;
-					case SDLK_LCTRL: keyboard[KeyboardHandler::CTRL] = true; break;
-					case SDLK_a: keyboard[KeyboardHandler::A] = true; break;
-					case SDLK_s: keyboard[KeyboardHandler::S] = true; break;
-					case SDLK_d: keyboard[KeyboardHandler::D] = true; break;
-					case SDLK_w: keyboard[KeyboardHandler::W] = true; break;
-					case SDLK_j: keyboard[KeyboardHandler::J] = true; break;
-					case SDLK_k: keyboard[KeyboardHandler::K] = true; break;
-					case SDLK_l: keyboard[KeyboardHandler::L] = true; break;
+					case SDLK_ESCAPE: keyboard.set(KeyboardHandler::ESCAPE) = true; break;
+					case SDLK_LCTRL: keyboard.set(KeyboardHandler::CTRL) = true; break;
+					case SDLK_a: keyboard.set(KeyboardHandler::A) = true; break;
+					case SDLK_s: keyboard.set(KeyboardHandler::S) = true; break;
+					case SDLK_d: keyboard.set(KeyboardHandler::D) = true; break;
+					case SDLK_w: keyboard.set(KeyboardHandler::W) = true; break;
+					case SDLK_j: keyboard.set(KeyboardHandler::J) = true; break;
+					case SDLK_k: keyboard.set(KeyboardHandler::K) = true; break;
+					case SDLK_l: keyboard.set(KeyboardHandler::L) = true; break;
 					default: /*other keys to be implemented in the future*/ break;
 				}
 				break;
 			case SDL_KEYUP:
 					switch(event.key.keysym.sym){
-					case SDLK_ESCAPE: keyboard[KeyboardHandler::ESCAPE] = false; break;
-					case SDLK_LCTRL: keyboard[KeyboardHandler::CTRL] = false; break;
-					case SDLK_a: keyboard[KeyboardHandler::A] = false; break;
-					case SDLK_s: keyboard[KeyboardHandler::S] = false; break;
-					case SDLK_d: keyboard[KeyboardHandler::D] = false; break;
-					case SDLK_w: keyboard[KeyboardHandler::W] = false; break;
-					case SDLK_j: keyboard[KeyboardHandler::J] = false; break;
-					case SDLK_k: keyboard[KeyboardHandler::K] = false; break;
-					case SDLK_l: keyboard[KeyboardHandler::L] = false; break;
+					case SDLK_ESCAPE: keyboard.set(KeyboardHandler::ESCAPE) = false; break;
+					case SDLK_LCTRL: keyboard.set(KeyboardHandler::CTRL) = false; break;
+					case SDLK_a: keyboard.set(KeyboardHandler::A) = false; break;
+					case SDLK_s: keyboard.set(KeyboardHandler::S) = false; break;
+					case SDLK_d: keyboard.set(KeyboardHandler::D) = false; break;
+					case SDLK_w: keyboard.set(KeyboardHandler::W) = false; break;
+					case SDLK_j: keyboard.set(KeyboardHandler::J) = false; break;
+					case SDLK_k: keyboard.set(KeyboardHandler::K) = false; break;
+					case SDLK_l: keyboard.set(KeyboardHandler::L) = false; break;
 					default: /*every KEYUP correspond to a KEYDOWN*/ break;
 				}
 				break;
@@ -57,15 +58,15 @@ void EventHandler::parseEvent(SDL_Event& event){
 }
 
 void EventHandler::resetEscape(){
-	keyboard[KeyboardHandler::ESCAPE] = false;
+	keyboard.set(KeyboardHandler::ESCAPE) = false;
 }
 
 bool EventHandler::quit() const{
 	return quitgame;
 }
 
-bool EventHandler::getKeyboard(int i) const{
-	return keyboard[i];
+const KeyboardHandler& EventHandler::getKeyboard() const{
+	return keyboard;
 }
 
 

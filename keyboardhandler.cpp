@@ -16,6 +16,10 @@ KeyboardHandler::~KeyboardHandler(){
 }
 
 
-bool& KeyboardHandler::operator[](int key){
+bool& KeyboardHandler::set(int key){
+	return keys_pressed[key];
+}
+
+bool KeyboardHandler::operator[](int key) const{
 	return keys_pressed[key];
 }

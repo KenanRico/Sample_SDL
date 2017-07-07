@@ -18,6 +18,8 @@ s_mainRendererPointer(&g_renderer),
 s_sourceImage(img),
 s_srcRect(new SDL_Rect{_sx,_sy,_sw,_sh}),
 s_dstRect(new SDL_Rect{_dx,_dy,_dw,_dh}),
+s_imageW(0),
+s_imageH(0),
 s_created(false),
 s_framecounter(0){
 	;

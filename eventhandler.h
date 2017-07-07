@@ -16,9 +16,9 @@ class EventHandler{
 		EventHandler(const EventHandler&) = delete;
 		EventHandler& operator=(const EventHandler&) = delete;
 	public:	
-		void parseEvent(SDL_Event&);
+		void parseEvent();
 		bool quit() const;
-		bool getKeyboard(int) const;
+		const KeyboardHandler& getKeyboard() const;
 	private:
 		void resetEscape();
 

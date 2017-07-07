@@ -50,6 +50,7 @@ bool ObjectManager::insert(const char* ID, Sprite* sp_ptr){
 bool ObjectManager::remove(const char* ID){
 	bool successful = false;
 	if(o_Objects.find(ID)!=o_Objects.end()){
+		delete o_Objects[ID];
 		o_Objects.erase(ID);
 		successful = true;
 	}else{

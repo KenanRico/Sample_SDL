@@ -24,7 +24,7 @@ class Sprite{
 		Sprite(const Sprite&) = delete;
 		Sprite& operator=(const Sprite&) = delete;
 	public:
-		void createSprite();
+		virtual void createSprite() final;
 
 		Sprite(SDL_Renderer*&, const char*, int, int, int, int, int, int, int, int);
 
@@ -35,8 +35,8 @@ class Sprite{
 	protected:
 		void setSrcRect(int,int,int,int);
 		void setDstRect(int,int,int,int);
-		void resetFrameCounter();		
-		
+		void resetFrameCounter();
+
 	private:
 		void destroySprite();
 

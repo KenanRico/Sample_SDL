@@ -105,7 +105,7 @@ void Player::onGroundSpeedChange(){
 		if(s_framecounter%5==0){
 			(p_state->speed_h-1 > 0)?
 			--p_state->speed_h : p_state->speed_h=0;
-		}else;	
+		}else;
 	}else{
 		if(p_state->direction==p_action->_movedirection){
 			if(p_action->_walk){
@@ -142,9 +142,6 @@ void Player::checkJump(){
 }
 
 void Player::inAirSpeedChange(){
-	if(s_framecounter%5==0){
-		(p_state->speed_h-1 > 0) ? --p_state->speed_h : p_state->speed_h=0;
-	}else;
 	if(s_framecounter%10==0){
 		(p_state->speed_v+1 <= 10)?
 		 ++p_state->speed_v : p_state->speed_v=0;
@@ -160,22 +157,34 @@ void Player::checkLand(){
 
 void Player::updateSprite(){
 	int pm = GameSystem::PixToMetre;
-	s_srcRect->x = (s_srcRect->x+40>300)?3:s_srcRect->x+40;
-	s_dstRect->x += p_state->speed_h*pm/60*p_state->direction;
+	if(p_state->speed_h!=0){
+		s_srcRect->y = 50;
+		if(s_framecounter%(15-((p_state->speed_h<7)?p_state->speed_h+1:p_state->speed_h))==0){
+			s_srcRect->x = (s_srcRect->x+40>300)?0:s_srcRect->x+40;
+		}else
+		s_dstRect->x += p_state->speed_h*pm/60*p_state->direction;
+	}else{
+		//standing
+		s_srcRect->x = (s_srcRect->x>150)?0:s_srcRect->x;
+		s_srcRect->y = 0;
+		if(s_framecounter%12==0){
+			s_srcRect->x = (s_srcRect->x+40>150)?0:s_srcRect->x+40;
+		}else;
+
+	}
 	s_dstRect->y += p_state->speed_v*pm/60*p_state->in_air;
-	//setSrcRect();
 
 }
 
 void Player::updateActionBasedOnEvent(const EventHandler& event){
-	p_action->_walk = ((event.getKeyboard(KeyboardHandler::A)||event.getKeyboard(KeyboardHandler::D))&&!event.getKeyboard(KeyboardHandler::CTRL));
-	p_action->_sprint = ((event.getKeyboard(KeyboardHandler::A)||event.getKeyboard(KeyboardHandler::D))&&event.getKeyboard(KeyboardHandler::CTRL));
-	if(event.getKeyboard(KeyboardHandler::A)==true&&event.getKeyboard(KeyboardHandler::D)==true) ;
-	else if(event.getKeyboard(KeyboardHandler::A)==true) p_action->_movedirection = -1;
-	else if(event.getKeyboard(KeyboardHandler::D)==true) p_action->_movedirection = 1;
+	p_action->_walk = ((event.getKeyboard()[KeyboardHandler::A]||event.getKeyboard()[KeyboardHandler::D])&&!event.getKeyboard()[KeyboardHandler::CTRL]);
+	p_action->_sprint = ((event.getKeyboard()[KeyboardHandler::A]||event.getKeyboard()[KeyboardHandler::D])&&event.getKeyboard()[KeyboardHandler::CTRL]);
+	if(event.getKeyboard()[KeyboardHandler::A]==true&&event.getKeyboard()[KeyboardHandler::D]==true) ;
+	else if(event.getKeyboard()[KeyboardHandler::A]==true) p_action->_movedirection = -1;
+	else if(event.getKeyboard()[KeyboardHandler::D]==true) p_action->_movedirection = 1;
 	else p_action->_movedirection=0;
-	p_action->_jump = event.getKeyboard(KeyboardHandler::K);
-	p_action->_attack = event.getKeyboard(KeyboardHandler::J);
+	p_action->_jump = event.getKeyboard()[KeyboardHandler::K];
+	p_action->_attack = event.getKeyboard()[KeyboardHandler::J];
 	std::cout<<"walk: "<<p_action->_walk<<" sprint: "<<p_action->_sprint<<" movedirection: "<<p_action->_movedirection<<" jump: "<<p_action->_jump<<" attack: "<<p_action->_attack<<std::endl;//remove
 }
 

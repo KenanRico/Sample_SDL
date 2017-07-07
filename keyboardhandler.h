@@ -15,6 +15,7 @@ class KeyboardHandler{
 		KeyboardHandler(const KeyboardHandler&) = delete;
 		KeyboardHandler& operator=(const KeyboardHandler&) = delete;
 	public:
-		bool& operator[](int);
+		bool& set(int);
+		bool operator[](int) const;
 };
 #endif

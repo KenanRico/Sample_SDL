@@ -22,6 +22,7 @@ void Game::startGame(){
 
 
 enum class Game::State{
+	NONE,
 	RUN,
 	STOP,
 	PAUSE
@@ -78,17 +79,37 @@ void Game::loadAllObjects(){
 	//load every sprite used in the game
 	//Or we can load the ones that are rendered right off the bat and gradually load more as they come in
 	//g_objects->insert("lucas", new Sprite(g_renderer, "assets/lucas.png", 3,50,37,50,10,10,30,50));	
-	g_objects->insert("lucas", new Player(g_renderer, "assets/lucas.png", 3,50,37,50,10,10,30,50, 9,9,9,9));	
+	g_objects->insert("lucas", new Player(g_renderer, "assets/lucas.png", 0,0,37,50,10,10,37,50, 9,9,9,9));	
 }
 
 
 void Game::run(){
-	g_state = State::RUN;
+	g_state = State::RUN; //remove after implementing main menu
+//	mainMenu();
 	gameLoop();
-
 }
+
+/*void Game::mainMenu(){
+	Menu mainmenu;
+	mainmenu.setBackground(g_renderer, "assets/background/mainmenu.png", 0,0,1920,1280, 0,0, g_window->width, g_window->height);
+	mainmenu.addItem("start", new Button(g_renderer, "start", x,y,w,h, x,y,w,h));
+	mainmenu.addItem("exit", new Button(g_renderer, "quit", x,y,w,h, x,y,w,h));
+	mainmenu.display();
+	MenuItem& start = mainmenu["start"];
+	MenuItem& exit = mainmenu["exit"];
+	while(g_state!=State::RUN && g_state!=State::STOP){
+		g_event.parseEvent();
+		mainmenu.update(g_event);
+		if(start.triggered()){
+			g_state = State::RUN;
+		}else if(exit.triggered()){
+			g_state = State::STOP;
+		}else;
+	}
+}*/
+
 void Game::gameLoop(){
-	while(g_state!=State::STOP){
+	while(g_state!=State::STOP && g_state!=State::NONE){
 		if(g_state==State::RUN){
 			int starttime = SDL_GetTicks();
 			handleEvents_RUN();
@@ -112,12 +133,11 @@ void Game::gameLoop(){
 
 }
 void Game::handleEvents_RUN(){
-	SDL_Event event;
-	g_event.parseEvent(event);
+	g_event.parseEvent();
 	if(g_event.quit()){
 		g_state = State::STOP;
 	}else;
-	if(g_event.getKeyboard(KeyboardHandler::ESCAPE)){
+	if(g_event.getKeyboard()[KeyboardHandler::ESCAPE]){
 		g_state = State::PAUSE;
 		GameSystem::writeMessage("game paused");
 	}else;
@@ -146,8 +166,7 @@ void Game::hidePauseMenu(){
 }
 
 void Game::handleEvents_PAUSE(){
-	SDL_Event event;
-	g_event.parseEvent(event);
+	g_event.parseEvent();
 	if(g_event.quit()){
 		g_state = State::STOP;
 	}else;
