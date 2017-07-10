@@ -6,7 +6,7 @@
 #ifndef MENU_ITEM_H
 #define MENU_ITEM_H
 
-class MenuItem(){
+class MenuItem{
 	protected:
 		SDL_Renderer* m_mainRendererPointer;
 		std::string m_sourceImage;
@@ -14,6 +14,7 @@ class MenuItem(){
 		int m_imageW;
 		int m_imageH;
 		bool m_created;
+		bool m_clicked;
 		bool m_triggered;
 	protected:
 		SDL_Rect* m_srcRect;
@@ -33,8 +34,7 @@ class MenuItem(){
 	public:
 		virtual void render() = 0;
 		virtual void onEvent(const EventHandler&) = 0;
-		bool triggered() final;
-	private:
+		bool triggered() const;
 };
 #endif
 

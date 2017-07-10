@@ -7,6 +7,9 @@
 #include "eventhandler.h"
 #include "keyboardhandler.h"
 //#include "mousehandler.h"
+#include "menuitem.h"
+#include "menu_button.h"
+#include "menu.h"
 
 bool Game::Running = false;
 
@@ -32,7 +35,7 @@ enum class Game::State{
 Game::Game(): 
 g_window((SDL_Window*)0), 
 g_renderer((SDL_Renderer*)0), 
-g_state(State::STOP), 
+g_state(State::NONE), 
 g_objects((ObjectManager*)0){
 	initSystems();
 }
@@ -84,35 +87,43 @@ void Game::loadAllObjects(){
 
 
 void Game::run(){
-	g_state = State::RUN; //remove after implementing main menu
-//	mainMenu();
+	//g_state = State::RUN; //remove after implementing main menu
+	mainMenu();
 	gameLoop();
 }
 
-/*void Game::mainMenu(){
-	Menu mainmenu;
-	mainmenu.setBackground(g_renderer, "assets/background/mainmenu.png", 0,0,1920,1280, 0,0, g_window->width, g_window->height);
-	mainmenu.addItem("start", new Button(g_renderer, "start", x,y,w,h, x,y,w,h));
-	mainmenu.addItem("exit", new Button(g_renderer, "quit", x,y,w,h, x,y,w,h));
-	mainmenu.display();
-	MenuItem& start = mainmenu["start"];
-	MenuItem& exit = mainmenu["exit"];
+void Game::mainMenu(){
+	Menu mainmenu(g_renderer);
+	mainmenu.setBackground("assets/mainmenu.png");
+	mainmenu.addItem("start", new Button(g_renderer, "assets/button_blue.png", 0,0,120,40, 500,380,120,40));
+	mainmenu.addItem("exit", new Button(g_renderer, "assets/button_red.png", 0,0,120,40, 500,400,120,40));
+	mainmenu.renderMenu(g_window);
+	const MenuItem& start = mainmenu["start"];
+	const MenuItem& exit = mainmenu["exit"];
 	while(g_state!=State::RUN && g_state!=State::STOP){
-		g_event.parseEvent();
-		mainmenu.update(g_event);
+		int starttime = SDL_GetTicks();
+		handleEvents();
+		mainmenu.updateMenu(g_event);
+		mainmenu.renderMenu(g_window);
 		if(start.triggered()){
 			g_state = State::RUN;
+			GameSystem::writeMessage("Starting game");
 		}else if(exit.triggered()){
 			g_state = State::STOP;
+			GameSystem::writeMessage("Exiting game");
+		}else;
+		int timespent = SDL_GetTicks()-starttime;
+		if(timespent<GameSystem::FrameTime){
+			SDL_Delay((int)(GameSystem::FrameTime-timespent));
 		}else;
 	}
-}*/
+}
 
 void Game::gameLoop(){
 	while(g_state!=State::STOP && g_state!=State::NONE){
 		if(g_state==State::RUN){
 			int starttime = SDL_GetTicks();
-			handleEvents_RUN();
+			handleEvents();
 			updateGame();
 			renderGame();
 			int timespent = SDL_GetTicks()-starttime;
@@ -122,7 +133,7 @@ void Game::gameLoop(){
 		}else if(g_state==State::PAUSE){
 			showPauseMenu();
 			while(g_state==State::PAUSE){
-				handleEvents_PAUSE();
+				handleEvents();
 			}
 			hidePauseMenu();
 			//other PAUSE operations
@@ -132,15 +143,22 @@ void Game::gameLoop(){
 	}
 
 }
-void Game::handleEvents_RUN(){
+void Game::handleEvents(){
 	g_event.parseEvent();
 	if(g_event.quit()){
 		g_state = State::STOP;
 	}else;
-	if(g_event.getKeyboard()[KeyboardHandler::ESCAPE]){
-		g_state = State::PAUSE;
-		GameSystem::writeMessage("game paused");
-	}else;
+	if(g_state==State::RUN){
+		if(g_event.getKeyboard()[KeyboardHandler::ESCAPE]){
+			g_state = State::PAUSE;
+			GameSystem::writeMessage("game paused");
+		}else;
+	}else if(g_state==State::PAUSE){
+		if(g_event.getKeyboard()[KeyboardHandler::ESCAPE]){
+			g_state = State::RUN;
+			GameSystem::writeMessage("game resumed");
+		}else;
+	}
 }
 void Game::updateGame(){
 	//Note: This function is responsible for updating everything that indirectly responds to or that is independent from user inputs

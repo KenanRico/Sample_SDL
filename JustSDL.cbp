@@ -48,6 +48,8 @@
 		<Unit filename="keyboardhandler.cpp" />
 		<Unit filename="keyboardhandler.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="mousehandler.cpp" />
+		<Unit filename="mousehandler.h" />
 		<Unit filename="objectmanager.cpp" />
 		<Unit filename="objectmanager.h" />
 		<Unit filename="sprite.cpp" />

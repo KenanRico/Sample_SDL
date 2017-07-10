@@ -1,6 +1,6 @@
 #include <SDL2/SDL.h>
 #include "keyboardhandler.h"
-//#include "mousehandler.h"
+#include "mousehandler.h"
 
 #ifndef EVENT_HANDLER
 #define EVENT_HANDLER
@@ -9,6 +9,7 @@ class EventHandler{
 		bool quitgame;
 	private:
 		mutable	KeyboardHandler keyboard;
+		mutable MouseHandler mouse;	
 		//MouseHandler mouse;
 	public:
 		EventHandler();
@@ -19,6 +20,7 @@ class EventHandler{
 		void parseEvent();
 		bool quit() const;
 		const KeyboardHandler& getKeyboard() const;
+		const MouseHandler& getMouse() const;
 	private:
 		void resetEscape();
 

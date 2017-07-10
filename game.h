@@ -34,8 +34,9 @@ class Game{
 
 		void loadAllObjects();
 
+		void mainMenu();
 		void gameLoop();
-		void handleEvents_RUN();
+		void handleEvents();
 		void updateGame();
 		void renderGame();
 

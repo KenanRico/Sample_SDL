@@ -1,7 +1,7 @@
 #include <SDL2/SDL.h>
 #include "eventhandler.h"
 #include "keyboardhandler.h"
-//#include "mousehandler.h"
+#include "mousehandler.h"
 
 #include <iostream>
 
@@ -50,6 +50,16 @@ void EventHandler::parseEvent(){
 					default: /*every KEYUP correspond to a KEYDOWN*/ break;
 				}
 				break;
+			case SDL_MOUSEMOTION:
+				mouse.setPosition(event.motion.x, event.motion.y);
+				break;
+			case SDL_MOUSEBUTTONDOWN:
+				mouse.setClick(event.button.button-1, true);
+				mouse.setClickPosition(event.button.x, event.button.y);
+				break;
+			case SDL_MOUSEBUTTONUP:
+				mouse.setClick(event.button.button-1, false);
+				break;
 			default: /*other actions to be implemented in the future*/ break;
 		}
 	}else{
@@ -68,6 +78,8 @@ bool EventHandler::quit() const{
 const KeyboardHandler& EventHandler::getKeyboard() const{
 	return keyboard;
 }
-
+const MouseHandler& EventHandler::getMouse() const{
+	return mouse;
+}
 
 
