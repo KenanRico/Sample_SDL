@@ -38,7 +38,6 @@ bool Menu::addItem(const char* name, MenuItem* new_item){
 
 void Menu::renderMenu(SDL_Window* window){
 	SDL_RenderClear(mainRendererPointer);
-	GameSystem::writeMessage("Rendering Menu");
 	SDL_Rect srcRect{0,0,0,0};
 	SDL_QueryTexture(background, 0, 0, &srcRect.w, &srcRect.h);
 	SDL_Rect dstRect{0,0,0,0};
@@ -52,7 +51,7 @@ void Menu::renderMenu(SDL_Window* window){
 
 void Menu::updateMenu(const EventHandler& event){
 	for(std::map<std::string, MenuItem*>::iterator iter=items.begin(); iter!=items.end(); ++iter){
-		iter->second->onEvent(event);
+		iter->second->update(event);
 	}
 }
 

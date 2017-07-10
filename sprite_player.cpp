@@ -121,12 +121,12 @@ void Player::onGroundSpeedChange(){
 			}else;
 		}else{
 			if(p_action->_walk){
-				if(s_framecounter%4==0){
+				if(s_framecounter%3==0){
 					(p_state->speed_h-1 > 0)?
 					--p_state->speed_h : p_state->speed_h=0;
 				}else;
 			}else if(p_action->_sprint){
-				if(s_framecounter%3==0){
+				if(s_framecounter%2==0){
 					(p_state->speed_h-1 > 0)?
 					--p_state->speed_h : p_state->speed_h=0;
 				}

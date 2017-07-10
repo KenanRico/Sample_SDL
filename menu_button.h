@@ -6,9 +6,10 @@
 #ifndef SPRITE_BUTTON_H
 #define SPRITE_BUTTON_H
 class Button: public MenuItem{
+	private: 
+		class ButtonState;
 	private:
-		bool b_hoveredover;
-		int b_framecounter;
+		ButtonState* b_state;
 	public:
 		Button() = delete;
 		~Button();
@@ -19,12 +20,16 @@ class Button: public MenuItem{
 		
 	public:
 		void render() override;
-		void onEvent(const EventHandler&) override;
-	
+		void update(const EventHandler&) override;
+		bool triggered() const override;
 	private:
-		void rotateSprite();
-		void selectHoveredSprite();
-		void selectFirstNormalSprite();
+		void updateState(const EventHandler&);
+		void updateSprite();
+
+
+		//void rotateSprite();
+		//void selectHoveredSprite();
+		//void selectFirstNormalSprite();
 		
 };
 #endif

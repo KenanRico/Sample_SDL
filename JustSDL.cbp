@@ -48,6 +48,12 @@
 		<Unit filename="keyboardhandler.cpp" />
 		<Unit filename="keyboardhandler.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="menu.cpp" />
+		<Unit filename="menu.h" />
+		<Unit filename="menu_button.cpp" />
+		<Unit filename="menu_button.h" />
+		<Unit filename="menuitem.cpp" />
+		<Unit filename="menuitem.h" />
 		<Unit filename="mousehandler.cpp" />
 		<Unit filename="mousehandler.h" />
 		<Unit filename="objectmanager.cpp" />

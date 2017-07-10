@@ -14,8 +14,7 @@ class MenuItem{
 		int m_imageW;
 		int m_imageH;
 		bool m_created;
-		bool m_clicked;
-		bool m_triggered;
+		unsigned int m_framecounter;
 	protected:
 		SDL_Rect* m_srcRect;
 		SDL_Rect* m_dstRect;
@@ -33,8 +32,8 @@ class MenuItem{
 
 	public:
 		virtual void render() = 0;
-		virtual void onEvent(const EventHandler&) = 0;
-		bool triggered() const;
+		virtual void update(const EventHandler&) = 0;
+		virtual bool triggered() const = 0;
 };
 #endif
 

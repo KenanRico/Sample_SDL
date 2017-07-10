@@ -42,6 +42,5 @@ class Game{
 
 		void showPauseMenu();
 		void hidePauseMenu();
-		void handleEvents_PAUSE();
 };
 #endif

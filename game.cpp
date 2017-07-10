@@ -95,8 +95,8 @@ void Game::run(){
 void Game::mainMenu(){
 	Menu mainmenu(g_renderer);
 	mainmenu.setBackground("assets/mainmenu.png");
-	mainmenu.addItem("start", new Button(g_renderer, "assets/button_blue.png", 0,0,120,40, 500,380,120,40));
-	mainmenu.addItem("exit", new Button(g_renderer, "assets/button_red.png", 0,0,120,40, 500,400,120,40));
+	mainmenu.addItem("start", new Button(g_renderer, "assets/button_blue.png", 0,0,140,40, 400,280,100,30));
+	mainmenu.addItem("exit", new Button(g_renderer, "assets/button_red.png", 0,0,140,40, 400,360,100,30));
 	mainmenu.renderMenu(g_window);
 	const MenuItem& start = mainmenu["start"];
 	const MenuItem& exit = mainmenu["exit"];
@@ -183,14 +183,3 @@ void Game::hidePauseMenu(){
 
 }
 
-void Game::handleEvents_PAUSE(){
-	g_event.parseEvent();
-	if(g_event.quit()){
-		g_state = State::STOP;
-	}else;
-	if(false/*on resume button clicked*/){
-		g_state = State::RUN;
-		GameSystem::writeMessage("game resumed");
-		
-	}else;
-}

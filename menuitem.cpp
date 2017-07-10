@@ -12,8 +12,7 @@ m_dstRect(new SDL_Rect{dx,dy,dw,dh}),
 m_imageW(0),
 m_imageH(0),
 m_created(false),
-m_clicked(false),
-m_triggered(false){
+m_framecounter(0){
 	createItem();
 }
 
@@ -52,7 +51,4 @@ void MenuItem::destroyItem(){
 
 }
 
-bool MenuItem::triggered() const{
-	return m_triggered;
-}
 
