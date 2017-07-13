@@ -5,21 +5,21 @@
 
 
 
-#ifndef OBJECT_MANAGER_H
-#define OBJECT_MANAGER_H
-class ObjectManager{
-	public: static ObjectManager* Init();
+#ifndef SPRITE_MANAGER_H
+#define SPRITE_MANAGER_H
+class SpriteManager{
+	public: static SpriteManager* Init();
 	private: static bool Exist;
 
 	private:
 		std::map<std::string, Sprite*> o_Objects;
 
 	private:
-		ObjectManager();
+		SpriteManager();
 	public:
-		~ObjectManager();
-		ObjectManager(const ObjectManager&) = delete;
-		ObjectManager& operator=(const ObjectManager&) = delete;
+		~SpriteManager();
+		SpriteManager(const SpriteManager&) = delete;
+		SpriteManager& operator=(const SpriteManager&) = delete;
 	private: 
 		void freeObjects();
 	

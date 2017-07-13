@@ -40,14 +40,12 @@ void MenuItem::createItem(){
 		SDL_QueryTexture(m_texture, 0, 0, &m_imageW, &m_imageH);	
 	}else;
 	m_created = true;	
-	GameSystem::writeMessage("Created MenuItem");
 }
 
 void MenuItem::destroyItem(){
 	SDL_DestroyTexture(m_texture);
 	delete m_srcRect;
 	delete m_dstRect;
-	GameSystem::writeMessage("Destroyed MenuItem");
 
 }
 

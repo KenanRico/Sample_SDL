@@ -1,30 +1,30 @@
-#include "objectmanager.h"
+#include "spritemanager.h"
 #include "sprite.h"
 #include "gamesystem.h"
 #include <map>
 #include <string>
 
 
-bool ObjectManager::Exist = false;
+bool SpriteManager::Exist = false;
 
-ObjectManager* ObjectManager::Init(){
-	if(!ObjectManager::Exist){
-		ObjectManager::Exist = true;
-		return new ObjectManager;
+SpriteManager* SpriteManager::Init(){
+	if(!SpriteManager::Exist){
+		SpriteManager::Exist = true;
+		return new SpriteManager;
 	}else{
 		GameSystem::writeErrorMessage("Object Manger already exists!");
-		return (ObjectManager*)0;
+		return (SpriteManager*)0;
 	}
 }
 
-ObjectManager::ObjectManager(){
+SpriteManager::SpriteManager(){
 	;
 } 
-ObjectManager::~ObjectManager(){
+SpriteManager::~SpriteManager(){
 	freeObjects();
 }
 
-void ObjectManager::freeObjects(){
+void SpriteManager::freeObjects(){
 	//delete all Sprite* in "Objects"
 	for(std::map<std::string, Sprite*>::iterator iter = o_Objects.begin(); iter!=o_Objects.end(); ++iter){
 		delete iter->second;
@@ -32,7 +32,7 @@ void ObjectManager::freeObjects(){
 }
 
 
-bool ObjectManager::insert(const char* ID, Sprite* sp_ptr){
+bool SpriteManager::insert(const char* ID, Sprite* sp_ptr){
 	bool successful = false;
 	if(o_Objects.find(ID)==o_Objects.end()){
 		o_Objects[ID] = sp_ptr;
@@ -47,7 +47,7 @@ bool ObjectManager::insert(const char* ID, Sprite* sp_ptr){
 	return successful;
 }
 
-bool ObjectManager::remove(const char* ID){
+bool SpriteManager::remove(const char* ID){
 	bool successful = false;
 	if(o_Objects.find(ID)!=o_Objects.end()){
 		delete o_Objects[ID];
@@ -62,7 +62,7 @@ bool ObjectManager::remove(const char* ID){
 	return successful;
 }
 
-Sprite* ObjectManager::get(const char* ID){
+Sprite* SpriteManager::get(const char* ID){
 	if(o_Objects.find(ID)!=o_Objects.end()){
 		return o_Objects[ID];
 	}else{
@@ -74,6 +74,6 @@ Sprite* ObjectManager::get(const char* ID){
 	}	
 }
 
-unsigned int ObjectManager::count(){
+unsigned int SpriteManager::count(){
 	return o_Objects.size();
 }

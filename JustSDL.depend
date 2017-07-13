@@ -324,7 +324,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1498815503 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\gamesystem.h
+1499759145 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\gamesystem.h
 	<SDL2/SDL.h>
 	<iostream>
 	<string>
@@ -648,17 +648,17 @@
 	"begin_code.h"
 	"close_code.h"
 
-1499685718 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\game.h
+1499761441 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\game.h
 	<SDL2/SDL.h>
-	"objectmanager.h"
+	"spritemanager.h"
 	"eventhandler.h"
 	"keyboardhandler.h"
 
-1499689260 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\game.cpp
+1499761454 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\game.cpp
 	<SDL2/SDL.h>
 	"game.h"
 	"gamesystem.h"
-	"objectmanager.h"
+	"spritemanager.h"
 	"sprite.h"
 	"sprite_player.h"
 	"eventhandler.h"
@@ -1022,7 +1022,7 @@
 	"eventhandler.h"
 	"keyboardhandler.h"
 
-1499673044 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite_player.cpp
+1499690192 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite_player.cpp
 	<SDL2/SDL.h>
 	"sprite_player.h"
 	"sprite.h"
@@ -1054,7 +1054,7 @@
 1499673044 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\mousehandler.cpp
 	"mousehandler.h"
 
-1499689298 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\menu.cpp
+1499689777 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\menu.cpp
 	<SDL2/SDL.h>
 	<SDL2/extensions/SDL_image.h>
 	"gamesystem.h"
@@ -1069,25 +1069,37 @@
 	"menuitem.h"
 	"eventhandler.h"
 
-1499673513 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\menuitem.h
+1499689777 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\menuitem.h
 	<SDL2/SDL.h>
 	<string>
 	"eventhandler.h"
 
-1499689214 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\menu_button.cpp
+1499758138 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\menu_button.cpp
 	<SDL2/SDL.h>
 	"menu_button.h"
 	"eventhandler.h"
 	"mousehandler.h"
 
-1499681148 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\menu_button.h
+1499758152 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\menu_button.h
 	<SDL2/SDL.h>
 	"menuitem.h"
 	"eventhandler.h"
 
-1499673624 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\menuitem.cpp
+1499758828 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\menuitem.cpp
 	<SDL2/SDL.h>
 	<SDL2/extensions/SDL_image.h>
 	"menuitem.h"
 	"gamesystem.h"
+
+1499761419 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\spritemanager.h
+	"sprite.h"
+	<map>
+	<string>
+
+1499761398 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\spritemanager.cpp
+	"spritemanager.h"
+	"sprite.h"
+	"gamesystem.h"
+	<map>
+	<string>
 

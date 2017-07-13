@@ -2,7 +2,6 @@
 #include "menuitem.h"
 #include "eventhandler.h"
 
-
 #ifndef SPRITE_BUTTON_H
 #define SPRITE_BUTTON_H
 class Button: public MenuItem{

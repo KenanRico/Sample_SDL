@@ -56,12 +56,12 @@
 		<Unit filename="menuitem.h" />
 		<Unit filename="mousehandler.cpp" />
 		<Unit filename="mousehandler.h" />
-		<Unit filename="objectmanager.cpp" />
-		<Unit filename="objectmanager.h" />
 		<Unit filename="sprite.cpp" />
 		<Unit filename="sprite.h" />
 		<Unit filename="sprite_player.cpp" />
 		<Unit filename="sprite_player.h" />
+		<Unit filename="spritemanager.cpp" />
+		<Unit filename="spritemanager.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

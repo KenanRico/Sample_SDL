@@ -1,0 +1,31 @@
+private: void (*b_callback)();
+public:
+void Button::setCallback(void (*func)()){
+	if(func!=(void())0){
+		b_callback = func;
+	}else;
+}
+void Button::update(){
+	......
+	......
+	......
+	......
+	if(triggered){
+		(*b_callback)();
+	}else;
+}
+
+
+
+
+
+
+
+void Game::someAction(){
+	......
+}
+
+void Game::pauseMenu(){
+	......
+	button1.setCallback(someAction);
+}	

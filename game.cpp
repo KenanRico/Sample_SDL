@@ -1,7 +1,7 @@
 #include <SDL2/SDL.h>
 #include "game.h"
 #include "gamesystem.h"
-#include "objectmanager.h"
+#include "spritemanager.h"
 #include "sprite.h"
 #include "sprite_player.h"
 #include "eventhandler.h"
@@ -36,7 +36,7 @@ Game::Game():
 g_window((SDL_Window*)0), 
 g_renderer((SDL_Renderer*)0), 
 g_state(State::NONE), 
-g_objects((ObjectManager*)0){
+g_objects((SpriteManager*)0){
 	initSystems();
 }
 Game::~Game(){
@@ -50,8 +50,8 @@ void Game::initSystems(){
 	if(g_window!=(SDL_Window*)0){
 		g_renderer = SDL_CreateRenderer(g_window,-1, 0);
 		if(g_renderer!=(SDL_Renderer*)0){
-			g_objects = ObjectManager::Init();
-			if(g_objects!=(ObjectManager*)0){
+			g_objects = SpriteManager::Init();
+			if(g_objects!=(SpriteManager*)0){
 				loadAllObjects();
 			}else{
 				GameSystem::writeErrorMessage("Failed to init g_objects");
@@ -95,8 +95,8 @@ void Game::run(){
 void Game::mainMenu(){
 	Menu mainmenu(g_renderer);
 	mainmenu.setBackground("assets/mainmenu.png");
-	mainmenu.addItem("start", new Button(g_renderer, "assets/button_blue.png", 0,0,140,40, 400,280,100,30));
-	mainmenu.addItem("exit", new Button(g_renderer, "assets/button_red.png", 0,0,140,40, 400,360,100,30));
+	mainmenu.addItem("start", new Button(g_renderer, "assets/button_blue.png", 0,0,140,40, 400,280,150,45));
+	mainmenu.addItem("exit", new Button(g_renderer, "assets/button_red.png", 0,0,140,40, 400,360,150,45));
 	mainmenu.renderMenu(g_window);
 	const MenuItem& start = mainmenu["start"];
 	const MenuItem& exit = mainmenu["exit"];
@@ -118,6 +118,33 @@ void Game::mainMenu(){
 		}else;
 	}
 }
+void Game::pauseMenu(){
+	Menu pausemenu(g_renderer);
+	pausemenu.setBackground("assets/mainmenu.png");
+	pausemenu.addItem("resume", new Button(g_renderer, "assets/button_yellow.png", 0,0,140,40, 300,280,150,45));
+	pausemenu.addItem("exit", new Button(g_renderer, "assets/button_red.png", 0,0,140,40, 300,360,150,45));
+	pausemenu.renderMenu(g_window);
+	const MenuItem& resume = pausemenu["resume"];
+	const MenuItem& exit = pausemenu["exit"];
+	while(g_state!=State::RUN && g_state!=State::STOP){
+		int starttime = SDL_GetTicks();
+		handleEvents();
+		pausemenu.updateMenu(g_event);
+		pausemenu.renderMenu(g_window);
+		if(resume.triggered()){
+			g_state = State::RUN;
+			GameSystem::writeMessage("Resuming game");
+		}else if(exit.triggered()){
+			g_state = State::STOP;
+			GameSystem::writeMessage("Exiting game");
+		}else;
+		int timespent = SDL_GetTicks()-starttime;
+		if(timespent<GameSystem::FrameTime){
+			SDL_Delay((int)(GameSystem::FrameTime-timespent));
+		}else;
+	}
+}
+
 
 void Game::gameLoop(){
 	while(g_state!=State::STOP && g_state!=State::NONE){
@@ -131,11 +158,7 @@ void Game::gameLoop(){
 				SDL_Delay((int)(GameSystem::FrameTime-timespent));
 			}else;
 		}else if(g_state==State::PAUSE){
-			showPauseMenu();
-			while(g_state==State::PAUSE){
-				handleEvents();
-			}
-			hidePauseMenu();
+			pauseMenu();
 			//other PAUSE operations
 		}else{
 			//More states in the future?
@@ -160,6 +183,9 @@ void Game::handleEvents(){
 		}else;
 	}
 }
+
+
+
 void Game::updateGame(){
 	//Note: This function is responsible for updating everything that indirectly responds to or that is independent from user inputs
 	g_objects->get("lucas")->updateState(g_event);

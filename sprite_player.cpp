@@ -86,7 +86,7 @@ void Player::updateState(const EventHandler& event){
 	updateActionBasedOnEvent(event);
 	if(!p_state->in_air){
 		onGroundSpeedChange();
-		std::cout<<p_state->speed_h<<" "<<p_state->speed_v<<" "<<p_state->in_air<<std::endl;//remove
+		//std::cout<<p_state->speed_h<<" "<<p_state->speed_v<<" "<<p_state->in_air<<std::endl;//remove
 		checkJump();
 	}else;
 	if(p_state->in_air){
@@ -109,7 +109,7 @@ void Player::onGroundSpeedChange(){
 	}else{
 		if(p_state->direction==p_action->_movedirection){
 			if(p_action->_walk){
-				if(s_framecounter%7==0){
+				if(s_framecounter%6==0){
 					(p_state->speed_h+1 < p_attribute->_topwalkspeed)?
 					++p_state->speed_h : p_state->speed_h=p_attribute->_topwalkspeed;
 				}else;
@@ -186,8 +186,8 @@ void Player::updateActionBasedOnEvent(const EventHandler& event){
 	else p_action->_movedirection=0;
 	p_action->_jump = keyboard[KeyboardHandler::K];
 	p_action->_attack = keyboard[KeyboardHandler::J];
-	std::cout<<"walk: "<<p_action->_walk<<" sprint: "<<p_action->_sprint<<" movedirection: "<<p_action->_movedirection<<" jump: "<<p_action->_jump<<" attack: "<<p_action->_attack<<std::endl;//remove
-	std::cout<<event.getMouse().getX()<<" "<<event.getMouse().getY()<<" "<<event.getMouse()[0]<<" "<<event.getMouse()[1]<<" "<<event.getMouse()[2]<<" "<<event.getMouse().getClickX()<<" "<<event.getMouse().getClickY()<<std::endl;//remove
+	//std::cout<<"walk: "<<p_action->_walk<<" sprint: "<<p_action->_sprint<<" movedirection: "<<p_action->_movedirection<<" jump: "<<p_action->_jump<<" attack: "<<p_action->_attack<<std::endl;//remove
+	//std::cout<<event.getMouse().getX()<<" "<<event.getMouse().getY()<<" "<<event.getMouse()[0]<<" "<<event.getMouse()[1]<<" "<<event.getMouse()[2]<<" "<<event.getMouse().getClickX()<<" "<<event.getMouse().getClickY()<<std::endl;//remove
 }
 
 void Player::renderSprite(){

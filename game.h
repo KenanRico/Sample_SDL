@@ -1,5 +1,5 @@
 #include <SDL2/SDL.h>
-#include "objectmanager.h"
+#include "spritemanager.h"
 #include "eventhandler.h"
 #include "keyboardhandler.h"
 //#include "mousehandler.h"
@@ -18,7 +18,7 @@ class Game{
 		SDL_Window* g_window;
 		SDL_Renderer* g_renderer;
 		State g_state;
-		ObjectManager* g_objects;
+		SpriteManager* g_objects;
 		EventHandler g_event;	
 	private:
 		Game();
@@ -31,10 +31,11 @@ class Game{
 	private:
 		void initSystems();
 		void deinitSystems();
-
+		
 		void loadAllObjects();
 
 		void mainMenu();
+		void pauseMenu();
 		void gameLoop();
 		void handleEvents();
 		void updateGame();
