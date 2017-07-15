@@ -31,6 +31,11 @@ enum class Game::State{
 	PAUSE
 };
 
+struct Game::LevelInfo{
+	LevelManager levels,
+	int count = 0,
+}
+
 
 Game::Game(): 
 g_window((SDL_Window*)0), 
@@ -53,6 +58,7 @@ void Game::initSystems(){
 			g_objects = SpriteManager::Init();
 			if(g_objects!=(SpriteManager*)0){
 				loadAllObjects();
+				createLevels();
 			}else{
 				GameSystem::writeErrorMessage("Failed to init g_objects");
 			}
@@ -71,6 +77,7 @@ void Game::deinitSystems(){
 	SDL_DestroyRenderer(g_renderer);
 	GameSystem::Quit();
 	delete g_objects;
+	delete g_levels;
 	if(g_state==State::STOP){
 		GameSystem::writeMessage("De-Inited system");
 	}else{
@@ -83,6 +90,12 @@ void Game::loadAllObjects(){
 	//Or we can load the ones that are rendered right off the bat and gradually load more as they come in
 	//g_objects->insert("lucas", new Sprite(g_renderer, "assets/lucas.png", 3,50,37,50,10,10,30,50));	
 	g_objects->insert("lucas", new Player(g_renderer, "assets/lucas.png", 0,0,37,50,10,10,37,50, 9,9,9,9));	
+}
+void Game::createLevels(){
+	//insert all tile maps into g_levels for parsing
+	g_levels.levels.insert("levels/level_1");
+	g_levels.levels.insert("levels/level_2");
+	//...
 }
 
 
@@ -147,24 +160,35 @@ void Game::pauseMenu(){
 
 
 void Game::gameLoop(){
-	while(g_state!=State::STOP && g_state!=State::NONE){
-		if(g_state==State::RUN){
-			int starttime = SDL_GetTicks();
-			handleEvents();
-			updateGame();
-			renderGame();
-			int timespent = SDL_GetTicks()-starttime;
-			if(timespent<GameSystem::FrameTime){
-				SDL_Delay((int)(GameSystem::FrameTime-timespent));
-			}else;
-		}else if(g_state==State::PAUSE){
-			pauseMenu();
-			//other PAUSE operations
-		}else{
-			//More states in the future?
+	while(g_levels.count<g_levels.levels.totalLevels()){
+		while(g_state!=State::STOP && g_state!=State::NONE && !g_levels.levels[g_level.count].iscomplete()){
+			if(g_state==State::RUN){
+				int starttime = SDL_GetTicks();
+				handleEvents();
+				updateGame();
+				renderGame();
+				int timespent = SDL_GetTicks()-starttime;
+				if(timespent<GameSystem::FrameTime){
+					SDL_Delay((int)(GameSystem::FrameTime-timespent));
+				}else;
+			}else if(g_state==State::PAUSE){
+				pauseMenu();
+				//other PAUSE operations
+			}else{
+				//More states in the future?
+			}
 		}
+		if(g_state==State::STOP || g_state==State::NONE){
+			break;
+		}else if(g_levels.levels[g_level.count].iscomplete()){
+			++g_levels.count;
+		}else{
+			GameSystem::writeErrorMessage("Huh!? Gameloop broken unexpectedly");
+		}
+		if(g_levels.count==g_levels.levels.totalLevels()-1){
+			g_state = State::STOP;
+		}else;
 	}
-
 }
 void Game::handleEvents(){
 	g_event.parseEvent();
@@ -188,13 +212,14 @@ void Game::handleEvents(){
 
 void Game::updateGame(){
 	//Note: This function is responsible for updating everything that indirectly responds to or that is independent from user inputs
-	g_objects->get("lucas")->updateState(g_event);
-	g_objects->get("lucas")->updateSprite();
+	g_levels.levels[g_levels.count].updateLevel();
+	g_objects->updateAllStates();
+	g_objects->updateAllSprites();
 }
 void Game::renderGame(){
 	SDL_RenderClear(g_renderer);
-	g_objects->get("lucas")->renderSprite();
-
+	g_levels.levels[g_levels.count].renderLevel();
+	g_objects->renderAllSprites();
 
 	SDL_RenderPresent(g_renderer);
 }

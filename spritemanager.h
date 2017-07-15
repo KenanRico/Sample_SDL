@@ -12,7 +12,7 @@ class SpriteManager{
 	private: static bool Exist;
 
 	private:
-		std::map<std::string, Sprite*> o_Objects;
+		std::map<std::string, Sprite*> o_sprites;
 
 	private:
 		SpriteManager();
@@ -27,6 +27,9 @@ class SpriteManager{
 		bool insert(const char*, Sprite*);
 		bool remove(const char*);
 		Sprite* get(const char*);
+		void updateAllStates();
+		void updateAllSPrites();
+		void renderAllSprites();
 		unsigned int count();
 
 };

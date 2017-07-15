@@ -14,11 +14,13 @@ class Game{
 
 	private:
 		enum class State;
+		struct LevelInfo;
 	private:
 		SDL_Window* g_window;
 		SDL_Renderer* g_renderer;
 		State g_state;
 		SpriteManager* g_objects;
+		LevelInfo g_levels;
 		EventHandler g_event;	
 	private:
 		Game();
@@ -33,6 +35,7 @@ class Game{
 		void deinitSystems();
 		
 		void loadAllObjects();
+		void createLevels();
 
 		void mainMenu();
 		void pauseMenu();

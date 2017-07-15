@@ -26,7 +26,7 @@ SpriteManager::~SpriteManager(){
 
 void SpriteManager::freeObjects(){
 	//delete all Sprite* in "Objects"
-	for(std::map<std::string, Sprite*>::iterator iter = o_Objects.begin(); iter!=o_Objects.end(); ++iter){
+	for(std::map<std::string, Sprite*>::iterator iter = o_sprites.begin(); iter!=o_sprites.end(); ++iter){
 		delete iter->second;
 	}
 }
@@ -34,9 +34,9 @@ void SpriteManager::freeObjects(){
 
 bool SpriteManager::insert(const char* ID, Sprite* sp_ptr){
 	bool successful = false;
-	if(o_Objects.find(ID)==o_Objects.end()){
-		o_Objects[ID] = sp_ptr;
-		o_Objects[ID]->createSprite();
+	if(o_sprites.find(ID)==o_sprites.end()){
+		o_sprites[ID] = sp_ptr;
+		o_sprites[ID]->createSprite();
 		successful = true;
 	}else{
 		std::string Err1 = "Failed to insert object. Object ID ";
@@ -49,9 +49,9 @@ bool SpriteManager::insert(const char* ID, Sprite* sp_ptr){
 
 bool SpriteManager::remove(const char* ID){
 	bool successful = false;
-	if(o_Objects.find(ID)!=o_Objects.end()){
-		delete o_Objects[ID];
-		o_Objects.erase(ID);
+	if(o_sprites.find(ID)!=o_sprites.end()){
+		delete o_sprites[ID];
+		o_sprites.erase(ID);
 		successful = true;
 	}else{
 		std::string Err1 = "Failed to remove object. Object ID ";
@@ -63,8 +63,8 @@ bool SpriteManager::remove(const char* ID){
 }
 
 Sprite* SpriteManager::get(const char* ID){
-	if(o_Objects.find(ID)!=o_Objects.end()){
-		return o_Objects[ID];
+	if(o_sprites.find(ID)!=o_sprites.end()){
+		return o_sprites[ID];
 	}else{
 		std::string Err1 = "Cannot find object. Object ID ";
 		std::string Err2 = " does not exist";
@@ -74,6 +74,22 @@ Sprite* SpriteManager::get(const char* ID){
 	}	
 }
 
+void SpriteManager::updateAllStates(){
+	for(std::map<std::string, Sprite*>::iterator i=o_sprites.begin(); i!=o_sprites.end(); ++i){
+		i->second.updateState();
+	}
+}
+void SpriteManager::updateAllSprites(){
+	for(std::map<std::string, Sprite*>::iterator i=o_sprites.begin(); i!=o_sprites.end(); ++i){
+		i->second.updateSprite();
+	}
+}
+void SpriteManager::renderAllSprites(){
+	for(std::map<std::string, Sprite*>::iterator i=o_sprites.begin(); i!=o_sprites.end(); ++i){
+		i->second.renderSprite();
+	}
+}
+
 unsigned int SpriteManager::count(){
-	return o_Objects.size();
+	return o_sprites.size();
 }
