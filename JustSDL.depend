@@ -648,13 +648,12 @@
 	"begin_code.h"
 	"close_code.h"
 
-1499761441 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\game.h
+1500443540 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\game.h
 	<SDL2/SDL.h>
 	"spritemanager.h"
 	"eventhandler.h"
-	"keyboardhandler.h"
 
-1499761454 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\game.cpp
+1500450000 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\game.cpp
 	<SDL2/SDL.h>
 	"game.h"
 	"gamesystem.h"
@@ -666,13 +665,14 @@
 	"menuitem.h"
 	"menu_button.h"
 	"menu.h"
+	"xmlparser.h"
 
-1499417421 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite.h
+1500449872 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite.h
 	<SDL2/SDL.h>
 	<string>
 	"eventhandler.h"
 
-1499417370 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite.cpp
+1500449970 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite.cpp
 	<SDL2/SDL.h>
 	<SDL2/extensions/SDL_image.h>
 	"sprite.h"
@@ -1016,13 +1016,13 @@
 	<map>
 	<string>
 
-1499673044 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite_player.h
+1500449645 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite_player.h
 	<SDL2/SDL.h>
 	"sprite.h"
 	"eventhandler.h"
 	"keyboardhandler.h"
 
-1499690192 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite_player.cpp
+1500449935 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite_player.cpp
 	<SDL2/SDL.h>
 	"sprite_player.h"
 	"sprite.h"
@@ -1091,15 +1091,42 @@
 	"menuitem.h"
 	"gamesystem.h"
 
-1499761419 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\spritemanager.h
+1500444401 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\spritemanager.h
 	"sprite.h"
 	<map>
 	<string>
 
-1499761398 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\spritemanager.cpp
+1500449442 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\spritemanager.cpp
 	"spritemanager.h"
 	"sprite.h"
 	"gamesystem.h"
 	<map>
 	<string>
+
+1500448809 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\xmlparser.cpp
+	<rapidxml.hpp>
+	<SDL2/SDL.h>
+	"xmlparser.h"
+	"sprite.h"
+	"sprite_player.h"
+	"spritemanager.h"
+	<vector>
+	<string>
+	<fstream>
+	<sstream>
+	<math.h>
+	"gamesystem.h"
+	<iostream>
+
+1242150378 d:\coding\libs\rapidxml\include\rapidxml.hpp
+	<cstdlib>
+	<cassert>
+	<new>
+	<exception>
+
+1500445597 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\xmlparser.h
+	"rapidxml.hpp"
+	<SDL2/SDL.h>
+	<vector>
+	"spritemanager.h"
 

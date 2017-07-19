@@ -13,8 +13,8 @@ Sprite::~Sprite(){
 }*/
 
 
-Sprite::Sprite(SDL_Renderer*& g_renderer, const char* img, int _sx, int _sy, int _sw, int _sh, int _dx, int _dy, int _dw, int _dh) :
-s_mainRendererPointer(&g_renderer),
+Sprite::Sprite(SDL_Renderer* g_renderer, const char* img, int _sx, int _sy, int _sw, int _sh, int _dx, int _dy, int _dw, int _dh) :
+s_mainRendererPointer(g_renderer),
 s_sourceImage(img),
 s_srcRect(new SDL_Rect{_sx,_sy,_sw,_sh}),
 s_dstRect(new SDL_Rect{_dx,_dy,_dw,_dh}),
@@ -34,7 +34,7 @@ void Sprite::createSprite(){
 	}else;
 	SDL_Surface* temp_surf = IMG_Load(s_sourceImage.c_str());
 	if(temp_surf!=(SDL_Surface*)0){
-		s_texture = SDL_CreateTextureFromSurface(*s_mainRendererPointer, temp_surf);
+		s_texture = SDL_CreateTextureFromSurface(s_mainRendererPointer, temp_surf);
 	}else{
 		std::string Err1("Failed to load image: ");
 		std::string Err = Err1+s_sourceImage;

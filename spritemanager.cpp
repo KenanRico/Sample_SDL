@@ -12,7 +12,7 @@ SpriteManager* SpriteManager::Init(){
 		SpriteManager::Exist = true;
 		return new SpriteManager;
 	}else{
-		GameSystem::writeErrorMessage("Object Manger already exists!");
+		GameSystem::writeErrorMessage("Object Manager already exists!");
 		return (SpriteManager*)0;
 	}
 }
@@ -74,19 +74,19 @@ Sprite* SpriteManager::get(const char* ID){
 	}	
 }
 
-void SpriteManager::updateAllStates(){
+void SpriteManager::updateAllStates(const EventHandler& event){
 	for(std::map<std::string, Sprite*>::iterator i=o_sprites.begin(); i!=o_sprites.end(); ++i){
-		i->second.updateState();
+		i->second->updateState(event);
 	}
 }
 void SpriteManager::updateAllSprites(){
 	for(std::map<std::string, Sprite*>::iterator i=o_sprites.begin(); i!=o_sprites.end(); ++i){
-		i->second.updateSprite();
+		i->second->updateSprite();
 	}
 }
 void SpriteManager::renderAllSprites(){
 	for(std::map<std::string, Sprite*>::iterator i=o_sprites.begin(); i!=o_sprites.end(); ++i){
-		i->second.renderSprite();
+		i->second->renderSprite();
 	}
 }
 

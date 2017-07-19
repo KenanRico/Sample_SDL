@@ -1,8 +1,6 @@
 #include <SDL2/SDL.h>
 #include "spritemanager.h"
 #include "eventhandler.h"
-#include "keyboardhandler.h"
-//#include "mousehandler.h"
 
 
 #ifndef GAME_H
@@ -20,7 +18,7 @@ class Game{
 		SDL_Renderer* g_renderer;
 		State g_state;
 		SpriteManager* g_objects;
-		LevelInfo g_levels;
+		/*LevelInfo g_levels;*///level_recover
 		EventHandler g_event;	
 	private:
 		Game();

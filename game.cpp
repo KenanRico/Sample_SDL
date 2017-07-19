@@ -10,6 +10,10 @@
 #include "menuitem.h"
 #include "menu_button.h"
 #include "menu.h"
+#include "xmlparser.h"
+
+
+
 
 bool Game::Running = false;
 
@@ -32,9 +36,9 @@ enum class Game::State{
 };
 
 struct Game::LevelInfo{
-	LevelManager levels,
-	int count = 0,
-}
+	//LevelManager levels;//level_recover
+	int count = 0;
+};
 
 
 Game::Game(): 
@@ -77,7 +81,6 @@ void Game::deinitSystems(){
 	SDL_DestroyRenderer(g_renderer);
 	GameSystem::Quit();
 	delete g_objects;
-	delete g_levels;
 	if(g_state==State::STOP){
 		GameSystem::writeMessage("De-Inited system");
 	}else{
@@ -88,19 +91,15 @@ void Game::deinitSystems(){
 void Game::loadAllObjects(){
 	//load every sprite used in the game
 	//Or we can load the ones that are rendered right off the bat and gradually load more as they come in
-	//g_objects->insert("lucas", new Sprite(g_renderer, "assets/lucas.png", 3,50,37,50,10,10,30,50));	
-	g_objects->insert("lucas", new Player(g_renderer, "assets/lucas.png", 0,0,37,50,10,10,37,50, 9,9,9,9));	
+	XMLParser::Sprite("items/sprites.xml", g_objects, g_renderer);
 }
 void Game::createLevels(){
-	//insert all tile maps into g_levels for parsing
-	g_levels.levels.insert("levels/level_1");
-	g_levels.levels.insert("levels/level_2");
-	//...
+	/*g_levels.levels.insert("levels/level_1", g_renderer, g_window);
+	g_levels.levels.insert("levels/level_2", g_renderer, g_window);*///level_recover
 }
 
 
 void Game::run(){
-	//g_state = State::RUN; //remove after implementing main menu
 	mainMenu();
 	gameLoop();
 }
@@ -160,8 +159,8 @@ void Game::pauseMenu(){
 
 
 void Game::gameLoop(){
-	while(g_levels.count<g_levels.levels.totalLevels()){
-		while(g_state!=State::STOP && g_state!=State::NONE && !g_levels.levels[g_level.count].iscomplete()){
+	//while(g_levels.count<g_levels.levels.totalLevels()){//level_recover
+		while(g_state!=State::STOP && g_state!=State::NONE /*&& !g_levels.levels[g_level.count].iscomplete()*//*level_recover*/){
 			if(g_state==State::RUN){
 				int starttime = SDL_GetTicks();
 				handleEvents();
@@ -179,16 +178,16 @@ void Game::gameLoop(){
 			}
 		}
 		if(g_state==State::STOP || g_state==State::NONE){
-			break;
-		}else if(g_levels.levels[g_level.count].iscomplete()){
+			//break;//level_recover
+		}/*else if(g_levels.levels[g_level.count].iscomplete()){//level_recover
 			++g_levels.count;
-		}else{
+		}*/else{
 			GameSystem::writeErrorMessage("Huh!? Gameloop broken unexpectedly");
 		}
-		if(g_levels.count==g_levels.levels.totalLevels()-1){
+		/*if(g_levels.count==g_levels.levels.totalLevels()-1){
 			g_state = State::STOP;
-		}else;
-	}
+		}else;*///level_recover
+	//}//level_recover
 }
 void Game::handleEvents(){
 	g_event.parseEvent();
@@ -212,13 +211,13 @@ void Game::handleEvents(){
 
 void Game::updateGame(){
 	//Note: This function is responsible for updating everything that indirectly responds to or that is independent from user inputs
-	g_levels.levels[g_levels.count].updateLevel();
-	g_objects->updateAllStates();
+	/*g_levels.levels[g_levels.count].updateLevel();*///level_recover
+	g_objects->updateAllStates(g_event);
 	g_objects->updateAllSprites();
 }
 void Game::renderGame(){
 	SDL_RenderClear(g_renderer);
-	g_levels.levels[g_levels.count].renderLevel();
+	/*g_levels.levels[g_levels.count].renderLevel();*///lever_recover
 	g_objects->renderAllSprites();
 
 	SDL_RenderPresent(g_renderer);

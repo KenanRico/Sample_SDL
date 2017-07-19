@@ -27,8 +27,8 @@ class SpriteManager{
 		bool insert(const char*, Sprite*);
 		bool remove(const char*);
 		Sprite* get(const char*);
-		void updateAllStates();
-		void updateAllSPrites();
+		void updateAllStates(const EventHandler&);
+		void updateAllSprites();
 		void renderAllSprites();
 		unsigned int count();
 

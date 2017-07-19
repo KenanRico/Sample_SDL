@@ -70,7 +70,7 @@ class Player::PlayerAction{
 
 
 
-Player::Player(SDL_Renderer*& g_renderer, const char* img, int _sx,int _sy,int _sw,int _sh,int _dx,int _dy,int _dw,int _dh, int a,int s,int i,int d):
+Player::Player(SDL_Renderer* g_renderer, const char* img, int _sx,int _sy,int _sw,int _sh,int _dx,int _dy,int _dw,int _dh, int a,int s,int i,int d):
 Sprite(g_renderer,img,_sx,_sy,_sw,_sh,_dx,_dy,_dw,_dh), p_attribute(new PlayerAttribute(a,s,i,d)), p_state(new PlayerState), p_action(new PlayerAction)
 {;}
 
@@ -197,7 +197,7 @@ void Player::renderSprite(){
 		case 0: break;
 		default: break;
 	}
-	SDL_RenderCopyEx(*s_mainRendererPointer, s_texture, s_srcRect, s_dstRect, 0, 0, p_state->spriteflip);
+	SDL_RenderCopyEx(s_mainRendererPointer, s_texture, s_srcRect, s_dstRect, 0, 0, p_state->spriteflip);
 }
 
 

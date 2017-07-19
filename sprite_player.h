@@ -24,7 +24,7 @@ class Player : public Sprite{
 		Player(const Player&) = delete;
 		Player& operator=(const Player&) = delete;
 	public:
-		Player(SDL_Renderer*&, const char*, int,int,int,int,int,int,int,int, int,int,int,int);
+		Player(SDL_Renderer*, const char*, int,int,int,int,int,int,int,int, int,int,int,int);
 	public:
 		void renderSprite();
 		void updateSprite(); //update sprite on states

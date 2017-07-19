@@ -7,7 +7,7 @@
 #define SPRITE_H
 class Sprite{
 	protected:
-		SDL_Renderer** s_mainRendererPointer;
+		SDL_Renderer* s_mainRendererPointer;
 		std::string s_sourceImage;
 		SDL_Texture* s_texture;
 		int s_imageW;
@@ -26,7 +26,7 @@ class Sprite{
 	public:
 		virtual void createSprite() final;
 
-		Sprite(SDL_Renderer*&, const char*, int, int, int, int, int, int, int, int);
+		Sprite(SDL_Renderer*, const char*, int, int, int, int, int, int, int, int);
 
 		//void moveRight(); //Will move to inherited classes
 		virtual void updateState(const EventHandler&) = 0;//to be implemented by each derived based on there own states

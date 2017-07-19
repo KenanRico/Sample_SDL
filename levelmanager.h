@@ -1,3 +1,4 @@
+#include <SDL2/SDL.h>
 #include <vector>
 #include "level.h"
 
@@ -13,7 +14,7 @@ class LevelManager{
 		LevelManager(const LevelManager&) = delete;
 		LevelManager& operator=(const LevelManager&) = delete;
 	public:
-		void insert(const char*); //taking .tmx files to convert to Level objects
+		void insert(const char*, SDL_Renderer*, SDL_Window*); //taking .tmx files to convert to Level objects
 		const Level& operator[](int);
 		unsigned int totalLevels();
 };
