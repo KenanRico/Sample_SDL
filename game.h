@@ -18,7 +18,7 @@ class Game{
 		SDL_Renderer* g_renderer;
 		State g_state;
 		SpriteManager* g_objects;
-		/*LevelInfo g_levels;*///level_recover
+		LevelInfo g_levels;
 		EventHandler g_event;	
 	private:
 		Game();

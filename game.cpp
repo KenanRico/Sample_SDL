@@ -36,7 +36,7 @@ enum class Game::State{
 };
 
 struct Game::LevelInfo{
-	//LevelManager levels;//level_recover
+	LevelManager levels;
 	int count = 0;
 };
 
@@ -94,8 +94,8 @@ void Game::loadAllObjects(){
 	XMLParser::Sprite("items/sprites.xml", g_objects, g_renderer);
 }
 void Game::createLevels(){
-	/*g_levels.levels.insert("levels/level_1", g_renderer, g_window);
-	g_levels.levels.insert("levels/level_2", g_renderer, g_window);*///level_recover
+	g_levels.levels.insert("levels/level_1", g_renderer, g_window);
+	g_levels.levels.insert("levels/level_2", g_renderer, g_window);
 }
 
 
@@ -159,8 +159,8 @@ void Game::pauseMenu(){
 
 
 void Game::gameLoop(){
-	//while(g_levels.count<g_levels.levels.totalLevels()){//level_recover
-		while(g_state!=State::STOP && g_state!=State::NONE /*&& !g_levels.levels[g_level.count].iscomplete()*//*level_recover*/){
+	while(g_levels.count<g_levels.levels.totalLevels()){
+		while(g_state!=State::STOP && g_state!=State::NONE && !g_levels.levels[g_level.count].iscomplete()){
 			if(g_state==State::RUN){
 				int starttime = SDL_GetTicks();
 				handleEvents();
@@ -178,16 +178,16 @@ void Game::gameLoop(){
 			}
 		}
 		if(g_state==State::STOP || g_state==State::NONE){
-			//break;//level_recover
-		}/*else if(g_levels.levels[g_level.count].iscomplete()){//level_recover
+			break;
+		}else if(g_levels.levels[g_level.count].iscomplete()){
 			++g_levels.count;
-		}*/else{
+		}else{
 			GameSystem::writeErrorMessage("Huh!? Gameloop broken unexpectedly");
 		}
-		/*if(g_levels.count==g_levels.levels.totalLevels()-1){
+		if(g_levels.count==g_levels.levels.totalLevels()-1){
 			g_state = State::STOP;
-		}else;*///level_recover
-	//}//level_recover
+		}else;
+	}
 }
 void Game::handleEvents(){
 	g_event.parseEvent();
@@ -211,13 +211,13 @@ void Game::handleEvents(){
 
 void Game::updateGame(){
 	//Note: This function is responsible for updating everything that indirectly responds to or that is independent from user inputs
-	/*g_levels.levels[g_levels.count].updateLevel();*///level_recover
+	g_levels.levels[g_levels.count].updateLevel();
 	g_objects->updateAllStates(g_event);
 	g_objects->updateAllSprites();
 }
 void Game::renderGame(){
 	SDL_RenderClear(g_renderer);
-	/*g_levels.levels[g_levels.count].renderLevel();*///lever_recover
+	g_levels.levels[g_levels.count].renderLevel();
 	g_objects->renderAllSprites();
 
 	SDL_RenderPresent(g_renderer);

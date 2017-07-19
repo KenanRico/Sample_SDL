@@ -19,14 +19,14 @@ class XMLParser{
 	public:
 		static void Sprite(const char*, SpriteManager*, SDL_Renderer*);
 		static void MenuItem();
-		//static void TileMap(const char*, std::vector<Layer*>&, std::vector<ImageLayer*>&, std::vector<TileSet*>&);//level_recover
+		static void TileMap(const char*, std::vector<Layer*>&, std::vector<ImageLayer*>&, std::vector<TileSet*>&);
 	private:
 		static int stringtoint(const char*);
 		static void insertplayer(rapidxml::xml_node<>*, SpriteManager*, SDL_Renderer*);
 		static void insertenemy(rapidxml::xml_node<>*, SpriteManager*);
 		static void insertnpc(rapidxml::xml_node<>*, SpriteManager*);
-		/*void parsetotilesets(rapidxml::xml_node<>*, std::vector<TileSet*>&);
+		void parsetotilesets(rapidxml::xml_node<>*, std::vector<TileSet*>&);
 		void parsetoimagelayers(rapidxml::xml_node<>*, std::vector<ImageLayer*>&);
-		void parsetolayers(rapidxml::xml_node<>*, std::vector<Layer*>&);*///level_recover
+		void parsetolayers(rapidxml::xml_node<>*, std::vector<Layer*>&);
 };
 #endif

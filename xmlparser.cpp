@@ -119,7 +119,7 @@ void XMLParser::MenuItem(){
 
 
 
-/*void XMLParser::TileMap(const char* tmx_source, std::vector<Layer*>& layers, std::vector<ImageLayer*>& imagelayers, std::vector<TileSet*>& tilesets){
+void XMLParser::TileMap(const char* tmx_source, std::vector<Layer*>& layers, std::vector<ImageLayer*>& imagelayers, std::vector<TileSet*>& tilesets){
 	std::fstream fs(tmx_source);
 	std::vector<char> buffer((std::istreambuf_iterator<char>(fs)), std::istreambuf_iterator<char>());
 	buffer.push_back('\0');
@@ -153,4 +153,4 @@ void XMLParser::parsetolayers(rapidxml::node<>* element, std::vector<Layer*>& la
 	
 
 }
-*///level_recover
+
