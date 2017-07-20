@@ -24,7 +24,7 @@ Level::~Level(){
 
 
 bool Level::initLevel(){
-	XMLParser::TileMap(lv_name.c_str(), lv_layers, lv_imagelayers, lv_tilesets);
+	XMLParser::TileMap(lv_name.c_str(), lv_layers, lv_imagelayers, lv_tilesets, mainRendererPointer, mainWindowPointer);
 }
 bool Level::destroyLevel(){
 	for(std::vector<TileLayer*>::iterator i=lv_layers.begin(); i<lv_layers.end(); ++i){
@@ -84,8 +84,9 @@ SDL_Texture Level::getTextureFromTileID(int tileID){
 }
 
 void Level::drawBackground(){
-
-
+	for(std::vector<ImageLayer*>::const_iterator iter=lv_imagelayers.end()-1; iter>=lv_imagelayers.end(); --iter){
+		*iter->renderImageLayer();
+	}
 }
 
 

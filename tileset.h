@@ -24,9 +24,9 @@ class TileSet{
 	public:
 		TileSet(SDL_Renderer*, const char*, const char*, int, int, int, int, int); //no lastgid or rows initialization
 	public:
-		int getFirstTileID();
-		int getLastTileID();
-		int getTexture();
+		int getFirstTileID() const;
+		int getLastTileID() const;
+		int getTexture() const;
 
 };
 #endif

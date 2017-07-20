@@ -15,6 +15,7 @@
 					<Add option="-std=c++11" />
 					<Add option="-g" />
 					<Add directory="D:/Coding/libs/SDL2_VC/include" />
+					<Add directory="D:/Coding/libs/RapidXML/include" />
 				</Compiler>
 				<Linker>
 					<Add library="D:/Coding/libs/SDL2_VC/lib/x86/SDL2.lib" />
@@ -62,6 +63,8 @@
 		<Unit filename="sprite_player.h" />
 		<Unit filename="spritemanager.cpp" />
 		<Unit filename="spritemanager.h" />
+		<Unit filename="xmlparser.cpp" />
+		<Unit filename="xmlparser.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
