@@ -1,9 +1,7 @@
 # depslib dependency file v1.0
-1498636896 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\main.cpp
+1500658175 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\main.cpp
 	<SDL2/SDL.h>
-	"gamesystem.h"
 	"game.h"
-	<iostream>
 
 1476935894 d:\coding\libs\sdl2-2.0.5\i686-w64-mingw32\include\sdl2\sdl.h
 	"SDL_main.h"
@@ -324,7 +322,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1499759145 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\gamesystem.h
+1500658061 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\gamesystem.h
 	<SDL2/SDL.h>
 	<iostream>
 	<string>
@@ -648,12 +646,13 @@
 	"begin_code.h"
 	"close_code.h"
 
-1500450940 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\game.h
+1500606617 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\game.h
 	<SDL2/SDL.h>
 	"spritemanager.h"
 	"eventhandler.h"
+	"levelmanager.h"
 
-1500450000 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\game.cpp
+1500657789 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\game.cpp
 	<SDL2/SDL.h>
 	"game.h"
 	"gamesystem.h"
@@ -666,13 +665,15 @@
 	"menu_button.h"
 	"menu.h"
 	"xmlparser.h"
+	"levelmanager.h"
+	<iostream>
 
 1500449872 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite.h
 	<SDL2/SDL.h>
 	<string>
 	"eventhandler.h"
 
-1500449970 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite.cpp
+1500658123 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite.cpp
 	<SDL2/SDL.h>
 	<SDL2/extensions/SDL_image.h>
 	"sprite.h"
@@ -1103,18 +1104,23 @@
 	<map>
 	<string>
 
-1500448809 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\xmlparser.cpp
+1500623918 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\xmlparser.cpp
 	<rapidxml.hpp>
 	<SDL2/SDL.h>
 	"xmlparser.h"
 	"sprite.h"
 	"sprite_player.h"
 	"spritemanager.h"
+	"levelmanager.h"
+	"tilelayer.h"
+	"imagelayer.h"
+	"tileset.h"
 	<vector>
 	<string>
 	<fstream>
 	<sstream>
 	<math.h>
+	<algorithm>
 	"gamesystem.h"
 	<iostream>
 
@@ -1124,9 +1130,75 @@
 	<new>
 	<exception>
 
-1500445597 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\xmlparser.h
+1500623388 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\xmlparser.h
 	"rapidxml.hpp"
 	<SDL2/SDL.h>
 	<vector>
+	<string>
 	"spritemanager.h"
+	"levelmanager.h"
+	"tilelayer.h"
+	"imagelayer.h"
+	"tileset.h"
+
+1500622877 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\levelmanager.h
+	<SDL2/SDL.h>
+	<vector>
+	"level.h"
+
+1500658708 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\level.h
+	<SDL2/SDL.h>
+	"tilelayer.h"
+	"tileset.h"
+	"imagelayer.h"
+	<string>
+	<vector>
+
+1500660851 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\tileset.h
+	<SDL2/SDL.h>
+	<string>
+
+1500651454 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\imagelayer.h
+	<SDL2/SDL.h>
+	<string>
+
+1500609798 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\tilelayer.h
+
+1500661771 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\imagelayer.cpp
+	"imagelayer.h"
+	<SDL2/extensions/SDL_image.h>
+	<SDL2/SDL.h>
+	<string>
+	<iostream>
+
+1500662398 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\level.cpp
+	"level.h"
+	<SDL2/SDL.h>
+	<string>
+	<vector>
+	<sstream>
+	"tilelayer.h"
+	"tileset.h"
+	"imagelayer.h"
+	"gamesystem.h"
+	"xmlparser.h"
+	<iostream>
+
+1500623727 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\levelmanager.cpp
+	"levelmanager.h"
+	<SDL2/SDL.h>
+	<vector>
+	"level.h"
+	"xmlparser.h"
+
+1500609796 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\tilelayer.cpp
+	"tilelayer.h"
+
+1500660824 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\tileset.cpp
+	"tileset.h"
+	<SDL2/SDL.h>
+	<SDL2/extensions/SDL_image.h>
+	<string>
+	"gamesystem.h"
+	<iostream>
 

@@ -46,8 +46,14 @@
 		<Unit filename="game.cpp" />
 		<Unit filename="game.h" />
 		<Unit filename="gamesystem.h" />
+		<Unit filename="imagelayer.cpp" />
+		<Unit filename="imagelayer.h" />
 		<Unit filename="keyboardhandler.cpp" />
 		<Unit filename="keyboardhandler.h" />
+		<Unit filename="level.cpp" />
+		<Unit filename="level.h" />
+		<Unit filename="levelmanager.cpp" />
+		<Unit filename="levelmanager.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="menu.cpp" />
 		<Unit filename="menu.h" />
@@ -63,6 +69,10 @@
 		<Unit filename="sprite_player.h" />
 		<Unit filename="spritemanager.cpp" />
 		<Unit filename="spritemanager.h" />
+		<Unit filename="tilelayer.cpp" />
+		<Unit filename="tilelayer.h" />
+		<Unit filename="tileset.cpp" />
+		<Unit filename="tileset.h" />
 		<Unit filename="xmlparser.cpp" />
 		<Unit filename="xmlparser.h" />
 		<Extensions>

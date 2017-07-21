@@ -3,9 +3,9 @@
 
 
 
-#ifndef IMAGE_LEVEL_H
-#define IMAGE_LEVEL_H
-class ImageLevel{
+#ifndef IMAGE_LAYER_H
+#define IMAGE_LAYER_H
+class ImageLayer{
 	private:
 		std::string name;
 		std::string source;
@@ -19,17 +19,17 @@ class ImageLevel{
 		SDL_Rect* srcRect;
 		SDL_Rect* dstRect;
 	public:
-		ImageLevel() = delete;
-		~ImageLevel();
-		ImageLevel(const ImageLevel&) = delete;
-		ImageLevel& operator=(const ImageLevel&) = delete;
+		ImageLayer() = delete;
+		~ImageLayer();
+		ImageLayer(const ImageLayer&) = delete;
+		ImageLayer& operator=(const ImageLayer&) = delete;
 	public:
-		ImageLevel(const char*, const char*, int, int, int, int, SDL_Renderer*, SDL_Window*);
+		ImageLayer(const char*, const char*, int, int, int, int, SDL_Renderer*, SDL_Window*);
 	private:
 		void initImageLayer();
 		void destroyImageLayer();
 	public:
-		void updateImageLayer();
-		void renderImageLayer();
+		void updateImageLayer(int,int) const;
+		void renderImageLayer() const;
 };
 #endif

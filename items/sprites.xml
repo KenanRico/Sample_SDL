@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Sprites>
 	<Players>
-		<Player name="lucas" source="assets/lucas.png" sourceX="0" sourceY="0" spriteW="37" spriteH="50" displayX="10" displayY="300" agility="9" strength="9" intelligence="9" dexterity="9"/> 
-		<Player name="cat" source="assets/Cougar.png" sourceX="0" sourceY="0" spriteW="10" spriteH="10" displayX="50" displayY="100" agility="9" strength="9" intelligence="9" dexterity="9"/> 
+		<Player name="lucas" source="assets/lucas.png" sourceX="0" sourceY="0" spriteW="37" spriteH="50" displayX="10" displayY="310" agility="9" strength="9" intelligence="9" dexterity="9"/> 
 	</Players>
 	<Enemies>
 		<!Enemies>

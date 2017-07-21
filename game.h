@@ -1,6 +1,7 @@
 #include <SDL2/SDL.h>
 #include "spritemanager.h"
 #include "eventhandler.h"
+#include "levelmanager.h"
 
 
 #ifndef GAME_H
@@ -12,7 +13,10 @@ class Game{
 
 	private:
 		enum class State;
-		struct LevelInfo;
+		struct LevelInfo{
+			LevelManager levels;
+			int count = 0;
+		};
 	private:
 		SDL_Window* g_window;
 		SDL_Renderer* g_renderer;

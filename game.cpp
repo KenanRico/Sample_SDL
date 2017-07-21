@@ -6,13 +6,13 @@
 #include "sprite_player.h"
 #include "eventhandler.h"
 #include "keyboardhandler.h"
-//#include "mousehandler.h"
 #include "menuitem.h"
 #include "menu_button.h"
 #include "menu.h"
 #include "xmlparser.h"
+#include "levelmanager.h"
 
-
+#include <iostream>
 
 
 bool Game::Running = false;
@@ -33,11 +33,6 @@ enum class Game::State{
 	RUN,
 	STOP,
 	PAUSE
-};
-
-struct Game::LevelInfo{
-	LevelManager levels;
-	int count = 0;
 };
 
 
@@ -94,8 +89,7 @@ void Game::loadAllObjects(){
 	XMLParser::Sprite("items/sprites.xml", g_objects, g_renderer);
 }
 void Game::createLevels(){
-	g_levels.levels.insert("levels/level_1", g_renderer, g_window);
-	g_levels.levels.insert("levels/level_2", g_renderer, g_window);
+	g_levels.levels.insertAll("Levels/Levels.xml", g_renderer, g_window);
 }
 
 
@@ -160,7 +154,7 @@ void Game::pauseMenu(){
 
 void Game::gameLoop(){
 	while(g_levels.count<g_levels.levels.totalLevels()){
-		while(g_state!=State::STOP && g_state!=State::NONE && !g_levels.levels[g_level.count].iscomplete()){
+		while(g_state!=State::STOP && g_state!=State::NONE && !g_levels.levels[g_levels.count].isComplete()){
 			if(g_state==State::RUN){
 				int starttime = SDL_GetTicks();
 				handleEvents();
@@ -179,7 +173,7 @@ void Game::gameLoop(){
 		}
 		if(g_state==State::STOP || g_state==State::NONE){
 			break;
-		}else if(g_levels.levels[g_level.count].iscomplete()){
+		}else if(g_levels.levels[g_levels.count].isComplete()){
 			++g_levels.count;
 		}else{
 			GameSystem::writeErrorMessage("Huh!? Gameloop broken unexpectedly");
@@ -219,7 +213,6 @@ void Game::renderGame(){
 	SDL_RenderClear(g_renderer);
 	g_levels.levels[g_levels.count].renderLevel();
 	g_objects->renderAllSprites();
-
 	SDL_RenderPresent(g_renderer);
 }
 

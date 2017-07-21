@@ -75,16 +75,3 @@ void Sprite::resetFrameCounter(){
 	s_framecounter = 0;
 }
 
-/*void Sprite::moveRight(){
-	int w = 300;
-	int h = 0;
-	std::cout<<s_srcRect->x<<std::endl;
-	SDL_QueryTexture(s_texture, nullptr, nullptr, &w, &h);
-	s_srcRect->x = (s_srcRect->x+40>w)?3:s_srcRect->x+40;
-	s_dstRect->x += 4;
-}*/
-
-/*void Sprite::render(){
-	SDL_RenderCopyEx(*s_mainRendererPointer, s_texture, s_srcRect, s_dstRect, 0, 0, SDL_FLIP_NONE);
-	SDL_Delay(10);
-}*/

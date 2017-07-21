@@ -16,14 +16,14 @@ namespace GameSystem{
                 		throw SDL_GetError();
 	        	}else;
 		}catch(const char* s){
-			std::cerr<<s<<std::endl;
+			std::cerr<<s<<"\n";
 		}
-		std::cout<<"Init success! Init()"<<std::endl;
+		std::cout<<"Init success! Init() \n";
 	}
 //---------------------------SDL_Quit---------------------------------------
 	inline void Quit(){
 		SDL_Quit();
-		std::cout<<"Quit SDL! Quit()"<<std::endl;
+		std::cout<<"Quit SDL! Quit() \n";
 	}
 //--------------------------SDL_Delay---------------------------------------
 	inline void Pause(int ms){
@@ -34,16 +34,16 @@ namespace GameSystem{
 				throw -1;
 			}
 		}catch(int error){
-			std::cerr<<"Time entered must be > 0"<<std::endl;
+			std::cerr<<"Time entered must be > 0 \n";;
 		}
 	}
 //-------------------------Print Message-------------------------------------
 	inline void writeErrorMessage(const char* err_msg){
-		std::cerr<<"******Fatal Error: "<<err_msg<<std::endl;
+		std::cerr<<"******Fatal Error: "<<err_msg<<"\n";;
 	}
 
 	inline void writeMessage(const char* msg){
-		std::cout<<msg<<std::endl;	
+		std::cout<<msg<<"\n";	
 	}
 //------------------------State Enum----------------------------------------
 
