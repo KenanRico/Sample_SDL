@@ -7,6 +7,7 @@
 #include "tilelayer.h"
 #include "imagelayer.h"
 #include "tileset.h"
+#include "sprite_player.h"
 
 
 
@@ -21,7 +22,7 @@ class XMLParser{
 	public:
 		static void Sprite(const char*, SpriteManager*, SDL_Renderer*);
 		static void MenuItem();
-		static void Levels(const char*, SDL_Renderer*, SDL_Window*, LevelManager&);
+		static void Levels(const char*, SDL_Renderer*, SDL_Window*, const Player*, LevelManager&);
 		static void TileMap(const char*, const char*, std::vector<TileLayer*>&, std::vector<ImageLayer*>&, std::vector<TileSet*>&, int&, int&, int&, int&, SDL_Renderer*, SDL_Window*);
 	private:
 		static void insertplayer(rapidxml::xml_node<>*, SpriteManager*, SDL_Renderer*);

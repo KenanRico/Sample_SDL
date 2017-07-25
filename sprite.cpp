@@ -16,10 +16,9 @@ Sprite::~Sprite(){
 Sprite::Sprite(SDL_Renderer* g_renderer, const char* img, int _sx, int _sy, int _sw, int _sh, int _dx, int _dy, int _dw, int _dh) :
 s_mainRendererPointer(g_renderer),
 s_sourceImage(img),
-s_srcRect(new SDL_Rect{_sx,_sy,_sw,_sh}),
-s_dstRect(new SDL_Rect{_dx,_dy,_dw,_dh}),
-s_imageW(0),
-s_imageH(0),
+s_srcRect(new SDL_Rect{_sx,_sy,_sw,_sh}), s_dstRect(new SDL_Rect{_dx,_dy,_dw,_dh}),
+s_imageW(0), s_imageH(0),
+s_offsetX(s_dstRect->x), s_offsetY(s_dstRect->y),
 s_created(false),
 s_framecounter(0){
 	;
@@ -55,6 +54,14 @@ void Sprite::destroySprite(){
 	delete s_srcRect;
 	delete s_dstRect;
 	GameSystem::writeMessage("Destroyed sprite");
+}
+
+
+int Sprite::getOffsetX() const{
+	return s_offsetX;
+}
+int Sprite::getOffsetY() const{
+	return s_offsetY;
 }
 
 

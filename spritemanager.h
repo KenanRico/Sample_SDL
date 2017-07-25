@@ -27,10 +27,11 @@ class SpriteManager{
 		bool insert(const char*, Sprite*);
 		bool remove(const char*);
 		Sprite* get(const char*);
+		unsigned int count();
+	public:
 		void updateAllStates(const EventHandler&);
 		void updateAllSprites();
 		void renderAllSprites();
-		unsigned int count();
 
 };
 #endif

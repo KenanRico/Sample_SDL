@@ -74,6 +74,11 @@ Sprite* SpriteManager::get(const char* ID){
 	}	
 }
 
+unsigned int SpriteManager::count(){
+	return o_sprites.size();
+}
+
+
 void SpriteManager::updateAllStates(const EventHandler& event){
 	for(std::map<std::string, Sprite*>::iterator i=o_sprites.begin(); i!=o_sprites.end(); ++i){
 		i->second->updateState(event);
@@ -88,8 +93,4 @@ void SpriteManager::renderAllSprites(){
 	for(std::map<std::string, Sprite*>::iterator i=o_sprites.begin(); i!=o_sprites.end(); ++i){
 		i->second->renderSprite();
 	}
-}
-
-unsigned int SpriteManager::count(){
-	return o_sprites.size();
 }

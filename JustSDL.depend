@@ -322,7 +322,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1500662953 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\gamesystem.h
+1500982320 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\gamesystem.h
 	<SDL2/SDL.h>
 	<iostream>
 	<string>
@@ -646,13 +646,13 @@
 	"begin_code.h"
 	"close_code.h"
 
-1500662953 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\game.h
+1500982205 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\game.h
 	<SDL2/SDL.h>
 	"spritemanager.h"
 	"eventhandler.h"
 	"levelmanager.h"
 
-1500662953 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\game.cpp
+1500991713 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\game.cpp
 	<SDL2/SDL.h>
 	"game.h"
 	"gamesystem.h"
@@ -668,12 +668,12 @@
 	"levelmanager.h"
 	<iostream>
 
-1500449872 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite.h
+1500993221 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite.h
 	<SDL2/SDL.h>
 	<string>
 	"eventhandler.h"
 
-1500662953 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite.cpp
+1500993263 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite.cpp
 	<SDL2/SDL.h>
 	<SDL2/extensions/SDL_image.h>
 	"sprite.h"
@@ -1017,13 +1017,13 @@
 	<map>
 	<string>
 
-1500449645 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite_player.h
+1500992171 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite_player.h
 	<SDL2/SDL.h>
 	"sprite.h"
 	"eventhandler.h"
 	"keyboardhandler.h"
 
-1500663194 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite_player.cpp
+1500992950 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite_player.cpp
 	<SDL2/SDL.h>
 	"sprite_player.h"
 	"sprite.h"
@@ -1038,7 +1038,7 @@
 	<SDL2/SDL.h>
 	"keyboardhandler.h"
 
-1499673044 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\eventhandler.h
+1500875936 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\eventhandler.h
 	<SDL2/SDL.h>
 	"keyboardhandler.h"
 	"mousehandler.h"
@@ -1092,19 +1092,19 @@
 	"menuitem.h"
 	"gamesystem.h"
 
-1500444401 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\spritemanager.h
+1500664683 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\spritemanager.h
 	"sprite.h"
 	<map>
 	<string>
 
-1500449442 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\spritemanager.cpp
+1500664666 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\spritemanager.cpp
 	"spritemanager.h"
 	"sprite.h"
 	"gamesystem.h"
 	<map>
 	<string>
 
-1500662954 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\xmlparser.cpp
+1500991442 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\xmlparser.cpp
 	<rapidxml.hpp>
 	<SDL2/SDL.h>
 	"xmlparser.h"
@@ -1115,6 +1115,7 @@
 	"tilelayer.h"
 	"imagelayer.h"
 	"tileset.h"
+	"sprite_player.h"
 	<vector>
 	<string>
 	<fstream>
@@ -1130,7 +1131,7 @@
 	<new>
 	<exception>
 
-1500662954 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\xmlparser.h
+1500991466 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\xmlparser.h
 	"rapidxml.hpp"
 	<SDL2/SDL.h>
 	<vector>
@@ -1140,17 +1141,20 @@
 	"tilelayer.h"
 	"imagelayer.h"
 	"tileset.h"
+	"sprite_player.h"
 
-1500662953 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\levelmanager.h
+1500991283 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\levelmanager.h
 	<SDL2/SDL.h>
 	<vector>
 	"level.h"
+	"sprite_player.h"
 
-1500662953 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\level.h
+1500991341 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\level.h
 	<SDL2/SDL.h>
 	"tilelayer.h"
 	"tileset.h"
 	"imagelayer.h"
+	"sprite_player.h"
 	<string>
 	<vector>
 
@@ -1171,7 +1175,7 @@
 	<string>
 	<iostream>
 
-1500662953 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\level.cpp
+1500993199 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\level.cpp
 	"level.h"
 	<SDL2/SDL.h>
 	<string>
@@ -1181,14 +1185,16 @@
 	"tileset.h"
 	"imagelayer.h"
 	"gamesystem.h"
+	"sprite_player.h"
 	"xmlparser.h"
 	<iostream>
 
-1500662953 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\levelmanager.cpp
+1500991291 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\levelmanager.cpp
 	"levelmanager.h"
 	<SDL2/SDL.h>
 	<vector>
 	"level.h"
+	"sprite_player.h"
 	"xmlparser.h"
 
 1500662953 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\tilelayer.cpp

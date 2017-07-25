@@ -8,7 +8,9 @@ namespace GameSystem{
 //-------------------------System parameters-----------------------------
 	const int PixToMetre = 30;
 	const int FPS = 60;
-	const int FrameTime = 1000.0f/FPS;	
+	const int FrameTime = 1000.0f/FPS;
+	const int defaultWindowW = 640;
+	const int defaultWindowH = 480;
 //--------------------------SDL_Init-------------------------------------
 	inline void Init(){
 		try{

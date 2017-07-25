@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 #include <vector>
 #include "level.h"
+#include "sprite_player.h"
 #include "xmlparser.h"
 
 
@@ -16,12 +17,12 @@ LevelManager::~LevelManager(){
 	}
 }
 
-void LevelManager::insertAll(const char* levelsFile, SDL_Renderer* g_renderer, SDL_Window* g_window){
-	XMLParser::Levels(levelsFile, g_renderer, g_window, *this);
+void LevelManager::insertAll(const char* levelsFile, SDL_Renderer* g_renderer, SDL_Window* g_window, const Player* player){
+	XMLParser::Levels(levelsFile, g_renderer, g_window, player, *this);
 	//levels.push_back(new Level(levelsFile, g_renderer, g_window));
 }
-void LevelManager::insertLevel(const char* dir, const char* file, SDL_Renderer* g_renderer, SDL_Window* g_window){
-	levels.push_back(new Level(dir, file, g_renderer, g_window));
+void LevelManager::insertLevel(const char* dir, const char* file, SDL_Renderer* g_renderer, SDL_Window* g_window, const Player* player){
+	levels.push_back(new Level(dir, file, g_renderer, g_window, player));
 }
 
 

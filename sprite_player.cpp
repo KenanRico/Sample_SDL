@@ -102,7 +102,7 @@ void Player::onGroundSpeedChange(){
 		p_state->direction = p_action->_movedirection;
 	}else;
 	if(p_action->_movedirection==0){
-		if(s_framecounter%5==0){
+		if(s_framecounter%3==0){
 			(p_state->speed_h-1 > 0)?
 			--p_state->speed_h : p_state->speed_h=0;
 		}else;
@@ -121,12 +121,12 @@ void Player::onGroundSpeedChange(){
 			}else;
 		}else{
 			if(p_action->_walk){
-				if(s_framecounter%3==0){
+				if(s_framecounter%2==0){
 					(p_state->speed_h-1 > 0)?
 					--p_state->speed_h : p_state->speed_h=0;
 				}else;
 			}else if(p_action->_sprint){
-				if(s_framecounter%2==0){
+				if(s_framecounter%1==0){
 					(p_state->speed_h-1 > 0)?
 					--p_state->speed_h : p_state->speed_h=0;
 				}
@@ -155,14 +155,19 @@ void Player::checkLand(){
 }
 
 
+
 void Player::updateSprite(){
 	int pm = GameSystem::PixToMetre;
 	if(p_state->speed_h!=0){
 		s_srcRect->y = 50;
 		if(s_framecounter%(15-((p_state->speed_h<7)?p_state->speed_h+1:p_state->speed_h))==0){
 			s_srcRect->x = (s_srcRect->x+40>300)?0:s_srcRect->x+40;
-		}else
-		s_dstRect->x += p_state->speed_h*pm/60*p_state->direction;
+		}else;
+		if(s_dstRect->x<200&&p_state->direction==-1 || s_dstRect->x>440&&p_state->direction==1){
+			s_offsetX += p_state->speed_h*pm/60*p_state->direction;
+		}else{
+			s_dstRect->x += p_state->speed_h*pm/60*p_state->direction;
+		}
 	}else{
 		//standing
 		s_srcRect->x = (s_srcRect->x>150)?0:s_srcRect->x;
@@ -172,8 +177,11 @@ void Player::updateSprite(){
 		}else;
 
 	}
-	s_dstRect->y += p_state->speed_v*pm/60*p_state->in_air;
-
+	if(s_offsetY<200&&p_state->direction==-1 || s_offsetY>440&&p_state->direction==1 || false){
+		s_offsetY += p_state->speed_v*pm/60*p_state->in_air;
+	}else{
+		s_dstRect->y += p_state->speed_v*pm/60*p_state->in_air;
+	}
 }
 
 void Player::updateActionBasedOnEvent(const EventHandler& event){

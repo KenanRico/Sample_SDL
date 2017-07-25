@@ -2,6 +2,7 @@
 #include "tilelayer.h"
 #include "tileset.h"
 #include "imagelayer.h"
+#include "sprite_player.h"
 #include <string>
 #include <vector>
 
@@ -15,14 +16,16 @@ class Level{
 		std::vector<TileLayer*> lv_layers;
 		std::vector<ImageLayer*> lv_imagelayers;
 		std::vector<TileSet*> lv_tilesets;
+		mutable int*** lv_overallTileLayer;
 		int lv_mapH;
 		int lv_mapW;
 		int lv_tileH;
 		int lv_tileW;
 		bool lv_complete;
-		SDL_Renderer* mainRendererPointer;
-		mutable SDL_Texture* texture;
-		SDL_Window* mainWindowPointer;
+		SDL_Renderer* lv_mainRendererPointer;
+		mutable SDL_Texture* lv_texture;
+		SDL_Window* lv_mainWindowPointer;
+		const Player* lv_playerPointer;
 		SDL_Rect* lv_srcRect;
 		SDL_Rect* lv_dstRect;
 	public:
@@ -31,14 +34,14 @@ class Level{
 		Level(const Level&) = delete;
 		Level& operator=(const Level&) = delete;
 	public:
-		Level(const char*, const char*, SDL_Renderer*, SDL_Window*);
+		Level(const char*, const char*, SDL_Renderer*, SDL_Window*, const Player*);
 	private:
 		void initLevel(); //Parse lv_name and insert TileLayer objects and TileSet objects
 		void destroyLevel(); //Free layer and tileset objects
 	private:
+		void setOverallTileLayer() const;
 		void drawBackground() const;
-		int** overallTileLayer() const;
-		bool setTextureFromTileID(int) const;
+		bool setSrcRectFromTileID(int) const;
 	public:
 		void updateLevel() const;
 		void renderLevel() const;

@@ -8,6 +8,7 @@
 #include "tilelayer.h"
 #include "imagelayer.h"
 #include "tileset.h"
+#include "sprite_player.h"
 #include <vector>
 #include <string>
 #include <fstream>
@@ -21,9 +22,6 @@
 
 XMLParser::XMLParser(){;}
 XMLParser::~XMLParser(){;}
-
-
-
 
 
 
@@ -92,7 +90,7 @@ void XMLParser::MenuItem(){
 
 
 
-void XMLParser::Levels(const char* levelsXML, SDL_Renderer* mainRendererPointer, SDL_Window* mainWindowPointer, LevelManager& levels){
+void XMLParser::Levels(const char* levelsXML, SDL_Renderer* mainRendererPointer, SDL_Window* mainWindowPointer, const Player* player, LevelManager& levels){
 	std::fstream fs(levelsXML);
 	std::vector<char> buffer((std::istreambuf_iterator<char>(fs)), std::istreambuf_iterator<char>());
 	buffer.push_back('\0');
@@ -103,7 +101,7 @@ void XMLParser::Levels(const char* levelsXML, SDL_Renderer* mainRendererPointer,
 	for(rapidxml::xml_node<>* level=root->first_node("Level"); level!=(rapidxml::xml_node<>*)0; level=level->next_sibling()){
 		std::string dir(level->first_attribute("dir")->value());
 		std::string file(level->first_attribute("file")->value());
-		levels.insertLevel(dir.c_str(), file.c_str(), mainRendererPointer, mainWindowPointer);
+		levels.insertLevel(dir.c_str(), file.c_str(), mainRendererPointer, mainWindowPointer, player);
 	}
 }
 

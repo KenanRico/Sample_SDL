@@ -23,6 +23,5 @@ class EventHandler{
 		const MouseHandler& getMouse() const;
 	private:
 		void resetEscape();
-
 };
 #endif

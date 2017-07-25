@@ -37,7 +37,7 @@ enum class Game::State{
 
 
 Game::Game(): 
-g_window((SDL_Window*)0), 
+g_window((SDL_Window*)0),
 g_renderer((SDL_Renderer*)0), 
 g_state(State::NONE), 
 g_objects((SpriteManager*)0){
@@ -50,7 +50,7 @@ Game::~Game(){
 
 void Game::initSystems(){
 	GameSystem::Init();
-	g_window = SDL_CreateWindow("This is a window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_RESIZABLE|SDL_WINDOW_OPENGL);
+	g_window = SDL_CreateWindow("This is a window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, GameSystem::defaultWindowW, GameSystem::defaultWindowH, SDL_WINDOW_RESIZABLE|SDL_WINDOW_OPENGL);
 	if(g_window!=(SDL_Window*)0){
 		g_renderer = SDL_CreateRenderer(g_window,-1, 0);
 		if(g_renderer!=(SDL_Renderer*)0){
@@ -89,7 +89,7 @@ void Game::loadAllObjects(){
 	XMLParser::Sprite("items/sprites.xml", g_objects, g_renderer);
 }
 void Game::createLevels(){
-	g_levels.levels.insertAll("Levels/Levels.xml", g_renderer, g_window);
+	g_levels.levels.insertAll("Levels/Levels.xml", g_renderer, g_window, (Player*)g_objects->get("lucas"));
 }
 
 
