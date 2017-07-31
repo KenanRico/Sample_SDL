@@ -1,0 +1,3 @@
+Method 1 - Create a CollisionManager class, an instance of which is declared in Game object to store references of all collidable objects (sprites, objectlayerobjects). For every frame, update the movable objects'(sprites') states AFTER each of them update themselves based on collision.
+
+Method 2 - Create a Collision class, an instance of which is declared in every movable object(sprite) to store references of all colliadable objects. For every frame, update movable objects based on player control, AND its collision object.

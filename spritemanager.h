@@ -28,6 +28,7 @@ class SpriteManager{
 		bool remove(const char*);
 		Sprite* get(const char*);
 		unsigned int count();
+		const std::map<std::string, Sprite*>& getAllSprites();
 	public:
 		void updateAllStates(const EventHandler&);
 		void updateAllSprites();

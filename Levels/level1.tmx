@@ -9,6 +9,7 @@
  <imagelayer name="Image Layer 1" offsetx="-6" offsety="-43">
   <image source="BackgroundGradient.png" width="1280" height="1472"/>
  </imagelayer>
+ <objectgroup name="Object Layer 1" offsetx="14.6667" offsety="9.33333"/>
  <layer name="Tile Layer 2" width="20" height="15">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

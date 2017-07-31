@@ -26,8 +26,8 @@ class Player : public Sprite{
 	public:
 		Player(SDL_Renderer*, const char*, int,int,int,int,int,int,int,int, int,int,int,int);
 	public:
-		void renderSprite();
-		void updateSprite(); //update sprite on states
+		void renderSprite() override;
+		void updateSprite() override; //update sprite on states
 	private:
 
 		void updateState(const EventHandler&); //update states (or attributes) on p_action

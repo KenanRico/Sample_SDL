@@ -158,7 +158,6 @@ void Level::renderLevel() const{
 					SDL_RenderCopy(lv_mainRendererPointer, lv_texture, lv_srcRect, lv_dstRect);
 				}else{
 					//empty tile, nothing to render
-					//std::cout<<"huh"<<std::endl;//remove
 				}
 			}
 		}

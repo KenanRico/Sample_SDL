@@ -65,6 +65,20 @@ int Sprite::getOffsetY() const{
 }
 
 
+int Sprite::getLeft() const{
+	return s_dstRect->x;
+}
+int Sprite::getRight() const{
+	return (s_dstRect->x + s_dstRect->w);
+}
+int Sprite::getTop() const{
+	return s_dstRect->y;
+}
+int Sprite::getBottom() const{
+	return (s_dstRect->y + s_dstRect->h);
+}
+
+
 void Sprite::setSrcRect(int x, int y, int w, int h){
 	s_srcRect->x = x;
 	s_srcRect->y = y;

@@ -163,7 +163,7 @@ void Player::updateSprite(){
 		if(s_framecounter%(15-((p_state->speed_h<7)?p_state->speed_h+1:p_state->speed_h))==0){
 			s_srcRect->x = (s_srcRect->x+40>300)?0:s_srcRect->x+40;
 		}else;
-		if(s_dstRect->x<200&&p_state->direction==-1 || s_dstRect->x>440&&p_state->direction==1){
+		if(s_dstRect->x<150&&p_state->direction==-1 || s_dstRect->x>440&&p_state->direction==1){
 			s_offsetX += p_state->speed_h*pm/60*p_state->direction;
 		}else{
 			s_dstRect->x += p_state->speed_h*pm/60*p_state->direction;

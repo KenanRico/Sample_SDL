@@ -78,6 +78,10 @@ unsigned int SpriteManager::count(){
 	return o_sprites.size();
 }
 
+const std::map<std::string, Sprite*>& SpriteManager::getAllSprites(){
+	return o_sprites;
+}
+
 
 void SpriteManager::updateAllStates(const EventHandler& event){
 	for(std::map<std::string, Sprite*>::iterator i=o_sprites.begin(); i!=o_sprites.end(); ++i){

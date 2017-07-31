@@ -37,6 +37,11 @@ class Sprite{
 	public:
 		int getOffsetX() const;
 		int getOffsetY() const;
+	public:
+		int getLeft() const;
+		int getRight() const;
+		int getTop() const;
+		int getBottom() const;
 	protected:
 		void setSrcRect(int,int,int,int);
 		void setDstRect(int,int,int,int);
