@@ -1,5 +1,5 @@
 #include "objectlayerobject.h"
-
+#include <vector>
 
 #ifndef OBJECT_LAYER_POLYGON_H
 #define OBJECT_LAYER_POLYGON_H
@@ -16,7 +16,7 @@ class ObjectLayerPolygon : public ObjectLayerObject{
 	public:
 		ObjectLayerPolygon(int,int,int);
 	public:
-		bool onContact() override;
+		bool onContact(int,int,int,int,int) const override;
 		void insertPoint(int,int);
 };
 #endif

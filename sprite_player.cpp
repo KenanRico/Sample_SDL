@@ -30,7 +30,7 @@ class Player::PlayerAttribute{
 	public:
 		PlayerAttribute(int a, int s, int i, int d): agility(a), strength(s), intelligence(i), dexterity(d){
 			//all values below are sample value; will change later
-			_jumpspeed = 5;
+			_jumpspeed = 16;
 			_acceleration = 3;//per second, applied every 1/3 second (per 20 frames)
 			_deceleration = 10;//per second, applied every 1/10 second (per 6 frames)
 			_topwalkspeed = 6;
@@ -70,9 +70,13 @@ class Player::PlayerAction{
 
 
 
-Player::Player(SDL_Renderer* g_renderer, const char* img, int _sx,int _sy,int _sw,int _sh,int _dx,int _dy,int _dw,int _dh, int a,int s,int i,int d):
-Sprite(g_renderer,img,_sx,_sy,_sw,_sh,_dx,_dy,_dw,_dh), p_attribute(new PlayerAttribute(a,s,i,d)), p_state(new PlayerState), p_action(new PlayerAction)
-{;}
+Player::Player(SDL_Renderer* g_renderer, const char* nm, const char* img, int _sx,int _sy,int _sw,int _sh,int _dx,int _dy,int _dw,int _dh, int a,int s,int i,int d):
+Sprite(g_renderer,nm,img,_sx,_sy,_sw,_sh,_dx,_dy,_dw,_dh), 
+p_attribute(new PlayerAttribute(a,s,i,d)), 
+p_state(new PlayerState), 
+p_action(new PlayerAction){
+	;
+}
 
 Player::~Player(){
 	delete p_attribute;
@@ -84,20 +88,44 @@ Player::~Player(){
 
 void Player::updateState(const EventHandler& event){
 	updateActionBasedOnEvent(event);
-	if(!p_state->in_air){
-		onGroundSpeedChange();
-		//std::cout<<p_state->speed_h<<" "<<p_state->speed_v<<" "<<p_state->in_air<<std::endl;//remove
-		checkJump();
-	}else;
-	if(p_state->in_air){
-		inAirSpeedChange();
-		checkLand();
-	}else;
+	s_collision.updateCollisionInfo();
+	jumpUpdate();
+	onGroundUpdate();
 	++s_framecounter;
 	//We need a procedure here to reset framecounter to 0 when reaching least common multiple of all frames-dependent updates (to prevent overflow in case someone plays this game for straight 20k hours without stopping)
 }
 
-void Player::onGroundSpeedChange(){
+void Player::jumpUpdate(){
+	if(s_collision.getCollisionInfo().bottom){
+		if(p_state->in_air){
+			if(p_state->speed_v>0){
+				p_state->in_air = false;
+				p_state->speed_v = 0;
+				s_srcRect->x = 0;
+			}else if(p_state->speed_v<0){
+				s_srcRect->x = 40;
+			}else;
+		}else{
+			if(p_action->_jump){
+				p_state->in_air = true;
+				s_srcRect->x = 40;
+				p_state->speed_v = -p_attribute->_jumpspeed;
+			}else;
+		}
+	}else{
+		if(p_state->in_air){
+			if(s_framecounter%1==0){
+				++p_state->speed_v;
+			}else;
+		}else{
+			p_state->in_air = true;
+			s_srcRect->x = 40;
+			//GameSystem::writeErrorMessage("huhuhuh");
+		}
+	}
+}
+
+void Player::onGroundUpdate(){
 	if(p_state->speed_h==0){
 		p_state->direction = p_action->_movedirection;
 	}else;
@@ -107,80 +135,69 @@ void Player::onGroundSpeedChange(){
 			--p_state->speed_h : p_state->speed_h=0;
 		}else;
 	}else{
-		if(p_state->direction==p_action->_movedirection){
-			if(p_action->_walk){
-				if(s_framecounter%8==0){
-					(p_state->speed_h+1 < p_attribute->_topwalkspeed)?
-					++p_state->speed_h : p_state->speed_h=p_attribute->_topwalkspeed;
+		if(p_action->_movedirection==-1 && !s_collision.getCollisionInfo().left || p_action->_movedirection==1 && !s_collision.getCollisionInfo().right){
+			if(p_state->direction==p_action->_movedirection){
+				if(p_action->_walk){
+					if(s_framecounter%8==0){
+						(p_state->speed_h+1 < p_attribute->_topwalkspeed)? ++p_state->speed_h : p_state->speed_h=p_attribute->_topwalkspeed;
+					}else;
+				}else if(p_action->_sprint){
+					if(s_framecounter%6==0){
+						(p_state->speed_h+1 < p_attribute->_topsprintspeed)? ++p_state->speed_h : p_state->speed_h=p_attribute->_topsprintspeed;
+					}else;
 				}else;
-			}else if(p_action->_sprint){
-				if(s_framecounter%6==0){
-					(p_state->speed_h+1 < p_attribute->_topsprintspeed)?
-					++p_state->speed_h : p_state->speed_h=p_attribute->_topsprintspeed;
+			}else{
+				if(p_action->_walk){
+					if(s_framecounter%2==0){
+						(p_state->speed_h-1 > 0) ? --p_state->speed_h : p_state->speed_h=0;
+					}else;
+				}else if(p_action->_sprint){
+					if(s_framecounter%1==0){
+						(p_state->speed_h-1 > 0) ? --p_state->speed_h : p_state->speed_h=0;
+					}else;
 				}else;
-			}else;
+			}
 		}else{
-			if(p_action->_walk){
-				if(s_framecounter%2==0){
-					(p_state->speed_h-1 > 0)?
-					--p_state->speed_h : p_state->speed_h=0;
-				}else;
-			}else if(p_action->_sprint){
-				if(s_framecounter%1==0){
-					(p_state->speed_h-1 > 0)?
-					--p_state->speed_h : p_state->speed_h=0;
-				}
-			}else;
+			p_state->speed_h = 0;
+			//extra animation for collision
 		}
 	}
 }
-void Player::checkJump(){
-	if(p_action->_jump){
-		p_state->in_air = true;
-		p_state->speed_v = -p_attribute->_jumpspeed;
-	}else;
-}
-
-void Player::inAirSpeedChange(){
-	if(s_framecounter%10==0){
-		(p_state->speed_v+1 <= 10)?
-		 ++p_state->speed_v : p_state->speed_v=0;
-	}else;
-}
-void Player::checkLand(){
-//implement later on
-	if(false){
-		p_state->in_air = false;
-	}else;
-}
-
-
 
 void Player::updateSprite(){
 	int pm = GameSystem::PixToMetre;
-	if(p_state->speed_h!=0){
-		s_srcRect->y = 50;
-		if(s_framecounter%(15-((p_state->speed_h<7)?p_state->speed_h+1:p_state->speed_h))==0){
-			s_srcRect->x = (s_srcRect->x+40>300)?0:s_srcRect->x+40;
+	if(p_state->in_air){
+		s_srcRect->y = 100;
+		if(s_srcRect->x<200){
+			if(s_framecounter%6==0){
+				s_srcRect->x += 40;
+			}else;
 		}else;
-		if(s_dstRect->x<150&&p_state->direction==-1 || s_dstRect->x>440&&p_state->direction==1){
-			s_offsetX += p_state->speed_h*pm/60*p_state->direction;
+		if(s_offsetY<200&&p_state->direction==-1 || s_offsetY>440&&p_state->direction==1 || false){
+			s_offsetY += p_state->speed_v*pm/60*p_state->in_air;
 		}else{
-			s_dstRect->x += p_state->speed_h*pm/60*p_state->direction;
+			s_dstRect->y += p_state->speed_v*pm/60*p_state->in_air;
 		}
 	}else{
-		//standing
-		s_srcRect->x = (s_srcRect->x>150)?0:s_srcRect->x;
-		s_srcRect->y = 0;
-		if(s_framecounter%12==0){
-			s_srcRect->x = (s_srcRect->x+40>150)?0:s_srcRect->x+40;
-		}else;
+		if(p_state->speed_h!=0){
+			s_srcRect->y = 50;
+			if(s_framecounter%(15-((p_state->speed_h<7)?p_state->speed_h+1:p_state->speed_h))==0){
+				s_srcRect->x = (s_srcRect->x+40>300)?0:s_srcRect->x+40;
+			}else;
+			if(s_dstRect->x<150&&p_state->direction==-1 || s_dstRect->x>440&&p_state->direction==1){
+				s_offsetX += p_state->speed_h*pm/60*p_state->direction;
+			}else{
+				s_dstRect->x += p_state->speed_h*pm/60*p_state->direction;
+			}
+		}else{
+			//standing
+			s_srcRect->x = (s_srcRect->x>150)?0:s_srcRect->x;
+			s_srcRect->y = 0;
+			if(s_framecounter%12==0){
+				s_srcRect->x = (s_srcRect->x+40>150)?0:s_srcRect->x+40;
+			}else;
 
-	}
-	if(s_offsetY<200&&p_state->direction==-1 || s_offsetY>440&&p_state->direction==1 || false){
-		s_offsetY += p_state->speed_v*pm/60*p_state->in_air;
-	}else{
-		s_dstRect->y += p_state->speed_v*pm/60*p_state->in_air;
+		}
 	}
 }
 

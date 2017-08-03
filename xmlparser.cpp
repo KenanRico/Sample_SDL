@@ -7,6 +7,12 @@
 #include "levelmanager.h"
 #include "tilelayer.h"
 #include "imagelayer.h"
+#include "objectlayer.h"
+#include "objectlayerobject.h"
+#include "objectlayerrectangle.h"
+#include "objectlayerellipse.h"
+#include "objectlayerpolygon.h"
+#include "objectlayerpolyline.h"
 #include "tileset.h"
 #include "sprite_player.h"
 #include <vector>
@@ -68,7 +74,7 @@ void XMLParser::insertplayer(rapidxml::xml_node<>* player, SpriteManager* g_obje
 	int strength = stringtoint(player->first_attribute("strength")->value());
 	int intelligence = stringtoint(player->first_attribute("intelligence")->value());
 	int dexterity = stringtoint(player->first_attribute("dexterity")->value());
-	g_objects->insert(name.c_str(), new Player(g_renderer, source.c_str(), sourceX, sourceY, spriteW, spriteH, displayX, displayY, spriteW, spriteH, agility, strength, intelligence, dexterity));
+	g_objects->insert(name.c_str(), new Player(g_renderer, name.c_str(), source.c_str(), sourceX, sourceY, spriteW, spriteH, displayX, displayY, spriteW, spriteH, agility, strength, intelligence, dexterity));
 
 }
 
@@ -107,7 +113,7 @@ void XMLParser::Levels(const char* levelsXML, SDL_Renderer* mainRendererPointer,
 
 
 
-void XMLParser::TileMap(const char* tmx_dir, const char* tmx_file, std::vector<TileLayer*>& layers, std::vector<ImageLayer*>& imagelayers, std::vector<TileSet*>& tilesets, int& mapH, int& mapW, int& tileH, int& tileW, SDL_Renderer* mainRendererPointer, SDL_Window* mainWindowPointer){
+void XMLParser::TileMap(const char* tmx_dir, const char* tmx_file, std::vector<TileLayer*>& layers, std::vector<ImageLayer*>& imagelayers, std::vector<ObjectLayer*>& objectgroups, std::vector<TileSet*>& tilesets, int& mapH, int& mapW, int& tileH, int& tileW, SDL_Renderer* mainRendererPointer, SDL_Window* mainWindowPointer){
 	std::string tmx_source = std::string(tmx_dir) + "/" + std::string(tmx_file);
 	std::fstream fs(tmx_source);
 	std::vector<char> buffer((std::istreambuf_iterator<char>(fs)), std::istreambuf_iterator<char>());
@@ -128,6 +134,8 @@ void XMLParser::TileMap(const char* tmx_dir, const char* tmx_file, std::vector<T
 			parsetoimagelayers(element, tmx_dir, imagelayers, mainRendererPointer, mainWindowPointer);
 		}else if(element_type=="layer"){
 			parsetotilelayers(element, layers);
+		}else if(element_type=="objectgroup"){
+			parsetoobjectlayers(element, objectgroups);
 		}else{
 			//other potential elements
 		}
@@ -162,13 +170,58 @@ void XMLParser::parsetotilelayers(rapidxml::xml_node<>* element, std::vector<Til
 	int** data = stringtomatrix(datastring.c_str(), columns, rows);
 	layers.push_back(new TileLayer(data, columns, rows));
 }
-
+void XMLParser::parsetoobjectlayers(rapidxml::xml_node<>* element, std::vector<ObjectLayer*>& objectgroups){
+	std::string layer_name(element->first_attribute("name")->value());
+	ObjectLayer* new_object_layer = new ObjectLayer(layer_name.c_str());
+	for(rapidxml::xml_node<>* object=element->first_node(); object!=(rapidxml::xml_node<>*)0; object = object->next_sibling()){
+		if(object->first_node()==(rapidxml::xml_node<>*)0){
+			int ID = stringtoint(object->first_attribute("id")->value());
+			int x = stringtoint(object->first_attribute("x")->value());
+			int y = stringtoint(object->first_attribute("y")->value());
+			int width = 1;
+			if(object->first_attribute("width")!=(rapidxml::xml_attribute<char>*)0){
+				width = stringtoint(object->first_attribute("width")->value());
+			}else;
+			int height = 1;
+			if(object->first_attribute("height")!=(rapidxml::xml_attribute<char>*)0){
+				height = stringtoint(object->first_attribute("height")->value());
+			}else;
+			new_object_layer->insertObject(new ObjectLayerRectangle(ID, x, y, width, height));
+		}else{
+			std::string object_name(object->first_node()->name());
+			if(object_name=="ellipse"){
+				int ID = stringtoint(object->first_attribute("id")->value());
+				int x = stringtoint(object->first_attribute("x")->value());
+				int y = stringtoint(object->first_attribute("y")->value());
+				int width = 1;
+				if(object->first_attribute("width")!=(rapidxml::xml_attribute<char>*)0){
+					width = stringtoint(object->first_attribute("width")->value());
+				}else;
+				int height = 1;
+				if(object->first_attribute("height")!=(rapidxml::xml_attribute<char>*)0){
+					height = stringtoint(object->first_attribute("height")->value());
+				}else;
+				new_object_layer->insertObject(new ObjectLayerEllipse(ID, x, y, width, height));
+			}else if(object_name=="polygon"){
+				//object is polygon
+			}else if(object_name=="polyline"){
+				//object is polyline
+			}else{
+				GameSystem::writeErrorMessage("unrecognized object layer object type");
+				return;
+			}
+		}
+	}
+	objectgroups.push_back(new_object_layer);
+}
 
 
 int XMLParser::stringtoint(const char* sValue){
 	int iValue = 0;
 	std::string s(sValue);
 	int digit = 0;
+	//trim s based upon encounter of character '.'
+	
 	try{
 		for(std::string::iterator i=s.end()-1; i>=s.begin(); --i){
 			if(*i=='-'){

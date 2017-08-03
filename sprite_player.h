@@ -24,17 +24,15 @@ class Player : public Sprite{
 		Player(const Player&) = delete;
 		Player& operator=(const Player&) = delete;
 	public:
-		Player(SDL_Renderer*, const char*, int,int,int,int,int,int,int,int, int,int,int,int);
+		Player(SDL_Renderer*, const char*, const char*, int,int,int,int,int,int,int,int, int,int,int,int);
 	public:
 		void renderSprite() override;
 		void updateSprite() override; //update sprite on states
 	private:
 
 		void updateState(const EventHandler&); //update states (or attributes) on p_action
-		void onGroundSpeedChange();
-		void checkJump();
-		void inAirSpeedChange();
-		void checkLand();
+		void jumpUpdate();
+		void onGroundUpdate();
 
 		void updateActionBasedOnEvent(const EventHandler&);
 };

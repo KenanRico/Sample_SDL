@@ -1,18 +1,23 @@
 #include <SDL2/SDL.h>
 #include <string>
 #include "eventhandler.h"
+#include "collision.h"
 
 
 #ifndef SPRITE_H
 #define SPRITE_H
+class Collision;
 class Sprite{
 	protected:
 		SDL_Renderer* s_mainRendererPointer;
+		std::string s_name;
 		std::string s_sourceImage;
 		SDL_Texture* s_texture;
 	protected:
 		SDL_Rect* s_srcRect;
 		SDL_Rect* s_dstRect;
+	protected:
+		Collision s_collision;
 	protected:
 		int s_imageW;
 		int s_imageH;
@@ -28,12 +33,12 @@ class Sprite{
 		Sprite& operator=(const Sprite&) = delete;
 	public:
 		virtual void createSprite() final;
-		Sprite(SDL_Renderer*, const char*, int, int, int, int, int, int, int, int);
-
-		//void moveRight(); //Will move to inherited classes
-		virtual void updateState(const EventHandler&) = 0;//to be implemented by each derived based on there own states
+		Sprite(SDL_Renderer*, const char*, const char*, int, int, int, int, int, int, int, int);
+		virtual void updateState(const EventHandler&) = 0;
 		virtual void updateSprite() = 0;
 		virtual void renderSprite() = 0;
+	public:
+		std::string getName() const;
 	public:
 		int getOffsetX() const;
 		int getOffsetY() const;

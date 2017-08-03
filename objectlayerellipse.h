@@ -15,6 +15,6 @@ class ObjectLayerEllipse : public ObjectLayerObject{
 	public:
 		ObjectLayerEllipse(int,int,int,int,int);
 	public:
-		bool onContact() override;
+		bool onContact(int,int,int,int,int) const override;
 };
 #endif

@@ -2,6 +2,7 @@
 #include "tilelayer.h"
 #include "tileset.h"
 #include "imagelayer.h"
+#include "objectlayer.h"
 #include "sprite_player.h"
 #include <string>
 #include <vector>
@@ -15,6 +16,7 @@ class Level{
 		std::string lv_file;
 		std::vector<TileLayer*> lv_layers;
 		std::vector<ImageLayer*> lv_imagelayers;
+		std::vector<ObjectLayer*> lv_objectlayers;
 		std::vector<TileSet*> lv_tilesets;
 		mutable int*** lv_overallTileLayer;
 		int lv_mapH;
@@ -46,5 +48,7 @@ class Level{
 		void updateLevel() const;
 		void renderLevel() const;
 		bool isComplete() const;
+	public:
+		const std::vector<ObjectLayer*>& getObjectLayers() const;
 };
 #endif

@@ -15,11 +15,11 @@ class ObjectLayerRectangle : public ObjectLayerObject{
 	public:
 		ObjectLayerRectangle(int,int,int,int,int);
 	public:
-		bool onContact(int,int,int) override;
-	protected:
-		bool above(int,int,int,int) override;
-		bool below(int,int,int,int) override;
-		bool leftof(int,int,int,int) override;
-		bool rightof(int,int,int,int) override;
+		bool onContact(int,int,int,int,int) const override;
+	private:
+		bool above(int,int,int,int) const;
+		bool below(int,int,int,int) const;
+		bool leftof(int,int,int,int) const;
+		bool rightof(int,int,int,int) const;
 };
 #endif

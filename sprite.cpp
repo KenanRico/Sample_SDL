@@ -3,26 +3,26 @@
 #include "sprite.h"
 #include "gamesystem.h"
 #include <string>
+#include "collision.h"
 
 
-Sprite::~Sprite(){
-	destroySprite();
-}
-
-/*Sprite::Sprite(const Sprite& rhs) : s_mainRendererPointer(rhs.s_mainRendererPointer), s_sourceImage(rhs.s_sourceImage), s_created(false){
-}*/
-
-
-Sprite::Sprite(SDL_Renderer* g_renderer, const char* img, int _sx, int _sy, int _sw, int _sh, int _dx, int _dy, int _dw, int _dh) :
+Sprite::Sprite(SDL_Renderer* g_renderer, const char* nm, const char* img, int _sx, int _sy, int _sw, int _sh, int _dx, int _dy, int _dw, int _dh) :
 s_mainRendererPointer(g_renderer),
+s_name(nm),
 s_sourceImage(img),
 s_srcRect(new SDL_Rect{_sx,_sy,_sw,_sh}), s_dstRect(new SDL_Rect{_dx,_dy,_dw,_dh}),
+s_collision(this),
 s_imageW(0), s_imageH(0),
 s_offsetX(s_dstRect->x), s_offsetY(s_dstRect->y),
 s_created(false),
 s_framecounter(0){
 	;
 }
+
+Sprite::~Sprite(){
+	destroySprite();
+}
+
 
 void Sprite::createSprite(){
 	if(s_created){
@@ -54,6 +54,11 @@ void Sprite::destroySprite(){
 	delete s_srcRect;
 	delete s_dstRect;
 	GameSystem::writeMessage("Destroyed sprite");
+}
+
+
+std::string Sprite::getName() const{
+	return s_name;
 }
 
 

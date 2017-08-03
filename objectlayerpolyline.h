@@ -1,4 +1,5 @@
 #include "objectlayerobject.h"
+#include <vector>
 
 
 #ifndef OBJECT_LAYER_POLYLINE_H
@@ -16,7 +17,7 @@ class ObjectLayerPolyline : public ObjectLayerObject{
 	public:
 		ObjectLayerPolyline(int,int,int);
 	public:
-		bool onContact() override;
+		bool onContact(int,int,int,int,int) const override;
 		void insertPoint(int,int);
 };
 #endif

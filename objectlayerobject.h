@@ -1,4 +1,4 @@
-
+#include <iostream> //remove
 
 #ifndef OBJECT_LAYER_OBJECT_H
 #define OBJECT_LAYER_OBJECT_H
@@ -9,10 +9,12 @@ class ObjectLayerObject{
 			TOP = 1,
 			BOTTOM = 2,
 			LEFT = 3,
-			RIGHT = 4;
-		}
+			RIGHT = 4
+		};
 	protected:
 		int ID;
+		int x0;
+		int y0;
 		int x;
 		int y;
 	public:
@@ -23,12 +25,12 @@ class ObjectLayerObject{
 	public:
 		ObjectLayerObject(int,int,int);
 	public:
-		virtual bool onContact(int,int,int) = 0;
-	protected:
-		virtual bool above(int,int,int,int) = 0;
-		virtual bool below(int,int,int,int) = 0;
-		virtual bool leftof(int,int,int,int) = 0;
-		virtual bool rightof(int,int,int,int) = 0;
+		void updateObject(int,int);
+	public:
+		virtual bool onContact(int,int,int,int,int) const = 0;
+		virtual int angleLeft() const;
+		virtual int angleRight() const;
+		virtual void printInfo() const; //debug. remove
 };
 #endif
 

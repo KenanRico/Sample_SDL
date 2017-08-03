@@ -11,6 +11,6 @@ width(_w), height(_h){
 ObjectLayerEllipse::~ObjectLayerEllipse(){;}
 
 
-bool ObjectLayerEllipse::onContact() override{
-
+bool ObjectLayerEllipse::onContact(int side, int y1, int y2, int x1, int x2) const{
+	return false;
 }

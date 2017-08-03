@@ -9,9 +9,8 @@ ObjectLayerObject(_id, _x, _y){
 ObjectLayerPolygon::~ObjectLayerPolygon(){;}
 
 
-bool ObjectLayerPolygon::onContact(){
-
-
+bool ObjectLayerPolygon::onContact(int side, int y1, int y2, int x1, int x2) const{
+	return false;
 }
 
 void ObjectLayerPolygon::insertPoint(int x, int y){

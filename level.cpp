@@ -6,6 +6,7 @@
 #include "tilelayer.h"
 #include "tileset.h"
 #include "imagelayer.h"
+#include "objectlayer.h"
 #include "gamesystem.h"
 #include "sprite_player.h"
 #include "xmlparser.h"
@@ -28,7 +29,7 @@ Level::~Level(){
 
 
 void Level::initLevel(){
-	XMLParser::TileMap(lv_dir.c_str(), lv_file.c_str(), lv_layers, lv_imagelayers, lv_tilesets, lv_mapH, lv_mapW, lv_tileH, lv_tileW, lv_mainRendererPointer, lv_mainWindowPointer);
+	XMLParser::TileMap(lv_dir.c_str(), lv_file.c_str(), lv_layers, lv_imagelayers, lv_objectlayers, lv_tilesets, lv_mapH, lv_mapW, lv_tileH, lv_tileW, lv_mainRendererPointer, lv_mainWindowPointer);
 	setOverallTileLayer();
 }
 void Level::destroyLevel(){
@@ -134,6 +135,9 @@ void Level::updateLevel() const{
 	for(std::vector<ImageLayer*>::const_iterator iter=lv_imagelayers.end()-1; iter>=lv_imagelayers.begin(); --iter){
 		(*iter)->updateImageLayer(windowW, windowH);
 	}
+	for(std::vector<ObjectLayer*>::const_iterator iter=lv_objectlayers.begin(); iter<lv_objectlayers.end(); ++iter){
+		(*iter)->updateObjectLayer(lv_playerPointer->getOffsetX(), lv_playerPointer->getOffsetY());
+	}
 }
 void Level::renderLevel() const{
 	//set lv_srcRect according to character's position relative to whole map.
@@ -167,4 +171,9 @@ void Level::renderLevel() const{
 
 bool Level::isComplete() const{
 	return lv_complete;
+}
+
+
+const std::vector<ObjectLayer*>& Level::getObjectLayers() const{
+	return lv_objectlayers;
 }

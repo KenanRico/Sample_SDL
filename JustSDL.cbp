@@ -41,6 +41,8 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="collision.cpp" />
+		<Unit filename="collision.h" />
 		<Unit filename="eventhandler.cpp" />
 		<Unit filename="eventhandler.h" />
 		<Unit filename="game.cpp" />
@@ -63,6 +65,18 @@
 		<Unit filename="menuitem.h" />
 		<Unit filename="mousehandler.cpp" />
 		<Unit filename="mousehandler.h" />
+		<Unit filename="objectlayer.cpp" />
+		<Unit filename="objectlayer.h" />
+		<Unit filename="objectlayerellipse.cpp" />
+		<Unit filename="objectlayerellipse.h" />
+		<Unit filename="objectlayerobject.cpp" />
+		<Unit filename="objectlayerobject.h" />
+		<Unit filename="objectlayerpolygon.cpp" />
+		<Unit filename="objectlayerpolygon.h" />
+		<Unit filename="objectlayerpolyline.cpp" />
+		<Unit filename="objectlayerpolyline.h" />
+		<Unit filename="objectlayerrectangle.cpp" />
+		<Unit filename="objectlayerrectangle.h" />
 		<Unit filename="sprite.cpp" />
 		<Unit filename="sprite.h" />
 		<Unit filename="sprite_player.cpp" />

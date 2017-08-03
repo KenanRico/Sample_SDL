@@ -1,23 +1,23 @@
+#include <string>
 #include <vector>
-//#include "objectlayerobject.h"
-
+#include "objectlayerobject.h"
 
 
 #ifndef OBJECT_LAYER_H
 #define OBJECT_LAYER_H
 class ObjectLayer{
 	private:
-		//std::vector<ObjectLayerEllipse*> ellipses;
-		//std::vector<ObjectLayerRectangle*> rectangles;
-		//std::vector<ObjectLayerPolygon*> polygons;
-		//std::vector<ObjectLayerPolyLine*> polylines;
+		std::string name;
+	private:
 		std::vector<ObjectLayerObject*> objects;
 	public:
-		ObjectLayer();
+		ObjectLayer(const char*);
 		~ObjectLayer();
 		ObjectLayer(const ObjectLayer&) = delete;
 		ObjectLayer& operator=(const ObjectLayer&) = delete;
 	public:
 		void insertObject(ObjectLayerObject*);
+		const std::vector<ObjectLayerObject*>& getObjects() const;
+		void updateObjectLayer(int,int);
 };
 #endif

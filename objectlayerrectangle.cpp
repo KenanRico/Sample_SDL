@@ -11,7 +11,7 @@ ObjectLayerObject(_id, _x, _y), width(_w), height(_h){
 ObjectLayerRectangle::~ObjectLayerRectangle(){;}
 
 
-bool ObjectLayerRectangle::onContact(int side, int y1, int y2, int x1, int x2){
+bool ObjectLayerRectangle::onContact(int side, int y1, int y2, int x1, int x2) const{
 	bool result = false;
 	try{
 		switch(side){
@@ -38,7 +38,7 @@ bool ObjectLayerRectangle::onContact(int side, int y1, int y2, int x1, int x2){
 	return result;
 }
 
-bool ObjectLayerRectangle::above(int top, int bottom, int left, int right){
+bool ObjectLayerRectangle::above(int top, int bottom, int left, int right) const{
 	bool result = false;
 	if(left>=x && right<=x+width){
 		if(y < top){
@@ -49,7 +49,7 @@ bool ObjectLayerRectangle::above(int top, int bottom, int left, int right){
 	}else;
 	return result;
 }
-bool ObjectLayerRectangle::below(int top, int bottom, int left, int right){
+bool ObjectLayerRectangle::below(int top, int bottom, int left, int right) const{
 	bool result = false;
 	if(left>=x && right<=x+width){
 		if(y+height > bottom){
@@ -60,7 +60,7 @@ bool ObjectLayerRectangle::below(int top, int bottom, int left, int right){
 	}else;
 	return result;
 }
-bool ObjectLayerRectangle::leftof(int top, int bottom, int left, int right){
+bool ObjectLayerRectangle::leftof(int top, int bottom, int left, int right) const{
 	bool result = false;
 	if(top>=y && bottom<=(y+height)){
 		if(x<left){
@@ -71,7 +71,7 @@ bool ObjectLayerRectangle::leftof(int top, int bottom, int left, int right){
 	}else;
 	return result;
 }
-bool ObjectLayerRectangle::rightof(int top, int bottom, int left, int right){
+bool ObjectLayerRectangle::rightof(int top, int bottom, int left, int right) const{
 	bool result = false;
 	if(top>=y && bottom<=(y+height)){
 		if((x+height)>right){

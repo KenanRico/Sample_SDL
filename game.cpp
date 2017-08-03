@@ -11,6 +11,7 @@
 #include "menu.h"
 #include "xmlparser.h"
 #include "levelmanager.h"
+#include "collision.h"
 
 #include <iostream>
 
@@ -58,6 +59,7 @@ void Game::initSystems(){
 			if(g_objects!=(SpriteManager*)0){
 				loadAllObjects();
 				createLevels();
+				Collision::updateCollidables(g_objects->getAllSprites(), g_levels.levels[g_levels.count].getObjectLayers());
 			}else{
 				GameSystem::writeErrorMessage("Failed to init g_objects");
 			}
