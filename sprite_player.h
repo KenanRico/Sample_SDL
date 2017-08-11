@@ -29,8 +29,8 @@ class Player : public Sprite{
 		void renderSprite() override;
 		void updateSprite() override; //update sprite on states
 	private:
-
 		void updateState(const EventHandler&); //update states (or attributes) on p_action
+		void actionUpdate();
 		void jumpUpdate();
 		void onGroundUpdate();
 

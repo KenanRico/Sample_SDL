@@ -16,6 +16,10 @@ class ObjectLayerRectangle : public ObjectLayerObject{
 		ObjectLayerRectangle(int,int,int,int,int);
 	public:
 		bool onContact(int,int,int,int,int) const override;
+		int top() const override;
+		int bottom() const override;
+		int left() const override;
+		int right() const override;
 	private:
 		bool above(int,int,int,int) const;
 		bool below(int,int,int,int) const;

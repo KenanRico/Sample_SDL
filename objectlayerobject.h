@@ -28,6 +28,10 @@ class ObjectLayerObject{
 		void updateObject(int,int);
 	public:
 		virtual bool onContact(int,int,int,int,int) const = 0;
+		virtual int top() const;
+		virtual int bottom() const;
+		virtual int left() const;
+		virtual int right() const;
 		virtual int angleLeft() const;
 		virtual int angleRight() const;
 		virtual void printInfo() const; //debug. remove

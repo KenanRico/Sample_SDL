@@ -5,7 +5,9 @@
 #include <string>
 #include "sprite.h"
 
-Collision::Collision(const Sprite* sp): mySprite(sp), collisionInfo((CollisionDetail){false,false,false,false,0,0}){;}
+
+
+Collision::Collision(const Sprite* sp): mySprite(sp), collisionInfo((CollisionDetail){false,0,false,0,false,0,false,0, 0,0}){;}
 
 Collision::~Collision(){;}
 
@@ -29,9 +31,13 @@ void Collision::updateCollidables(const std::map<std::string, Sprite*>& spriteMa
 
 void Collision::updateCollisionInfo(){
 	collisionInfo.top = false;
+	collisionInfo.lowesttop = 0;
 	collisionInfo.bottom = false;
+	collisionInfo.highestbottom = 3000;
 	collisionInfo.left = false;
+	collisionInfo.rightmostleft = 0;
 	collisionInfo.right = false;
+	collisionInfo.leftmostright = 3000;
 	collisionInfo.angle_left = 0;
 	collisionInfo.angle_right = 0;	
 	int top = mySprite->getTop();
@@ -56,7 +62,7 @@ void Collision::updateCollisionInfo(){
 						collisionInfo.bottom = true;
 					}else;
 				}else;
-				}else;
+			}else;
 			//left collision check
 			if(!collisionInfo.left){
 				if(left < target->getLeft()){
@@ -79,21 +85,42 @@ void Collision::updateCollisionInfo(){
 		const ObjectLayerObject* target = *iter;	
 		if(!collisionInfo.top){
 			collisionInfo.top = target->onContact(ObjectLayerObject::TOP, top, bottom, left, right);
+			if(collisionInfo.top){
+				if(target->bottom() > collisionInfo.lowesttop){
+					collisionInfo.lowesttop = target->bottom();
+				}else;
+			}else;
 		}else;
 		if(!collisionInfo.bottom){
 			collisionInfo.bottom = target->onContact(ObjectLayerObject::BOTTOM, top, bottom, left, right);
+			if(collisionInfo.bottom){
+				if(target->top() < collisionInfo.highestbottom){
+					collisionInfo.highestbottom = target->top();
+				}else;
+			}else;
 		}else;
 		if(!collisionInfo.left){
-			if(target->onContact(ObjectLayerObject::LEFT, top, bottom, left, right)){
-				collisionInfo.left = true;
-				collisionInfo.angle_left = target->angleRight(/*arguments*/);
+			//if(target->onContact(ObjectLayerObject::LEFT, top, bottom, left, right)){
+			collisionInfo.left = target->onContact(ObjectLayerObject::LEFT, top, bottom, left, right);
+			if(collisionInfo.left){
+				if(target->right() > collisionInfo.rightmostleft){
+					collisionInfo.rightmostleft = target->right();
+				}else;
 			}else;
+			collisionInfo.angle_left = target->angleRight(/*arguments*/);
+			//}else;
 		}else;
 		if(!collisionInfo.right){
-			if(target->onContact(ObjectLayerObject::RIGHT, top, bottom, left, right)){
-				collisionInfo.right = true;
-				collisionInfo.angle_right = target->angleLeft(/*arguments*/);
+			//if(target->onContact(ObjectLayerObject::RIGHT, top, bottom, left, right)){
+				//collisionInfo.right = true;
+			collisionInfo.right = target->onContact(ObjectLayerObject::RIGHT, top, bottom, left, right);
+			if(collisionInfo.right){
+				if(target->left() < collisionInfo.leftmostright){
+					collisionInfo.leftmostright = target->left();
+				}else;
 			}else;
+			collisionInfo.angle_right = target->angleLeft(/*arguments*/);
+			//}else;
 		}else;
 	}
 }

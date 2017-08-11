@@ -46,9 +46,11 @@ class Player::PlayerState{
 		int speed_v;
 		int direction;
 		bool in_air;
+		bool attacking;
+		bool jumping_up;
 		SDL_RendererFlip spriteflip;
 	public:
-		PlayerState(): speed_h(0), speed_v(0), direction(1), in_air(false), spriteflip(SDL_FLIP_NONE){;}
+		PlayerState(): speed_h(0), speed_v(0), direction(1), in_air(false), attacking(false), jumping_up(false), spriteflip(SDL_FLIP_NONE){;}
 		~PlayerState(){;}
 		PlayerState(const PlayerState&) = delete;
 		PlayerState& operator=(const PlayerState&) = delete;
@@ -88,11 +90,21 @@ Player::~Player(){
 
 void Player::updateState(const EventHandler& event){
 	updateActionBasedOnEvent(event);
+	actionUpdate();
 	s_collision.updateCollisionInfo();
 	jumpUpdate();
 	onGroundUpdate();
 	++s_framecounter;
 	//We need a procedure here to reset framecounter to 0 when reaching least common multiple of all frames-dependent updates (to prevent overflow in case someone plays this game for straight 20k hours without stopping)
+}
+
+void Player::actionUpdate(){
+	if(p_action->_attack){
+		p_state->attacking = true;
+	}else;
+	if(p_action->_jump){
+		p_state->jumping_up = true;
+	}else;
 }
 
 void Player::jumpUpdate(){
@@ -166,23 +178,21 @@ void Player::onGroundUpdate(){
 
 void Player::updateSprite(){
 	int pm = GameSystem::PixToMetre;
-	if(p_state->in_air){
-		s_srcRect->y = 100;
-		if(s_srcRect->x<200){
-			if(s_framecounter%6==0){
-				s_srcRect->x += 40;
-			}else;
-		}else;
-		if(s_offsetY<200&&p_state->direction==-1 || s_offsetY>440&&p_state->direction==1 || false){
-			s_offsetY += p_state->speed_v*pm/60*p_state->in_air;
-		}else{
-			s_dstRect->y += p_state->speed_v*pm/60*p_state->in_air;
-		}
-	}else{
+	if(!p_state->in_air){
 		if(p_state->speed_h!=0){
-			s_srcRect->y = 50;
+			if(p_state->attacking){
+				s_srcRect->y=100;
+				p_state->attacking = p_action->_attack;
+			}else{
+				s_srcRect->y = 50;
+			}
 			if(s_framecounter%(15-((p_state->speed_h<7)?p_state->speed_h+1:p_state->speed_h))==0){
-				s_srcRect->x = (s_srcRect->x+40>300)?0:s_srcRect->x+40;
+				if(p_state->attacking){
+					s_srcRect->x = 280;
+					p_state->attacking = p_action->_attack;
+				}else{
+					s_srcRect->x = (s_srcRect->x+40>300)?0:s_srcRect->x+40;
+				}
 			}else;
 			if(s_dstRect->x<150&&p_state->direction==-1 || s_dstRect->x>440&&p_state->direction==1){
 				s_offsetX += p_state->speed_h*pm/60*p_state->direction;
@@ -191,14 +201,61 @@ void Player::updateSprite(){
 			}
 		}else{
 			//standing
-			s_srcRect->x = (s_srcRect->x>150)?0:s_srcRect->x;
-			s_srcRect->y = 0;
+			if(p_state->attacking){
+				s_srcRect->x = 280;
+				s_srcRect->y = 100;
+				p_state->attacking = p_action->_attack;
+			}else{
+				s_srcRect->x = (s_srcRect->x>150)?0:s_srcRect->x;
+				s_srcRect->y = 0;
+			}
 			if(s_framecounter%12==0){
-				s_srcRect->x = (s_srcRect->x+40>150)?0:s_srcRect->x+40;
+				if(p_state->attacking){
+					s_srcRect->x = 280;
+					p_state->attacking = p_action->_attack;
+				}else{
+					s_srcRect->x = (s_srcRect->x+40>150)?0:s_srcRect->x+40;
+				}
 			}else;
-
 		}
+	}else{
+		s_srcRect->y = 100;
+		if(s_srcRect->x<200){
+			if(s_framecounter%6==0){
+				if(p_state->attacking){
+					s_srcRect->x = 280;
+					p_state->attacking = p_action->_attack;
+				}else{
+					s_srcRect->x += 40;
+				}
+			}else;
+		}else if(s_srcRect->x==280){
+			if(p_state->attacking){
+				s_srcRect->x = 280;
+				p_state->attacking = p_action->_attack;
+			}else{
+				s_srcRect->x = 80;
+			}
+		}else;
+		if(s_dstRect->x<150&&p_state->direction==-1 || s_dstRect->x>440&&p_state->direction==1){
+			s_offsetX += p_state->speed_h*pm/60*p_state->direction;
+		}else{
+			s_dstRect->x += p_state->speed_h*pm/60*p_state->direction;
+		}
+		if(s_offsetY<200&&p_state->direction==-1 || s_offsetY>440&&p_state->direction==1 || false){
+			s_offsetY += p_state->speed_v*pm/60*p_state->in_air;
+		}else{
+			s_dstRect->y += p_state->speed_v*pm/60*p_state->in_air;
+		}
+		//jump
 	}
+			if(s_dstRect->y+s_dstRect->h > s_collision.getCollisionInfo().highestbottom){
+				s_dstRect->y = s_collision.getCollisionInfo().highestbottom-s_dstRect->h;
+			}else;
+			if(s_dstRect->y < s_collision.getCollisionInfo().lowesttop){
+				s_dstRect->y = s_collision.getCollisionInfo().lowesttop;
+			}else;
+			std::cout<<"highestbottom: "<<s_collision.getCollisionInfo().highestbottom<<"\n";
 }
 
 void Player::updateActionBasedOnEvent(const EventHandler& event){

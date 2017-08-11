@@ -40,7 +40,7 @@ bool ObjectLayerRectangle::onContact(int side, int y1, int y2, int x1, int x2) c
 
 bool ObjectLayerRectangle::above(int top, int bottom, int left, int right) const{
 	bool result = false;
-	if(left>=x && right<=x+width){
+	if(right>x&&right<(x+width) || left<(x+width)&&left>x){
 		if(y < top){
 			if(top-(y+height)<=1){
 				result = true;
@@ -51,7 +51,7 @@ bool ObjectLayerRectangle::above(int top, int bottom, int left, int right) const
 }
 bool ObjectLayerRectangle::below(int top, int bottom, int left, int right) const{
 	bool result = false;
-	if(left>=x && right<=x+width){
+	if(right>x&&right<(x+width) || left<(x+width)&&left>x){
 		if(y+height > bottom){
 			if(y-bottom<=1){
 				result = true;
@@ -62,8 +62,8 @@ bool ObjectLayerRectangle::below(int top, int bottom, int left, int right) const
 }
 bool ObjectLayerRectangle::leftof(int top, int bottom, int left, int right) const{
 	bool result = false;
-	if(top>=y && bottom<=(y+height)){
-		if(x<left){
+	if(bottom>y&&bottom<(y+height) || top<(y+height)&&top>y){
+		if(left>x){
 			if(left-(x+width)<=1){
 				result = true;
 			}else;
@@ -73,12 +73,27 @@ bool ObjectLayerRectangle::leftof(int top, int bottom, int left, int right) cons
 }
 bool ObjectLayerRectangle::rightof(int top, int bottom, int left, int right) const{
 	bool result = false;
-	if(top>=y && bottom<=(y+height)){
-		if((x+height)>right){
+	if(bottom>y&&bottom<(y+height) || top<(y+height)&&top>y){
+		if(right<(x+width)){
 			if(x-right<=1){
 				result = true;
+				std::cout<<"This object is contacting sprite on its right: "<<ObjectLayerObject::ID<<". Sprite bottom: "<<bottom<<". Object top: "<<y<<"\n"; //remove
 			}else;
 		}else;
 	}else;
 	return result;
+}
+
+
+int ObjectLayerRectangle::top() const{
+	return y;
+}
+int ObjectLayerRectangle::bottom() const{
+	return y+height;
+}
+int ObjectLayerRectangle::left() const{
+	return x;
+}
+int ObjectLayerRectangle::right() const{
+	return x+width;
 }

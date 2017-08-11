@@ -18,6 +18,19 @@ int ObjectLayerObject::angleRight() const{
 	return 1;
 }
 
+int ObjectLayerObject::top() const{
+	return 0;
+}
+int ObjectLayerObject::bottom() const{
+	return 3000;
+}
+int ObjectLayerObject::left() const{
+	return 0;
+}
+int ObjectLayerObject::right() const{
+	return 3000;
+}
+
 
 void ObjectLayerObject::printInfo() const{ //debug. remove
 	std::cout<<ID<<" "<<x<<" "<<y<<"\n";	

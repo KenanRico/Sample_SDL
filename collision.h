@@ -12,9 +12,13 @@ class Collision{
 	public:
 		struct CollisionDetail{
 			bool top;
+			int lowesttop;
 			bool bottom;
+			int highestbottom;
 			bool left;
+			int rightmostleft;
 			bool right;
+			int leftmostright;
 			int angle_right;
 			int angle_left;
 		};
