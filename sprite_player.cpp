@@ -4,6 +4,8 @@
 #include "gamesystem.h"
 #include "eventhandler.h"
 #include "keyboardhandler.h"
+#include "bulletmanager.h"
+#include "bullet.h"
 
 #include <iostream> //remove
 
@@ -89,18 +91,27 @@ Player::~Player(){
 
 
 void Player::updateState(const EventHandler& event){
+	++s_framecounter;
 	updateActionBasedOnEvent(event);
 	actionUpdate();
 	s_collision.updateCollisionInfo();
 	jumpUpdate();
 	onGroundUpdate();
-	++s_framecounter;
+	p_bullets.update();
 	//We need a procedure here to reset framecounter to 0 when reaching least common multiple of all frames-dependent updates (to prevent overflow in case someone plays this game for straight 20k hours without stopping)
 }
 
 void Player::actionUpdate(){
 	if(p_action->_attack){
 		p_state->attacking = true;
+		p_bullets.shoot(new Bullet(/*path*/"assets/button_yellow.png",
+						/*direction*/p_state->direction,
+						/*posX*/s_dstRect->x+s_dstRect->w/2, 
+						/*posY*/s_dstRect->y+s_dstRect->h/2, 
+						/*speedX*/p_state->speed_h, 
+						/*speedY*/p_state->speed_v, 
+						&s_framecounter,
+						s_mainRendererPointer));
 	}else;
 	if(p_action->_jump){
 		p_state->jumping_up = true;
@@ -139,7 +150,7 @@ void Player::jumpUpdate(){
 
 void Player::onGroundUpdate(){
 	if(p_state->speed_h==0){
-		p_state->direction = p_action->_movedirection;
+		p_state->direction = (p_action->_movedirection!=0) ? p_action->_movedirection : p_state->direction;
 	}else;
 	if(p_action->_movedirection==0){
 		if(s_framecounter%3==0){
@@ -255,7 +266,6 @@ void Player::updateSprite(){
 			if(s_dstRect->y < s_collision.getCollisionInfo().lowesttop){
 				s_dstRect->y = s_collision.getCollisionInfo().lowesttop;
 			}else;
-			std::cout<<"highestbottom: "<<s_collision.getCollisionInfo().highestbottom<<"\n";
 }
 
 void Player::updateActionBasedOnEvent(const EventHandler& event){
@@ -280,6 +290,7 @@ void Player::renderSprite(){
 		default: break;
 	}
 	SDL_RenderCopyEx(s_mainRendererPointer, s_texture, s_srcRect, s_dstRect, 0, 0, p_state->spriteflip);
+	p_bullets.renderAllBullets();
 }
 
 

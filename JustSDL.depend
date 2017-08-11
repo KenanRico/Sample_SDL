@@ -675,7 +675,7 @@
 	"eventhandler.h"
 	"collision.h"
 
-1501725306 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite.cpp
+1502422945 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite.cpp
 	<SDL2/SDL.h>
 	<SDL2/extensions/SDL_image.h>
 	"sprite.h"
@@ -1020,19 +1020,22 @@
 	<map>
 	<string>
 
-1502185861 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite_player.h
+1502418101 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite_player.h
 	<SDL2/SDL.h>
 	"sprite.h"
 	"eventhandler.h"
 	"keyboardhandler.h"
+	"bulletmanager.h"
 
-1502189653 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite_player.cpp
+1502430650 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\sprite_player.cpp
 	<SDL2/SDL.h>
 	"sprite_player.h"
 	"sprite.h"
 	"gamesystem.h"
 	"eventhandler.h"
 	"keyboardhandler.h"
+	"bulletmanager.h"
+	"bullet.h"
 	<iostream>
 
 1499673044 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\keyboardhandler.h
@@ -1283,4 +1286,23 @@
 
 1502178429 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\objectlayerrectangle.h
 	"objectlayerobject.h"
+
+1502420089 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\bulletmanager.h
+	"bullet.h"
+	<vector>
+
+1502424161 d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\bullet.h
+	<SDL2/SDL.h>
+
+1502431613 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\bullet.cpp
+	"bullet.h"
+	<SDL2/SDL.h>
+	<SDL2/extensions/SDL_image.h>
+	"gamesystem.h"
+	<math.h>
+
+1502431467 source:d:\codeblocks\pppppppppppppprojectssssssssssssss\justsdl\bulletmanager.cpp
+	"bulletmanager.h"
+	<vector>
+	"bullet.h"
 

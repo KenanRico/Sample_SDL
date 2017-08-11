@@ -2,6 +2,7 @@
 #include "sprite.h"
 #include "eventhandler.h"
 #include "keyboardhandler.h"
+#include "bulletmanager.h"
 
 #ifndef SPRITE_PLAYER_H
 #define SPRITE_PLAYER_H
@@ -16,7 +17,7 @@ class Player : public Sprite{
 		PlayerAction* p_action; //PlayerAction is a class that translate user input into character action
 		enum SpriteSize{WALKSHEET=0, SPRINTSHEET=1, JUMPSHEET=2, WALKSPRITE=3, SPRINTSPRITE=4, JUMPSPRITE=5};
 		enum Dimension{W=0, H=1};
-		
+		BulletManager p_bullets;
 		
 	public: 
 		Player() = delete;
